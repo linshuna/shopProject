@@ -1,0 +1,375 @@
+$def-font-size: .28rem;
+$font-20: .2rem;
+$font-24: .24rem;
+$font-26: .26rem;
+$font-30: .3rem;
+$font-32: .32rem;
+$font-38: .38rem;
+
+$light-gray: #e5e3e3;
+// $gray-ef1: #efeef4;
+$gray-ef: #f5f5f5;
+$gray-f0: #efefef;
+// $gray-ef: #f0f3f4; 
+$gray-f3: #f3f3f3;
+$gray-f5: #f5f5f5;
+$gray-f6: #f6f6f6;
+$gray-f9: #f9f9f9;
+$gray-dd: #dddddd;
+$gray-bd: #bdbdbd;
+$gray-cf:#cfdadd;
+$gray-de:#d1dade;
+//#d4d2d2
+$gray-3: #333;
+$gray-6: #666;
+$gray-9: #999;
+$gray: gray;
+
+$black: #000;
+$red: #c40500;
+$yellow: #f2b10f;
+
+$send-msg-blue: #1cb2ef;
+$light-blue: #88c7f8;
+$lighter-blue: #67B5F9;
+$blue-icon: #5a80c0;
+// $blue: #23b7e5;
+// $blue: #3296FA; #3296FA #4297ec
+$blue: #4297ec;
+$def-blue-btn: #23b7e5;
+
+$strong-blue: #095bda;
+
+$point-color: #23b7e5;
+$worng-color: #B2DD01;
+$right-color: #3de20b;
+
+$file-color: #009688;
+$green: #3de20b;
+$light-green: #09D758;
+$white: #fff;
+
+$light-yellow: #ffd400;
+$yellow-green: #B2DD01;
+$pink: #ff5253;
+$orange: #d05808;
+//任务颜色
+$task-light-green:rgb(115,216,139);
+$task-green: #27c24c;
+$task-pink:#f05050;
+$task-yellow:#fad733;
+//项目颜色
+$pro-primary:#23b7e5;
+$pro-danger:#ed5565;
+$pro-info:#23c6c8;
+$pro-warning:#f8ac59;
+$pro-default:#1c84c6;
+//border-radius
+$border-radius-4: 4px;
+$border-radius-size: 6px;
+$border-radius-12: 12px;
+$border-radius-100: 100px;
+// 公共样式
+.font-20{ font-size: $font-20;}
+.sm-font{ font-size: $font-24;}
+.def-font{ font-size: $def-font-size;}
+.def-font-32{ font-size: $font-32;}
+.task-green-bg{ background: $task-green!important;color:$white;}
+.task-light-green-bg{ background: $task-light-green!important;color:$white;}
+.task-pink-bg{ background: $task-pink!important;color:$white;}
+.task-yellow-bg{ background: $task-yellow!important;color:$white;}
+.task-blue-bg{ background: $blue!important;color:$white;}
+.task-green-bg{ background: $task-green!important;color:$white;}
+.task-gray-bg{ background: $gray-de!important;color: $gray-bd!important;}
+.task-linght-gray-bg{ background: $gray-de;color: $gray-3;} 
+.gray-bg{ background: $gray;}
+//样色
+.black-color{ color: $black;}
+.gray-color{ color: $gray; }
+.gray-color-3{ color: $gray-3;}
+.gray-color-9{ color: $gray-9;}
+.gray-color-bd{ color: $gray-bd;}
+.gray-color-ef{ color: $gray-ef;}
+.blue-color{ color: $blue; }
+.blue-icon-color { color: $blue-icon;}
+.red-color{ color: $red;}
+.pink-color{ color: $pink;}
+.orange-color{ color: $orange;}
+
+.point-color{ color: $point-color!important;}
+.wrong-color{ color: $worng-color!important;}
+.right-color{ color: $right-color!important;}
+
+//项目背景颜色
+.pro-primary{background: $pro-primary;}
+.pro-danger{background: $pro-danger;}
+.pro-info{background: $pro-info;}
+.pro-warning{background: $pro-warning;}
+.pro-default{background: $pro-default;}
+
+//默认border样式
+.border-1px:after{
+    border: 1px solid $gray-9;
+    border-radius: $border-radius-12;
+}
+.set-border-radius{border-radius: $border-radius-100;}
+// 按钮的公共样式
+//样式一：
+// .def-void-btn{ min-width: 1.6rem;border-radius: 4px;background: transparent;height: .64rem; color: $blue; font-size: $def-font-size;border:1px solid $blue;}
+// .def-btn{ min-width: 1.6rem;border-radius: 4px;background: $blue;height: .64rem; color: $white; font-size: $def-font-size;border:1px solid transparent;}
+// .def-light-btn{ min-width: 1.6rem;border-radius: 4px;background: $light-blue;height: .64rem; color: $black; font-size: $def-font-size;border:1px solid transparent;}
+//样式二:
+.def-void-btn{ cursor:pointer; min-width: 1.6rem;border-radius: 4px;background: transparent;height: .64rem; color: $def-blue-btn; font-size: $def-font-size;border:1px solid $def-blue-btn;}
+.def-btn{ cursor:pointer; min-width: 1.6rem;border-radius: 4px;background: $def-blue-btn;height: .64rem; color: $white; font-size: $def-font-size;border:1px solid transparent;}
+.def-light-btn{ cursor:pointer; min-width: 1.6rem;border-radius: 4px;background: $light-blue;height: .64rem; color: $black; font-size: $def-font-size;border:1px solid transparent;}
+//公共的文字大小
+.font24{ font-size: $font-24;}
+
+body,html{ 
+    font-size: $def-font-size;
+    overflow: hidden;
+}
+// input{  height: 22px;}
+// .input-error{
+//  background-color: red;
+// }
+.tip:after{ content: attr(data-attr); color: #0C68F7; }
+.star:before{ content:"*";  color:red; position: relative; z-index: 10;}
+
+//弹框的样式
+.box-shadow{ box-shadow: 1px 0 5px 2px #ccc;} 
+
+//浮动
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clearfix{
+    overflow: hidden;
+}
+//固定再头部
+.fixed-top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: $gray-ef;
+}
+//删除的icon
+.del-icon{
+    display: inline-block;
+    width: .3rem;
+    height: .3rem;
+    border:1px solid $blue;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 50%;
+    padding-left: .1rem;
+    &:after{
+        content: '';
+        width: 70%;
+        height: 1px;
+        display: inline-block;
+        background: $blue;
+        position: ABSOLUTE;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+//添加的icon
+.add-icon{
+    display: inline-block;
+    width: .38rem;
+    height: .38rem;
+    border:1px solid $gray;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 50%;
+    // margin-top: .04rem;
+    &:before{
+        content: '';
+        width: 1px;
+        height: 76%;
+        display: inline-block;
+        background: $gray;
+        position: ABSOLUTE;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    &:after{
+        content: '';
+        width: 70%;
+        height: 1px;
+        display: inline-block;
+        background: $gray;
+        position: ABSOLUTE;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+//保存按钮的公共样式
+.botton-wrap{
+    width: 100%;
+    margin: 0 auto;
+    height: 1rem;
+    line-height: 1rem;
+    padding: .2 0;
+    box-sizing: border-box;
+    background: $white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    button.save-btn{
+        width: 80%;
+        // display: inline-block;
+        // width: 80%;
+        // height: .7rem;
+        // line-height: .7rem;
+        // color: $white;
+        // background: $blue;
+        // border-radius: $border-radius-size;
+    }
+}
+.center-btn-wrap{
+    width: 100%;
+    padding: 0 .3rem;
+    box-sizing: border-box;
+    text-align: center;
+    button.save-btn{
+        width: 100%;
+    }
+}
+
+//给有头的添加maring-top
+.content-inner-wrap{
+    width: 100%;
+    padding-top: .2rem;
+    // margin-top: .86rem;
+}
+// 公共模块的样式
+.block{
+    width: 100%;
+    padding: 0 .2rem;
+    box-sizing: border-box;
+    border-radius: $border-radius-size;
+    // border: 1px solid $gray-9;
+    background: $white;
+}
+// 圆点
+.ring{
+    display: inline-block;
+    width: .08rem;
+    height: .08rem;
+    background: $gray-dd;
+    border-radius: 50%;
+}
+//公共标题
+.line{
+    display: inline-block;
+    width: .08rem;
+    height: .28rem;
+    // height: .3rem;
+    border-radius: 100px;
+    background: $blue;
+    vertical-align: middle;
+}    
+.text-right{
+    text-align: right;
+}
+//按钮的处理
+.state-btn {
+    font-size: $font-24;
+    padding: .04rem .1rem;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.not-set-flex{
+    display: block!important;
+    height: auto;
+}
+
+.rel-wrap{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0,-50%);
+    height: 26px!important;
+}
+// .switch-wrap{}
+.set-switch-wrap{
+    position: relative;
+}
+
+// 处理高亮的区域
+*{  
+    -webkit-touch-callout:none;  /*系统默认菜单被禁用*/  
+    -webkit-user-select:none; /*webkit浏览器*/  
+    -khtml-user-select:none; /*早期浏览器*/  
+    -moz-user-select:none;/*火狐*/  
+    -ms-user-select:none; /*IE10*/  
+    user-select:none;  
+}
+ 
+[v-cloak]{
+    display: none;
+}
+//如果时间小于12小时 就显示下面这个颜色
+.danger-color{
+    background: rgb(242, 222, 222);
+    color: $pro-danger;
+}
+
+//整个页面的层级
+// .index-wrap{
+//     width: 100%;
+//     height: 100%;
+//     position: relative;
+//     z-index: 10;
+// }
+// 项目的进度条显示
+.progress-line{
+    width: 100%;
+    position: relative;
+    background: $gray-de;
+    border-radius: 6px;
+    .line-inner{
+        height: .2rem;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: $task-green;
+    }
+}
+.all-line-bg{
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+    animation: progress-bar-stripes-total 2s linear infinite;
+}
+.blue-line-bg{
+    background-color: #23b7e5!important;
+}
+.red-line-bg{
+    background-color: #ed5565!important;
+}
+@keyframes progress-bar-stripes-total{
+    0% {
+        background-position: 40px 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
