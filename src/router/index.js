@@ -5,10 +5,7 @@ Vue.use(Router)
 var showNav = true;
 export default new Router({
   routes: [
-    { 
-      path: '/',
-      redirect: '/index',
-    },{
+    {
       path: '/index',
       name: 'Index',
       meta: { title: '首页', showNav: showNav},
@@ -24,14 +21,14 @@ export default new Router({
       meta: { title: '我的', showNav: showNav},
       component: resolve => require(['@/pages/Me'], resolve)
     },{
-      path: '/news',
+      path: '/news/:id',
       name: 'News',
       meta: { title: '最新资讯'},
       component: resolve => require(['@/pages/IndexModule/News'], resolve)
     },{
       path: '/shopNav',
       name: 'ShopNav',
-      meta: { title: '最新资讯'},
+      meta: { title: '商户导航'},
       component: resolve => require(['@/pages/IndexModule/ShopNav'], resolve)
     },{
       path: "/shopStore",
@@ -46,7 +43,7 @@ export default new Router({
     },{
       path: "/assistant",
       name: "Assistant",
-      meta: {title: "店员中心"},
+      meta: {title: "店员管理"},
       component: resolve => require(['@/pages/IndexModule/Assistant'], resolve)
     },{
       path: "/financeCenter",
@@ -179,7 +176,7 @@ export default new Router({
       meta: {title: "消息中心"},
       component: resolve => require(['@/pages/MeModule/Message'], resolve)
     },{
-      path: '/messageDetail',
+      path: '/messageDetail/:id',
       name: 'MessageDetail',
       meta: {title: '消息'},
       component: resolve => require(['@/pages/MeModule/MessageDetail'], resolve)
@@ -201,7 +198,7 @@ export default new Router({
     },{
       path: "/shopBill",
       name: "ShopBill",
-      meta: {title: '发票'},
+      meta: {title: "发票"},
       component: resolve => require(['@/pages/IndexModule/ShopBill'], resolve)
     }
   ]

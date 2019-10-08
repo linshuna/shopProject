@@ -1,15 +1,16 @@
 <template>
     <div class='detail-wrap' ref="contentWrap">
-        <div class='list' v-for="item in list" @click="goBill(item)">
+        <div class='list' v-for="item in list">
             <div class='set-padding set-flex'>
                 <span>单号：{{item.tid}}</span>
-                <span class="red-color">￥{{item.fee}}</span>
+                <span class='red-color'>￥{{item.fee}}</span>
             </div>
             <div class='gray-color set-flex'>
                 <span>{{item.createtime}}</span>
+                <button @click="goBill(item)" class="bill-btn">发票</button>
             </div>
         </div>
-        <p class="gray-color not-data-tip" v-if="!list||list.length==0">暂无发票数据</p>
+        <p class="gray-color not-data-tip" v-if="!list||list.length==0">暂无发票记录</p>
     </div>
 </template>
 <script>
@@ -52,8 +53,7 @@ export default {
             })
         },
         goBill(item){
-            //开发票
-            window.location.href = "http://shw.mxiaoxin.com/app/index.php?i=1&c=entry&do=invoice&m=vipcard&id="+item.id;
+            window.location.href = "http://shw.mxiaoxin.com/app/index.php?i=1&c=entry&do=invoice&m=vipcard&id="+item.id
         }
     }
 }
@@ -87,11 +87,15 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-    .gray-color{
-        font-size: .22rem;
+    .bill-btn{
+        background: red;
+        color: white;
+        font-size: .24rem;
+        border-radius: 4px;
+        padding: .1rem .2rem;
+        border: none;
     }
     .not-data-tip{
-        font-size: .24rem;
         text-align: center;
         padding: .2rem 0;
         background: transparent;

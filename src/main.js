@@ -66,7 +66,7 @@ const wx = require('weixin-js-sdk')
 Vue.prototype.getJsapi = function () {  
   let url = window.location.href
   url = url.split("#")[0]
-  this.$http.get('do=get_jsapi&m=vipcard&url='+url)
+  this.$http.get('do=get_jsapi&m=vipcard&url=http://shw.mxiaoxin.com/h5/index.html')
     .then(res => {
       let appId = res.appId
       let timestamp = res.timestamp
@@ -98,3 +98,14 @@ router.afterEach(function (to, from, next) {
   var name = to.meta.title;
   document.title = name;
 })
+
+var gobackUrl = window.location.href;
+if(gobackUrl.indexOf("?/")>-1){//重定向
+    var arr = gobackUrl.split("?");
+    window.location.href = "http://shw.mxiaoxin.com/h5/index.html?#"+arr[1];
+}else{
+  var backUrl = window.localStorage.getItem("backUrl")
+  if(backUrl&&backUrl!=''){
+    window.location.href = backUrl;
+  }
+}

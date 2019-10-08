@@ -31,7 +31,7 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="goUrl('/assistant')">
+                <li @click="goUrl('/shopNameList')">
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
                         <span>店员管理</span>

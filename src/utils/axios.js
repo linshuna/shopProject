@@ -20,6 +20,7 @@ axios.interceptors.response.use(function(response){
  return Promise.reject(error);
 });
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 service.get = (url, data = {}, config) => {
   return new Promise((resolve, reject) => {
     axios.get(oUrl + url, {
@@ -35,11 +36,14 @@ service.get = (url, data = {}, config) => {
             var rData = response.data.data;
             rData = !rData||rData=='null'||rData==undefined?[]:rData;
             resolve(rData);
+            window.localStorage.setItem("backUrl",'')
         }else if(tip.code == 401){
-          var gobackUrl = window.location.href
-          gobackUrl = gobackUrl.split("#")[0]
+          var gobackUrl = window.location.href;
+          var arr = gobackUrl.split("#");
+          gobackUrl = arr[0]+"?#"+arr[1];
           var resUrl = response.data.data.redirect+'&goback='+gobackUrl
           window.location.href = resUrl;
+          window.localStorage.setItem("backUrl",gobackUrl)
         }else if(tip.code == 500){
           //禁止提示
           if(data.forbidden) return false;

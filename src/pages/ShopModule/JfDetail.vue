@@ -1,8 +1,8 @@
 <template>
     <div class='jifen-wrap'>
         <div class='jifen-top'>
-            <div class='title'>积分余额</div>
-            <div class='money'>25900</div>
+            <div class='title'>积分</div>
+            <div class='money'>{{credit1}}</div>
             <div class='btn-wrap'>
                 <div><button @click="goTip">{{is_signed==1?'已签到':'签到'}}</button></div>
                 <div><button @click='goShop'>使用积分</button></div>
@@ -32,6 +32,7 @@ import calendar from "@/components/calendar"
 export default {
     data(){
         return{
+            credit1: '',
             year: '',
             month: '',
             is_signed: 1,
@@ -43,6 +44,8 @@ export default {
     },
     mounted() {
         this.$nextTick(function(){
+            
+            this.infoInit();//初始化 获取积分
             var date = new Date()
             this.year = date.getFullYear();
             this.month = date.getMonth();
@@ -50,6 +53,14 @@ export default {
         })
     },
     methods: {
+        infoInit(){
+            //获取积分
+            var _this = this;
+            this.$http.get("do=info&m=vipcard")
+            .then(function(res){
+                _this.credit1 = res.credit1;
+            })
+        },
         init(){
             var _this = this;
             this.$http.get("do=sign&m=vipcard&op=display&year="+this.year+"&month="+this.month)
@@ -74,7 +85,9 @@ export default {
                 _this.$message({ 
                     title: '签到成功,+'+res.credit1
                 })
-                _this.init();//重新调用
+                //重新调用
+                _this.init();
+                _this.infoInit();
             })
         },
         goShop(){

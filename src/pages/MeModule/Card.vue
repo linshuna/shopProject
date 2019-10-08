@@ -12,11 +12,11 @@
         <li class="yzm-wrap">
             <div class="yzm-inner">
                 <span>验证码</span>
-                <input type='text' placeholder='请输入验证码' v-model="smscode"/>
+                <input type='tel' placeholder='请输入验证码' v-model="smscode"/>
             </div>
             <span class="send-yzm" :class="{'gray-color': showYzm}" @click="sendYzm">{{showYzm?m+' s':'发送验证码'}}</span>
         </li>
-        <li ng-show="cardMsg.card_fee>0">
+        <li v-show="cardMsg.card_fee&&cardMsg.card_fee!=''&&cardMsg.card_fee>0">
             <span>会员费用</span>
             <span class='red-color'>{{cardMsg.card_fee}}元</span>
         </li>
@@ -27,7 +27,7 @@
         <div>充值5000或以上，免除会员费</div>
     </div>
     <div class='btn-wrap'>
-        <button class='get-btn' @click='goVipCenter'>领取</button>
+        <button class='get-btn' @click='getCard'>领取</button>
         <!--<button class='com-btn' @click="goTeam">企业/团队办理点击</button>-->
     </div>
 </div>
@@ -56,6 +56,8 @@ export default {
         .then(function(res){
             _this.cardMsg = res;
         })
+        
+        
     },
     methods: {
         sendYzm(){//点击验证码
@@ -80,10 +82,22 @@ export default {
         goTeam(){
             this.$router.push("/cardCom")
         },
+        getCard(){//领卡
+            var fee = this.cardMsg.card_fee
+            if(!fee||fee==''){//不用支付的领取
+                this.goVipCenter()
+            }else{
+                this.jsApiCall()
+            }
+        },
         goVipCenter(){
+            var _this = this;
             this.$http.get("do=get_card&m=vipcard&mobile="+this.mobile+"&realname="+this.realname+"&smscode="+this.smscode+"&pid="+this.pid)
             .then(function(res){
-                console.log(res)
+                _this.$toast({message:'领卡成功'});
+                setTimeout(function(){
+                    _this.$router.push("/vipCenter")
+                },1000)
             })
         },
         jsApiCall: function(result){
@@ -92,9 +106,7 @@ export default {
             WeixinJSBridge.invoke('getBrandWCPayRequest',result.packages,function(res){
                 if (res.err_msg == 'get_brand_wcpay_request:ok') {
                     self.$toast({message:'支付成功'});
-                    setTimeout(function(){
-                        self.$router.push("/vipCenter")
-                    },1000)
+                    self.goVipCenter()
                     return false;
                 }else if(res.err_msg == 'get_brand_wcpay_request:cancel'){
                     // alert('已取消支付');

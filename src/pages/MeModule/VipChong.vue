@@ -3,12 +3,12 @@
         <div class='vip-top'>
             <div class='vip-inner'>
                 <div class='header-icon'>
-                    <img src='../../assets/images/my-icon.png'/>
+                    <img :src='info.avatar'/>
                 </div>
-                <div class='vip-msg'>
-                    <div>张三</div>
-                    <div>会员卡：15222200</div>
-                    <div>手机号：15201110121</div>
+                <div class='vip-msg' v-show="info">
+                    <div>{{info.realname}}</div>
+                    <div>会员卡：{{info.cardsn}}</div>
+                    <div>余额：{{info.credit2}}</div>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                             <span class='font-28'>￥</span>{{item.num}}
                         </div>
                         <div class="square-inner" :class="{'square-active': defShow}" v-else>
-                            <div class='vip-square'><input placeholder='自定金额' v-model="defMoney"/></div>
+                            <input placeholder='自定金额' v-model="defMoney"/>
                         </div>
                     </div>
                 </div>
@@ -37,10 +37,10 @@
                 <img src='../../assets/images/weixin-right-icon.png' class='right-icon'/>
             </div>
         </div>
-        <div class='vip-title'>
+        <!--<div class='vip-title'>
             <span>团队充值</span>
             <img src='../../assets/images/right-icon.png'/>
-        </div>
+        </div>-->
         <div class='btn-wrap'>
             <button @click="chongFn">充值</button>
         </div>
@@ -54,11 +54,18 @@ export default {
             checkedMoney: 50,
             moneyArr: [{num: 50},{num: 100},{num: 200},{num: 300},{num: 1000},{def: true}],
             defMoney: '',
-            defShow: false
+            defShow: false,
+            info: ''
         }
     },
     mounted() {
         this.getJsapi()
+        //获取个人信息
+        var _this = this;
+        this.$http.get("do=info&m=vipcard")
+        .then(function(res){
+            _this.info = res;
+        })
     },
     methods: {
         check(item){
@@ -265,5 +272,16 @@ export default {
         font-size: .28rem;
         border-radius: 0;
     }
-
+    .square-active input::-webkit-input-placeholder { /* WebKit browsers */
+        color:    #fff;
+    }
+    .square-active input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #fff;
+    }
+    .square-active input::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #fff;
+    }
+    .square-active input:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:    #fff;
+    }
 </style>

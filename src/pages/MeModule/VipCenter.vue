@@ -7,7 +7,7 @@
                     <div>{{info.realname}}</div>
                     <div class='font-22'>绑定手机：<span class='no-ban'>{{info.cardsn}}</span></div>
                 </div>
-                <button class='my-msg-btn' @click='goMyMsg'>修改资料</button>
+                <!--<button class='my-msg-btn' @click='goMyMsg'>修改资料</button>-->
             </div>
         </div>
         <div class='my-money'>
@@ -31,8 +31,12 @@
             <span class='gray-color font-30'>{{shopInfo.branch_name}}会员服务</span>
         </div>
         <div class='list-con'>
-            <div class='square' @click='goVipPay'>
+            <!--<div class='square' @click='goVipPay'>
                 <img src='../../assets/images/vip-pay.png'/>
+                <div>会员支付</div>
+            </div>-->
+            <div class='square' @click='saoFn'>
+                <img src='../../assets/images/store/sao-icon.png' style='width:.46rem;height: .42rem;'/>
                 <div>会员支付</div>
             </div>
             <div class='square' @click='goVipChong'>
@@ -51,14 +55,14 @@
                 <img src='../../assets/images/jf-detail-icon.png'  style='width:.5rem;'/>
                 <div>积分明细</div>
             </div>
-            <div class='square' @click='goCoupon'>
+            <!--<div class='square' @click='goCoupon'>
                 <img src='../../assets/images/card-icon.png'/>
                 <div>优惠券</div>
             </div>
             <div class='square' @click='goTeamCenter'>
                 <img src='../../assets/images/tem-center-icon.png' style='height:.5rem;width:.5rem;'/>
                 <div>团队中心</div>
-            </div>
+            </div>-->
             <div class='square' @click='goShop'>
                 <img src='../../assets/images/act-center-icon.png'  style='width:.5rem;'/>
                 <div>活动中心</div>
@@ -67,7 +71,7 @@
                 <img src='../../assets/images/msg-center-icon.png'/>
                 <div>消息中心</div>
             </div>
-            <div class='square' @click='goConsumeList'>
+            <div class='square' @click='goJfDetail(1)'>
                 <img src='../../assets/images/list-icon.png' style='width:.5rem;'/>
                 <div>消费明细</div>
             </div>
@@ -80,6 +84,7 @@
 
 </template>
 <script>
+const wx = require('weixin-js-sdk')
 export default {
     data(){
         return{
@@ -95,7 +100,13 @@ export default {
         this.$http.get("do=info&m=vipcard")
         .then(function(res){
             _this.info = res;
+            var iscard = res.iscard;
+            if(iscard!=1){//未领卡
+                _this.$router.push("/card")
+            }
         })
+        //获取微信支付
+        this.getJsapi()
     },
     methods: {
         goMyMsg(){//资料
@@ -130,6 +141,22 @@ export default {
         },
         goMyTeam(){
             this.$router.push("/myTeam")
+        },
+        saoFn(){//扫一扫
+            var _this = this;
+            wx.scanQRCode({
+                needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    _this.verification(result)
+                }
+            });
+        },
+        verification(str){
+            this.$http.get("do=set_used&m=vipcard&sn="+str,{forbidden:true}) 
+            .then(function(res){
+            })
         }
     }
 }

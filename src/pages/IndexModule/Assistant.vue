@@ -105,7 +105,6 @@
             verification(str){
                 this.$http.get("do=set_used&m=vipcard&sn="+str,{forbidden:true}) 
                 .then(function(res){
-                    alert(res)
                 })
             }
         },

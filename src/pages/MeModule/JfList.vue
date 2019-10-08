@@ -11,16 +11,6 @@
             </div>
         </div>
         <p class="gray-color not-data-tip" v-if="!list||list.length==0">暂无数据</p>
-        <!--<div class='list'>
-            <div class='set-padding set-flex'>
-                <span>换购**产品</span>
-                <span class='blue-color'>-200</span>
-            </div>
-            <div class='gray-color set-flex'>
-                <span>2018-09-10 13:22</span> 
-                <span>积分：200</span>
-            </div>
-        </div>-->
     </div>
 </template>
 <script>
@@ -35,18 +25,9 @@ export default {
     },
     mounted(){
         this.type = this.$route.params.type;
+        document.title = this.type==1?"消费明细":"积分明细";//设置表头
         this.init();
         window.addEventListener('scroll', this.handleScroll, true); 
-        // var list = localStorage.getItem('vipcardList');
-        // var data = []
-        // if(list.data&&list.data.length>0){
-        //     data = list.data.filter(ele => {
-        //         return ele.sign == 1;//1是已签到
-        //     })
-        //     this.year = list.year;
-        //     this.month = list.month;
-        // }
-        // this.list = data;
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll);
@@ -110,11 +91,7 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-    .gray-color{
-        font-size: .22rem;
-    }
     .not-data-tip{
-        font-size: .24rem;
         text-align: center;
         padding: .2rem 0;
         background: transparent;

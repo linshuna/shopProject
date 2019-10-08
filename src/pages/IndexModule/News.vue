@@ -1,15 +1,7 @@
 <template>
     <div class="con-wrap">
-        <div class="con-inner">
-            <h3>标题内容</h3>
-            <p class="gray-color fu-title">2019.08.15 12:00:00</p>
-            <img src="../../assets/images/swiper/banner1.jpg"/>
-            <div class="duan">
-                互联网出现的前三十年里，人们对在线问答这种内容形式毫无概念。直到20世纪末，几家搜索引擎出现，信息随之裂变式的增长，丰富的内容世界增加了用户的筛选成本，这时候，人们才开始意识到自己对精准信息的需求。
-            </div>
-            <div class="duan">
-                正如华兴资本投资银行事业群负责人、董事总经理王力行所言，中国处在历史性的发展拐点，背靠知识升级的人口机遇，知乎抓住了，站在了新一代内容消费与高价值信息需求爆发的起点。
-            </div>
+        <div class="con-inner" v-html="content">
+            
         </div>
         <div class="btn-wrap">
             <button class="btn" @click="showMarsk = true">报名</button>
@@ -20,11 +12,11 @@
                 <ul>
                     <li>
                         <span class="name">姓名：</span>
-                        <input type="text"/>
+                        <input type="text" v-model="realname" placeholder="请输入姓名"/>
                     </li>
                     <li>
                         <span class="name">手机号：</span>
-                        <input type="tel"/>
+                        <input type="tel" v-model="mobile" placeholder="请输入手机号" maxlength="11"/>
                     </li>
                 </ul>
                 <div class="marsk-btn-wrap">
@@ -39,12 +31,38 @@
 export default {
     data(){
         return{
-            showMarsk: false
+            showMarsk: false,
+            content: '',
+            realname: '',
+            mobile: ''
         }
+    },
+    mounted() {
+        this.id = this.$route.params.id;
+        var _this = this;
+        this.$http.get("do=detail&m=webhome&id="+this.id)
+        .then(function(res){
+            _this.content = res.detail.content;
+        })
     },
     methods:{
         submit(){
-            this.showMarsk = false
+            if(!this.realname){
+                this.$toast({message: '请输入姓名'});
+                return false;
+            }
+            var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+            if(!reg.test(this.mobile)){
+                this.$toast({message: '电话号码格式错误'});
+                return false;
+            }
+            var _this = this;
+            this.$http.get("do=bm&m=webhome&id="+this.id+"&realname="+this.realname+"&mobile="+this.mobile)
+            .then(function(res){ 
+                _this.$toast({message: '报名成功'})
+                _this.showMarsk = false    
+            })
+            
         }
     }
 }
@@ -110,8 +128,9 @@ export default {
         display: inline-block;
         width: 70%;
         height: .62rem;
-        line-height: .62rem;
         border: 1px solid #efefef;
+        padding-left: .1rem;
+        box-sizing: border-box;
     }
     .marsk-btn-wrap{
         width: 100%;

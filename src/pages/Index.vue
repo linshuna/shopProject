@@ -6,7 +6,7 @@
                 <div class='slider-inner'>
                     <mt-swipe :auto="4000">
                         <mt-swipe-item v-for="item in imgUrls">
-                            <img :src="item.thumb" @click="goUrl(item.link)"/>
+                            <img :src="item.thumb" @click="goLink(item.link)"/>
                         </mt-swipe-item>
                     </mt-swipe>
                 </div>
@@ -42,7 +42,7 @@
                     <span class='title'>商户活动</span>
                     <span class="more">更多></span>
                 </div>
-                <div class='shop-con' @click="goUrl('/news')">
+                <div class='shop-con' @click="goNews(item)">
                     <div class='pic'>
                         <img :src="item.thumb"/>
                     </div>
@@ -82,26 +82,14 @@ export default {
         })
     },
     methods: {
-        goUrl(url){
+        goLink(url){
             window.location.href = url
-        },
-        goNew(){
-            this.$router.push("/news")
-        },
-        goNav(){
-            this.$router.push("/shopNav")
-        },
-        goShop(){
-            this.$router.push("/shop")
-        },
-        goShopDetail: function(){
-            this.$router.push("/news")
-        },
-        goParkingFee(){
-            this.$router.push("/parking")
         },
         goUrl(url){
             this.$router.push(url)
+        },
+        goNews(item){
+            this.$router.push('/news/'+item.id)
         }
     },
 }

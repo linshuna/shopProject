@@ -22,9 +22,9 @@
         <!--添加成员-->
         <div class="marsk-wrap" v-show="showAdd">
             <div class="marsk-inner">
-                <p class="title">修改规则</p>
+                <p class="title">添加队员</p>
                 <div class="tel-wrap">
-                    手机号：<input type="tel" v-model="mobile"/>
+                    手机号：<input type="tel" placeholder="请输入手机号" v-model="mobile" maxlength="11"/>
                 </div>
                 <div class="marsk-btn-wrap">
                     <span @click="showAdd=false;">取消</span>
@@ -125,6 +125,11 @@
                 this.$router.push("/myTeamDetail/"+id)
             },
             saveTeam(){//添加成员
+                var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+                if(!reg.test(this.mobile)){
+                    this.$toast({message: '电话号码格式错误'});
+                    return false;
+                }
                 var _this = this;
                 this.$http.get("do=team_add&m=vipcard&mobile="+this.mobile)
                 .then(function(res){
@@ -276,6 +281,8 @@
             input{
                 height: .65rem;
                 border: 1px solid #efefef;
+                padding-left: .1rem;
+                box-sizing: border-box;
             }
         }
         .marsk-btn-wrap{
@@ -290,5 +297,8 @@
             border-top: 1px solid #efefef;
 
         }
+    }
+    .tel-wrap{
+        padding: .2rem 0;
     }
 </style> 

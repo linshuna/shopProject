@@ -106,7 +106,7 @@ export default {
             this.$router.push("/jfDetail")
         },
         goChong(){
-            this.$router.push("/vipPay")
+            this.$router.push("/vipChong")
         },
         goShop(){
             this.$router.push("/shop")
