@@ -15,7 +15,7 @@
             </div>
         </div>
         <ul>
-            <li>
+            <li @click='goUrl("/record")'>
                 <div class="list-con">
                     <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
                     <span>对账导出</span>
@@ -51,6 +51,9 @@
         methods: {
             goUrl(url){
                 this.$router.push(url)
+            },
+            goExport(){
+                window.location.href = this.info.export_url
             }
         },
     }
