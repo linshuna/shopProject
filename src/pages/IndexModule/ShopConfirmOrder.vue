@@ -79,6 +79,19 @@ export default {
             this.num = num;
         },
         goBuy(){
+            //重新获取积分数据
+            var _this = this;
+            this.$http.get("do=info&m=vipcard")
+            .then(function(res){
+                if(res.credit1<_this.money){
+                    _this.$toast({message: "积分不够哦,请充值"})
+                    return false;
+                }
+                _this.confirmBuy()
+            })
+            
+        },
+        confirmBuy(){
             var _this = this;
             this.$http.get("do=exchange&m=score_shop&id="+this.id+"&num="+this.num)
             .then(function(res){
