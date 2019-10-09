@@ -3,7 +3,7 @@
         <div v-show="!showMa">
             <div class="header">
                 <span class="red-color">队员</span>
-                <router-link :to="{ name:'ShopQrcode',params:{'code': JSON.stringify({qrcode:erweima.qrcode})} }">邀请</router-link>
+                <span @click="goVipErweima">邀请</span>
             </div>
             <ul class="team-list">
                 <li @click="goTeamDetail(item.bid)" v-for="item in list">
@@ -148,6 +148,9 @@
                     })
 
                 })
+            },
+            goVipErweima(){
+                this.$router.push("/shopQrcode/vip")
             }
         }
     }
@@ -225,6 +228,8 @@
         position: absolute;
         top: 0;
         left: 0;
+        bottom: 0;
+        right: 0;
         background: rgba(0,0,0,.4);
         z-index: 2;
         .marsk-inner{

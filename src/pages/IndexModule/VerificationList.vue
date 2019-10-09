@@ -37,6 +37,7 @@ export default {
         "date-com": DateCom
     },
     mounted(){
+        this.id = this.$route.params.id;
         var date = new Date()
         this.dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
         this.date = this.dateStr
@@ -45,7 +46,7 @@ export default {
     methods: {
         init(){
             var _this = this;
-            this.$http.get("do=get_used_order_list&m=vipcard&ddate="+this.date+"&adminid=0")
+            this.$http.get("do=get_used_order_list&m=vipcard&ddate="+this.date+"&adminid="+this.id)
             .then(function(res){
                 _this.list = res;
             })

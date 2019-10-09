@@ -84,7 +84,6 @@
 
 </template>
 <script>
-const wx = require('weixin-js-sdk')
 export default {
     data(){
         return{
@@ -93,6 +92,8 @@ export default {
         }
     },
     mounted(){
+        //获取微信支付
+        this.getJsapi()
         //获取店铺信息
         var shopInfo = window.localStorage.getItem("shopInfo")
         this.shopInfo = shopInfo?JSON.parse(shopInfo):''
@@ -105,8 +106,6 @@ export default {
                 _this.$router.push("/card")
             }
         })
-        //获取微信支付
-        this.getJsapi()
     },
     methods: {
         goMyMsg(){//资料
@@ -144,14 +143,22 @@ export default {
         },
         saoFn(){//扫一扫
             var _this = this;
-            wx.scanQRCode({
-                needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                success: function (res) {
-                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                    _this.verification(result)
-                }
-            });
+            wx.ready(function () {
+                wx.checkJsApi({
+                    jsApiList: ['scanQRCode'],
+                    success: function (res) {
+                        wx.scanQRCode({
+                            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                            success: function (res) {
+                                var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                                _this.verification(result)
+                            }
+                        });
+                    }
+                });
+                
+            })
         },
         verification(str){
             this.$http.get("do=set_used&m=vipcard&sn="+str,{forbidden:true}) 

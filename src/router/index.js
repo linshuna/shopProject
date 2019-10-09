@@ -56,7 +56,12 @@ export default new Router({
       meta: {title: "店员列表"},
       component: resolve => require(['@/pages/IndexModule/ShopNameList'], resolve)
     },{
-      path: "/verificationList",
+      path: '/shopMsg',
+      name: "ShopMsg",
+      meta: {title: "店铺信息"},
+      component: resolve => require(['@/pages/IndexModule/ShopMsg'], resolve)
+    },{
+      path: "/verificationList/:id",
       name: "VerificationList",
       meta: {title: "核销记录"},
       component: resolve => require(['@/pages/IndexModule/VerificationList'], resolve)
@@ -200,6 +205,12 @@ export default new Router({
       name: "ShopBill",
       meta: {title: "发票"},
       component: resolve => require(['@/pages/IndexModule/ShopBill'], resolve)
+    },
+    {
+      path: "/sao",
+      name: "Sao",
+      meta: {title: ''},
+      component: resolve => require(['@/pages/MeModule/Sao'], resolve)
     }
   ]
 })

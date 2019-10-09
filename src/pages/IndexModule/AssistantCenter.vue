@@ -17,7 +17,7 @@
                 </div>
             </div>
             <ul>
-                <li @click="goUrl('/shopNameList')">
+                <li @click="goUrl('/shopMsg')">
                     <div class="list-con">
                         <img src="../../assets/images/store/mg-store-icon.png" class="icon"/>
                         <span>我的门店</span>
@@ -38,10 +38,38 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
+                <!--<li @click="goUrl('/message')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/msg-icon.png" class="icon"/>
+                        <span>消息通知</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>-->
+                <li @click="goUrl('/verificationList/0')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
+                        <span>核销记录</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
                 <li @click="goUrl('/message')">
                     <div class="list-con">
                         <img src="../../assets/images/store/msg-icon.png" class="icon"/>
                         <span>消息通知</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
+                <li @click="saoFn">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/sao-icon.png" class="icon"/>
+                        <span>核销订单</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
+                <li @click="goUrl('/shopQrcode')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
+                        <span>店铺收款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
@@ -68,7 +96,7 @@
                 </div>
             </div>
             <ul>
-                <li @click="goUrl('/verificationList')">
+                <li @click="goUrl('/verificationList/'+info.id)">
                     <div class="list-con">
                         <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
                         <span>核销记录</span>
@@ -93,6 +121,13 @@
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
                         <span>店铺收款</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
+                <li @click="goUrl('/shopMsg')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
+                        <span>店铺信息</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
@@ -129,12 +164,18 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
+                <li @click="goUrl('/shopMsg')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
+                        <span>店铺信息</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
             </ul>
         </template>
     </div>
 </template>
 <script>
-    const wx = require('weixin-js-sdk')
     export default {
         data(){
             return{
@@ -165,16 +206,7 @@
         },
         methods: {
             goUrl(url){
-                if(url == '/shopQrcode'){//店铺的收款码
-                    var _this = this;
-                    this.$http.get("do=get_storeinfo&m=vipcard")
-                    .then(function(res){
-                        var data = JSON.stringify({qrcode:res.qrcode});
-                        _this.$router.push({name: 'ShopQrcode',params:{'code': data}})
-                    })  
-                }else{
-                    this.$router.push(url)
-                }
+                this.$router.push(url)
             },
             saoFn(){//扫一扫
                 var _this = this;

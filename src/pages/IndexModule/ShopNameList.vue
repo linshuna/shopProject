@@ -53,11 +53,11 @@
                 <ul class="detail-wrap">
                     <li>
                         <span class="det-title">姓名：</span>
-                        <input type="text" v-model="info.realname"/>
+                        <input type="text" v-model="info.realname" placeholder="请输入姓名"/>
                     </li>
                     <li>
                         <span class="det-title">手机号码：</span>
-                        <input type="tel" v-model="info.mobile"/>
+                        <input type="tel" v-model="info.mobile" placeholder="请输入手机号" maxlength="11"/>
                     </li>
                    <!-- <li>
                         <span class="det-title">用户类型：</span>
@@ -166,6 +166,15 @@ export default {
         saveMember(){//添加成员
             var _this = this;
             var data = this.info;
+            if(!data.realname){
+                this.$toast({message: '请输入姓名'});
+                return false;
+            }
+            var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+            if(!reg.test(data.mobile)){
+                this.$toast({message: '电话号码格式错误'});
+                return false;
+            }
             this.$http.get("do=clerk_save&m=vipcard&realname="+data.realname+"&mobile="+data.mobile+"&utype="+data.utype)
             .then(function(res){
                 _this.show = false;
@@ -335,6 +344,8 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
+        bottom: 0;
+        right: 0;
         background: rgba(0,0,0,.4);
         z-index: 2;
         .marsk-inner{

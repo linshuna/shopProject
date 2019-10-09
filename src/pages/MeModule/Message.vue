@@ -19,7 +19,7 @@ export default {
         return{
             page: 1,
             totalPage: 0,
-            list: ''
+            list: []
         }
     },
     mounted(){

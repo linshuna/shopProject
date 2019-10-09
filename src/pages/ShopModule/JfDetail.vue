@@ -4,7 +4,7 @@
             <div class='title'>积分</div>
             <div class='money'>{{credit1}}</div>
             <div class='btn-wrap'>
-                <div><button @click="goTip">{{is_signed==1?'已签到':'签到'}}</button></div>
+                <!--<div><button @click="goTip">{{is_signed==1?'已签到':'签到'}}</button></div>-->
                 <div><button @click='goShop'>使用积分</button></div>
                 <div><button @click='goJfList'>积分明细</button></div>
             </div>
@@ -13,6 +13,7 @@
         <div class='calendar-wrap'>
             <div class='calendar-inner'>
                 <calendar　@checkOneDate="getCheckDate"></calendar>
+                <div class="sign-btn"><button @click="goTip" :class="{'gray-btn': is_signed==1}">{{is_signed==1?'已签到':'签到'}}</button></div>
             </div>
         </div>
         <!--<div class='list-wrap'>
@@ -35,6 +36,7 @@ export default {
             credit1: '',
             year: '',
             month: '',
+            day: '',
             is_signed: 1,
             list: []
         }
@@ -67,7 +69,15 @@ export default {
             .then(function(res){
                 _this.is_signed = res.is_signed
                 _this.rule = res.rule
-                _this.list = res
+                _this.list = res;
+                var day = res.day;
+                var filters = day.filter(ele =>{
+                    return ele.day == _this.day;
+                })
+                if(filters.length>0){
+                    _this.is_signed = filters[0].sign;
+                }
+
             })
         },
         goExplain(){
@@ -79,6 +89,9 @@ export default {
         },
         goTip(){
             var _this = this;
+            _this.$message({ 
+                    title: '成功签到，+1'
+                })
             if(this.is_signed==1) return false;//已签到
             this.$http.get("do=sign&m=vipcard&op=sign")
             .then(function(res){
@@ -100,6 +113,8 @@ export default {
         getCheckDate(value){
             this.year = value.year;
             this.month = value.month;
+            this.day = value.day;
+            console.log(value)
             this.init()
         }
     },
@@ -152,7 +167,7 @@ export default {
     }
     .jifen-top button{
         display: inline-block;
-        width: 80%;
+        width: 60%;
         height: .78rem;
         line-height: .78rem;
         margin: 0 auto;
@@ -191,6 +206,21 @@ export default {
         margin-top: -.8rem;
         background: url('../../assets/images/calendar-bg.png') no-repeat;
         background-size: 100%;
+        .sign-btn{
+            background: #fff;
+            text-align: center;
+            padding: .2rem;
+            button{
+                width: 1.6rem;
+                height: .6rem;
+                border-radius: 4px;
+                background: red;
+                color: #fff;
+            }
+            .gray-btn{
+                background: gray;
+            }
+        }
     }
 
     /* 底部列表 */

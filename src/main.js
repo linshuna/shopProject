@@ -61,7 +61,6 @@ if(config.isPing){//生产环境的拼接
 Vue.prototype.httpUrl = uploadUrl;
 Vue.prototype.globalIsPing = config.isPing;
 
-const wx = require('weixin-js-sdk')
 //wx的api授权
 Vue.prototype.getJsapi = function () {  
   let url = window.location.href
@@ -99,13 +98,18 @@ router.afterEach(function (to, from, next) {
   document.title = name;
 })
 
-var gobackUrl = window.location.href;
-if(gobackUrl.indexOf("?/")>-1){//重定向
-    var arr = gobackUrl.split("?");
-    window.location.href = "http://shw.mxiaoxin.com/h5/index.html?#"+arr[1];
+// var gobackUrl = window.location.href;
+// if(gobackUrl.indexOf("?#")>-1){//重定向
+//     var arr = gobackUrl.split("?#");
+//     window.location.href = "http://shw.mxiaoxin.com/h5/?#"+arr[1];
+// }else{}
+var backUrl = window.localStorage.getItem("backUrl")
+if(backUrl&&backUrl!=''){
+  window.location.href = backUrl;
 }else{
-  var backUrl = window.localStorage.getItem("backUrl")
-  if(backUrl&&backUrl!=''){
-    window.location.href = backUrl;
+  var url = window.location.href;
+  if(url.indexOf("?")<0){
+    var arr = url.split("#")
+    window.location.href = arr[0]+"?#"+arr[1]
   }
 }

@@ -52,7 +52,7 @@
     </div>
 </template>
 <script>
-    const wx = require('weixin-js-sdk')
+    // import wx from 'weixin-js-sdk';
     export default {
         data(){
             return{
@@ -80,16 +80,7 @@
         },
         methods: {
             goUrl(url){
-                if(url == '/shopQrcode'){//店铺的收款码
-                    var _this = this;
-                    this.$http.get("do=get_storeinfo&m=vipcard")
-                    .then(function(res){
-                        var data = JSON.stringify({qrcode:res.qrcode});
-                        _this.$router.push({name: 'ShopQrcode',params:{'code': data}})
-                    })  
-                }else{
-                    this.$router.push(url)
-                }
+                this.$router.push(url)
             },
             saoFn(){//扫一扫
                 var _this = this;
