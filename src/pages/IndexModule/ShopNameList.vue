@@ -311,9 +311,8 @@ export default {
     }
     .shop-add-wrap{
         width: 100%;
-        padding: 0 .2rem;
+        padding: .2rem .2rem 0;
         box-sizing: border-box;
-        margin-top: .2rem;
         li{
             width: 100%;
             height: .86rem;

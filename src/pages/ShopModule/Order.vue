@@ -28,6 +28,7 @@ export default {
             listData:[],
             status: '',
             page: 1,
+            check: true,
             goods: {}
         }
     },
@@ -48,27 +49,33 @@ export default {
         handleScroll    : function(){//滚动监听
             var contentWrap = this.$refs.contentWrap;
             if(contentWrap){
-                var sT = document.documentElement.scrollTop||document.body.scrollTop;//对象滚动的高度
-                var wH = document.body.clientHeight;//对象滚动的高度
-                var bH = document.body.scrollHeight;//对象滚动的高度
-                console.log(sT)
-                // console.log(sT+wH,bH)
-                // var sT = contentWrap.scrollTop;//对象滚动的高度
-                // var wH = contentWrap.clientHeight;//对象高度
-                // var bH = contentWrap.scrollHeight;//对象的滚动高度+对象本身的高度
+                var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+                var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+                var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
                 if(sT+wH == bH&&this.page<=this.totalPage){
-                    this.init()
+                    if(!this.check) return false;
+                    this.check = !this.check;
+                    this.init(true)
                 }    
             }
         },
-        init(){
+        init(isPan){
             var _this = this;
             this.$http.get("do=myorder&m=score_shop&page="+this.page+"&status="+this.status)
             .then(function(res){
-                _this.listData = _this.listData.concat(res.list);
+                if(isPan == true){
+                   _this.check = true;
+                   _this.page++;
+                }
+                var data= _this.listData.concat(res.list);
+                _this.listData = _this.unique(data);
                 _this.totalPage = res.allpage;
-                _this.page++;
+                
             })
+        },
+        unique(arr) {//去重
+            let res = new Map();
+            return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1))
         },
         checkTab: function(item){
             this.status = item.id;
@@ -79,8 +86,7 @@ export default {
         },
         goOrderDetail(item){
             // var data = JSON.stringify({qrcode:item.qrcode});
-            // this.$router.push({name: 'ShopQrcode',params:{'code': data}})
-            this.$router.push("/shopQrcode")
+            this.$router.push({name: 'ShopQrcode',params:{'qrcode': item.qrcode}})
         }
     },
 }
@@ -104,13 +110,13 @@ export default {
     .tab{
         width: 100%;
         background: #fff;
-        display: flex;
         position: fixed;
         left: 0;
         top: 0;
         z-index: 2;
     }
     .tab>div{
+        display: inline-block;
         width: 33.3%;
         text-align: center;
         padding: .3rem 0;

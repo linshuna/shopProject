@@ -1,7 +1,7 @@
 <template>
     <div class="team-wrap">
         <div class="header-wrap"></div>
-        <div class="img-wrap">
+        <div class="img-wrap" @click="goUrl">
             <div class="img-inner">
                 <span class="user-type">{{utype}}</span>
                 <img :src="shopInfo.logo" class="logo"/>
@@ -51,6 +51,9 @@ export default {
                 _this.cumList = res;
             })
         },
+        goUrl(){
+            this.$router.push("/shopQrcode/shopPay")
+        }
     },
 }
 </script>
@@ -78,7 +81,7 @@ export default {
     }
     .erweima-wrap{
         display: inline-block;
-        width: 50%;
+        width: 54%;
         text-align: center;
         color:#fff;
         background: #efefef;

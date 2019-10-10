@@ -95,8 +95,9 @@ export default {
             rankData: [{name: "综合升序", id:'asc'},{name: "综合降序",id:'desc'}],
             page: 1,
             totalPage: 0,
+            check: true,
             checkJson: {pcate: '',tag: '',sortfield: 'marketprice',sort: 'asc'},
-            show: true
+            show: true,
         }
     },
     components:{
@@ -116,25 +117,27 @@ export default {
         handleScroll    : function(){//滚动监听
             var contentWrap = this.$refs.contentWrap;
             if(contentWrap){
-                // var sT = contentWrap.scrollTop;//对象滚动的高度
-                // var wH = contentWrap.clientHeight;//对象高度
-                // var bH = contentWrap.scrollHeight;//对象的滚动高度+对象本身的高度
-                var sT = document.body.scrollTop;//对象滚动的高度
-                var wH = document.body.clientHeight;//对象滚动的高度
-                var bH = document.body.scrollHeight;//对象滚动的高度
+                var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+                var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+                var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
                 if(sT+wH == bH&&this.page<=this.totalPage){
-                    this.init()
+                    if(!this.check) return false;
+                    this.check = !this.check;
+                    this.init(true)
                 }  
             }
         },
-        init(){
+        init(isPan){
             var _this = this;
             var data = this.checkJson;
             this.$http.get("do=list&m=score_shop&page="+this.page+"&pcate="+data.pcate+"&tag="+data.tag+"&sortfield="+data.sortfield+"&sort="+data.sort)
             .then(function(res){ 
                 //总页码
                 _this.totalPage = res.allpage;
-                _this.page++;
+                if(isPan == true){
+                   _this.check = true;
+                   _this.page++;
+                }
                 //banner
                 _this.banner = res.banner;
                 //积分
@@ -192,7 +195,7 @@ export default {
     }
     .jifen-wrap{
         width: 100%;
-        min-height: calc(100%);
+        height: calc(100%);
         position: absolute;
         left: 0;
         overflow-y: auto;
@@ -288,7 +291,7 @@ export default {
         box-sizing: border-box;
         width: 1.6rem;
         height: .6rem;
-        display: flex;
+        display: inline-block;
         align-items: center;
         padding: 0 .2rem;
         background: #3385ff;
@@ -298,7 +301,6 @@ export default {
 
     .select_text {
         font-size: $def-font-size;
-        flex: 1;
         color: #fff;
         line-height: .86rem;
         height: .86rem;

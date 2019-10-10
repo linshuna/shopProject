@@ -19,7 +19,8 @@ export default {
         return{
             page: 1,
             totalPage: 0,
-            list: []
+            list: [],
+            check: true,
         }
     },
     mounted(){
@@ -36,21 +37,26 @@ export default {
                 // var sT = contentWrap.scrollTop;//对象滚动的高度
                 // var wH = contentWrap.clientHeight;//对象高度
                 // var bH = contentWrap.scrollHeight;//对象的滚动高度+对象本身的高度
-                var sT = document.body.scrollTop;//对象滚动的高度
-                var wH = document.body.clientHeight;//对象滚动的高度
-                var bH = document.body.scrollHeight;//对象滚动的高度
+                var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+                var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+                var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
                 if(sT+wH == bH&&this.page<=this.totalPage){
-                    this.init()
-                }    
+                    if(!this.check) return false;
+                    this.check = !this.check;
+                    this.init(true)
+                } 
             }
         },
-        init(){
+        init(isPan){
             var _this = this;
             this.$http.get("do=notice_list&m=vipcard&page="+this.page)
             .then(function(res){
+                if(isPan == true){
+                   _this.check = true;
+                   _this.page++;
+                }
                 _this.list = _this.list.concat(res.list);
                 _this.totalPage = res.allpage;
-                ++_this.page;
             })
         },
         goDetail(item){

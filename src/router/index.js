@@ -196,7 +196,7 @@ export default new Router({
       meta: {title: "成员信息"},
       component: resolve => require(['@/pages/MeModule/MyTeamDetail'], resolve)
     },{
-      path: "/shopQrcode/:code?",
+      path: "/shopQrcode/:code?/:status?/:qrcode?",
       name: "ShopQrcode",
       meta: {title: "二维码"},
       component: resolve => require(['@/pages/IndexModule/ShopQrcode'], resolve)
@@ -205,12 +205,6 @@ export default new Router({
       name: "ShopBill",
       meta: {title: "发票"},
       component: resolve => require(['@/pages/IndexModule/ShopBill'], resolve)
-    },
-    {
-      path: "/sao",
-      name: "Sao",
-      meta: {title: ''},
-      component: resolve => require(['@/pages/MeModule/Sao'], resolve)
     }
   ]
 })

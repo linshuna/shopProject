@@ -11,14 +11,27 @@
                 <p class="tip">请将二维码展示给店员</p>
             </div>
         </div>
-        <div class="shop-erweima-wrap" v-if="code=='shopPay'">
-        
+        <div class="shop-erweima-wrap" v-else-if="code=='shopPay'">
+            <div class="shop-inner">
+                <div class="shop-con">
+                    <p class="title">三号湾会员支付</p>
+                    <div class="shop-erweima-inner">
+                        <div class="shop-erweima-con">
+                            <img :src="erweima.qrcode"/>
+                        </div>
+                    </div>
+                    <div class="shop-name-wrap">{{shopName}}</div>
+                </div>
+                <div class="btn-wrap">
+                    <button @click="goBack">返回</button>
+                </div>
+            </div>
         </div>
         <!--二维码核销用得-->
         <div class="erweima-wrap" v-else>
             <div class="erweima-inner">
                 <div class="square">
-                    <img :src="erweima.qrcode"/>
+                    <img :src="erweima"/>
                 </div>
             </div>
             <p class="tip">请将二维码展示给店员</p>
@@ -31,7 +44,8 @@ export default {
     data(){
         return{
             code: '',
-            erweima: {}
+            erweima: {},
+            shopName: ''
         }
     },
     components:{
@@ -47,14 +61,22 @@ export default {
                 .then(function(res){
                     _this.erweima = res
                 })
-            }else{
+            }else if(code == 'shopPay'){//付款二维码
                 this.$http.get("do=get_storeinfo&m=vipcard")
                 .then(function(res){
                     _this.erweima = res;
-                }) 
+                    _this.shopName = res.branch_name;
+                })
+                document.title = "付款码"
+            }else{//核销订单二维码
+                this.erweima = this.$route.params.qrcode
             }
         })
-        
+    },
+    methods: {
+        goBack(){
+            this.$router.go(-1)
+        }        
     },
 }
 </script>
@@ -88,14 +110,75 @@ export default {
         }
     }
     .shop-erweima-wrap{
+        position: absolute;
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 2;
-        background: url(../../assets/images/shop-pay-bg.png) no-repeat;
-        background-size: 100%;
+        padding: 1rem .2rem;
+        box-sizing: border-box;
+        background: #529562;
+        .shop-inner{
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            padding: .42rem;
+            box-sizing: border-box;
+        }
+        .shop-con{
+            height: 86%;
+            background: #299F3E;
+            border:1px solid #299F3E;
+            position: relative;
+            .title{
+                color: #fff;
+                font-weight: 500;
+                font-size: 22px;
+                text-align: center;
+                padding: .6rem 0;
+            }
+            .shop-erweima-inner{
+                width: 3.4rem;
+                height: 3.4rem;
+                margin: 0 auto;
+                background: #fff;
+                border-radius: 4px;
+                overflow: hidden;
+                .shop-erweima-con{
+                    width: 100%;
+                    height: 100%;
+                }
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .shop-name-wrap{
+                background: #fff;
+                width: 100%;
+                height: 1.2rem;
+                line-height: 1.2rem;
+                text-align: center;
+                font-size: 18px;
+                margin-top: .6rem;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
+        .btn-wrap{
+            width: 100%;
+            margin-top: .42rem;
+            text-align: center;
+            button{
+                display: inline-block;
+                width: 70%;
+                height: .8rem;
+                font-size: .26rem;
+                background: transparent;
+                border: 1px solid #299F3E;
+                color: #299F3E;
+                border-radius: 4px;
+            }
+        }
     }
     .erweima-inner{
         width: 65%;
