@@ -9,14 +9,14 @@
                 <div class="erweima-wrap">
                     <img :src="shopInfo.qrcode" class="shopMa"/>
                 </div>
-                <p class="tip">店铺二维码</p>
+                <p class="tip">店铺收款二维码</p>
             </div>
         </div>
 
     </div>
 </template>
 <script>
-import { Picker,Popup,Cell } from 'mint-ui';
+import { Picker,Popup,Cell } from 'mint-ui'; 
 export default {
     data(){
         return{

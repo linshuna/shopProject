@@ -2,14 +2,26 @@
     <div>
         <!--二维码 :item
         <erweima :show="show" :item="erweima"></erweima>-->
-        <div :class="{'erweima-wrap': !code,'vip-erweima-wrap':code}">
+        <!--邀请会员-->
+        <div class="vip-erweima-wrap" v-if="code=='vip'">
             <div class="erweima-inner">
                 <div class="square">
                     <img :src="erweima.qrcode"/>
                 </div>
-                <p class="tip" v-if="code">请将二维码展示给店员</p>
+                <p class="tip">请将二维码展示给店员</p>
             </div>
-            <p class="tip" v-if="!code">请将二维码展示给店员</p>
+        </div>
+        <div class="shop-erweima-wrap" v-if="code=='shopPay'">
+        
+        </div>
+        <!--二维码核销用得-->
+        <div class="erweima-wrap" v-else>
+            <div class="erweima-inner">
+                <div class="square">
+                    <img :src="erweima.qrcode"/>
+                </div>
+            </div>
+            <p class="tip">请将二维码展示给店员</p>
         </div>
     </div>
 </template>
@@ -30,14 +42,7 @@ export default {
             var code = this.$route.params.code;
             this.code = code;
             var _this = this;
-            if(code){//带参数的 是邀请会员
-                // this.$http.get("do=info&m=vipcard")
-                // .then(function(res){
-                //    _this.$http.get("do=clerk_qrcode&m=vipcard&id="+res.id)
-                //     .then(function(result){
-                //         _this.erweima = result;
-                //     })
-                // })
+            if(code=='vip'){//带参数的 是邀请会员
                 this.$http.get("do=team_data&m=vipcard")
                 .then(function(res){
                     _this.erweima = res
@@ -81,6 +86,16 @@ export default {
             color: #000;
             margin-top: 0;
         }
+    }
+    .shop-erweima-wrap{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        background: url(../../assets/images/shop-pay-bg.png) no-repeat;
+        background-size: 100%;
     }
     .erweima-inner{
         width: 65%;

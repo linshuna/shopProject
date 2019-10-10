@@ -89,10 +89,10 @@ export default {
         },
         goTip(){
             var _this = this;
-            _this.$message({ 
-                    title: '成功签到，+1'
-                })
-            if(this.is_signed==1) return false;//已签到
+            if(this.is_signed==1) {
+                this.$toast({message: "已签到哦~"})
+                return false;
+            }//已签到
             this.$http.get("do=sign&m=vipcard&op=sign")
             .then(function(res){
                 _this.$message({ 

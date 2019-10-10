@@ -1,16 +1,12 @@
 <template>
     <div class="team-wrap">
-        <div class="header-wrap"></div>
+        <!--<div class="header-wrap"></div>
         <div class="img-wrap">
             <div class="img-inner">
                 <img :src="shopInfo.logo"/>
                 <p class="name">{{shopInfo.branch_name}}</p> 
-                <!--<div class="consume-wrap">
-                    <img src="" class="shopMa"/>
-                    <button class="shopMaBtn" @click="shopEr">店铺二维码</button>
-                </div>-->
             </div>
-        </div>
+        </div>-->
         <ul class="shop-add-wrap">
             <li @click="addType(2)">
                 <div>
@@ -31,11 +27,16 @@
             <div class="title"><span class="line"></span><span>店员列表</span></div>
             <ul class="consume-list">
                 <li v-for="(item,index) in cumList">
-                    <img :src="item.headimgurl" class="head-img"/>
+                    <img :src="item.headimgurl" class="head-img" v-if="item.headimgurl"/>
+                    <img src="../../assets/images/def-icon.png" class="head-img" v-else/>
                     <span>{{index+1}}</span>
                     <span>{{item.realname}}</span>
                     <span>{{item.utype==1?'店长':item.utype==2?'店员':'财务'}}</span>
-                    <button class="red-color" @click="cumItemDel($event,item)">移除</button>
+                    <div>
+                        <button class="red-color" v-if="item.isbind==0" @click="bindWeixin(item)">绑定</button>
+                        <button class="red-color" v-else @click="unbindWeixin(item)">解绑</button>
+                        <button class="red-color" @click="cumItemDel($event,item)">移除</button>
+                    </div>
                 </li>
                 <p class="gray-color no-data-tip" v-if="!cumList||cumList.length==0">暂无成员</p>
             </ul>
@@ -83,6 +84,16 @@
             <!--@change="onValuesChange"-->
             <mt-picker ref="picker" :slots="pickerList" value-key="name"></mt-picker>
         </mt-popup>
+        <div class="marsk-wrap" v-show="shoBindMa" @click="shoBindMa=false">
+            <div class="vip-erweima-wrap" >
+                <div class="erweima-inner">
+                    <div class="square">
+                        <img :src="shoBindMaCode"/>
+                    </div>
+                    <p class="tip">请将二维码展示给店员</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -103,7 +114,9 @@ export default {
                 mobile: '',
                 utype: ''
             },
-            shopInfo: ''
+            shopInfo: '',
+            shoBindMa: false,
+            shoBindMaCode: ''
         }
     },
     mounted(){
@@ -135,8 +148,7 @@ export default {
                 if (res === 'confirm') {
                     var _this = this;
                     this.$nextTick(() => {
-                        console.log(item)
-                        this.$http.get("do=clerk_unbind&m=vipcard&id="+item.id)
+                        this.$http.get("do=clerk_del&m=vipcard&id="+item.id)
                         .then(function(res){
                             _this.$toast({message:"移除成功"})
                             _this.init();
@@ -182,10 +194,49 @@ export default {
                 _this.init()
             })
         },
-        shopEr(){
-            
-            this.$router.push("/shopQrcode")
-            
+        bindWeixin(item){//绑定微信
+           var _this = this;
+           this.$message.confirm('',{
+                title: '是否确定绑定该成员',
+                message: ' ',
+                showCancelButton: true,
+                confirmButtonText: '确定',
+                cancelButtonText: '取消'  
+            })
+            .then((res) => {
+                if (res === 'confirm') {
+                    var _this = this;
+                    this.$nextTick(() => {
+                        this.$http.get("do=clerk_qrcode&m=vipcard&id="+item.id)
+                        .then(function(res){
+                            _this.shoBindMa = true;
+                            _this.shoBindMaCode = res.qrcode;
+                        })
+                    })
+                }
+            })
+        },
+        unbindWeixin(item){//解绑微信
+           var _this = this;
+           this.$message.confirm('',{
+                title: '是否确定解除绑定该成员',
+                message: ' ',
+                showCancelButton: true,
+                confirmButtonText: '确定',
+                cancelButtonText: '取消'  
+            })
+            .then((res) => {
+                if (res === 'confirm') {
+                    var _this = this;
+                    this.$nextTick(() => {
+                        this.$http.get("do=clerk_unbind&m=vipcard&id="+item.id)
+                        .then(function(res){
+                            _this.$toast({message: "解绑成功"});
+                            _this.init();
+                        })
+                    })
+                }
+            })
         }
     },
 }
@@ -308,7 +359,7 @@ export default {
     }
     .consume-list{
         width: 100%;
-        height: 6.28rem;
+        height: calc(100vh - 3.4rem);
         overflow-y: auto;
         padding: 0 .2rem;
         box-sizing: border-box;
@@ -453,6 +504,41 @@ export default {
             color: red;
         }
     }
+    .vip-erweima-wrap{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-size: 100%;
+        z-index: 2;
+        .erweima-inner{
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+            padding-bottom: .2rem;
+        }
+        .tip{
+            color: #000;
+            margin-top: 0;
+        }
+        .square{
+            display: inline-block;
+            width: 75%;
+            text-align: center;
+            color:#fff;
+            background: #efefef;
+            margin-top: 10%;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    
 </style>
 <style lang="">
     .mint-cell-wrapper{
@@ -465,4 +551,5 @@ export default {
     .mint-cell-value{
         width: 80%;
     }
+    
 </style>

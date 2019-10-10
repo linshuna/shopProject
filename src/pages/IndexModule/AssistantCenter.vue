@@ -66,13 +66,13 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="goUrl('/shopQrcode')">
+                <!--<li @click="goUrl('/shopQrcode')"> 
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
                         <span>店铺收款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
-                </li>
+                </li>-->
             </ul>
         </template>
         <template v-else-if="utype==2">

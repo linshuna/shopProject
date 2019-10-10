@@ -34,14 +34,18 @@
             <!--<div class='square' @click='goVipPay'>
                 <img src='../../assets/images/vip-pay.png'/>
                 <div>会员支付</div>
-            </div>-->
+            </div>
             <div class='square' @click='saoFn'>
                 <img src='../../assets/images/store/sao-icon.png' style='width:.46rem;height: .42rem;'/>
                 <div>会员支付</div>
-            </div>
+            </div>-->
             <div class='square' @click='goVipChong'>
                 <img src='../../assets/images/vip-chong-icon.png' style='width:.5rem;'></image>
                 <div>会员充值</div>
+            </div>
+            <div class='square' @click='goBill'>
+                <img src='../../assets/images/vip-pay.png' style='width:.5rem;'></image>
+                <div>发票</div>
             </div>
             <div class='square' @click='goOrder'>
                 <img src='../../assets/images/order-icon.png'  style='width:.48rem;'/>
@@ -119,6 +123,9 @@ export default {
         },
         goVipChong(){//会员充值
             this.$router.push("/vipChong")
+        },
+        goBill(){
+            this.$router.push("/shopBill")
         },
         goOrder(){//我的订单
             this.$router.push("/order")

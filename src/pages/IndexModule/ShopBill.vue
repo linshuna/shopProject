@@ -35,9 +35,12 @@ export default {
         handleScroll    : function(){//滚动监听
             var contentWrap = this.$refs.contentWrap;
             if(contentWrap){
-                var sT = contentWrap.scrollTop;//对象滚动的高度
-                var wH = contentWrap.clientHeight;//对象高度
-                var bH = contentWrap.scrollHeight;//对象的滚动高度+对象本身的高度
+                // var sT = contentWrap.scrollTop;//对象滚动的高度
+                // var wH = contentWrap.clientHeight;//对象高度
+                // var bH = contentWrap.scrollHeight;//对象的滚动高度+对象本身的高度
+                var sT = document.body.scrollTop;//对象滚动的高度
+                var wH = document.body.clientHeight;//对象滚动的高度
+                var bH = document.body.scrollHeight;//对象滚动的高度
                 if(sT+wH == bH&&this.page<=this.totalPage){
                     this.init()
                 }    
