@@ -69,7 +69,8 @@ export default {
                 })
                 document.title = "付款码"
             }else{//核销订单二维码
-                this.erweima = this.$route.params.qrcode
+                console.log(this.$route.params.qrcode)
+                this.erweima = decodeURIComponent(this.$route.params.qrcode)
             }
         })
     },

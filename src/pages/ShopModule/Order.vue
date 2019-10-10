@@ -85,8 +85,9 @@ export default {
             this.init()
         },
         goOrderDetail(item){
-            // var data = JSON.stringify({qrcode:item.qrcode});
-            this.$router.push({name: 'ShopQrcode',params:{'qrcode': item.qrcode}})
+            var data = encodeURIComponent(item.qrcode);
+            // this.$router.push({name: 'ShopQrcode',params:{'qrcode': item.qrcode}})
+            this.$router.push("/ShopQrcode/hx/0/"+data)
         }
     },
 }

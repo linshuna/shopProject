@@ -109,7 +109,7 @@ export default {
     @import '../assets/css/style';
     .main-wrap{
         width: 100%;
-        min-height: calc(100%);
+        height: calc(100%);
         position: absolute;
         left: 0;
         top: 0;
@@ -202,9 +202,7 @@ export default {
   background: #fff;
 }
 .title-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
 }
 .title{
   font-size: .32rem;
@@ -214,6 +212,9 @@ export default {
 .more{
   color:#f55d54;
   font-size: .24rem;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 .shop-con{
     width: 100%;
