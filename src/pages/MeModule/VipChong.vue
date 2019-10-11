@@ -22,7 +22,7 @@
                             <span class='font-28'>￥</span>{{item.num}}
                         </div>
                         <div class="square-inner" :class="{'square-active': defShow}" v-else>
-                            <input placeholder='自定金额' v-model="defMoney"/>
+                            <input placeholder='自定金额' type="number" v-model="defMoney" @keyup.enter="chongFn" @blur="chongFn"/>
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,13 @@ export default {
                 this.checkedMoney = item.num;
                 this.defShow = false;
             }
+        },
+        pressInp(){
+            alert("触发")
+            // if(ev.keyCode === 13){
+            //     alert(ev)
+            // }else{
+            // }
         },
         chongFn(){
             var _this = this;
