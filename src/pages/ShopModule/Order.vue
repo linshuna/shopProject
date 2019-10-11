@@ -87,7 +87,7 @@ export default {
         goOrderDetail(item){
             var data = encodeURIComponent(item.qrcode);
             // this.$router.push({name: 'ShopQrcode',params:{'qrcode': item.qrcode}})
-            this.$router.push("/ShopQrcode/hx/0/"+data)
+            this.$router.push("/shopQrcode/hx/0/"+data)
         }
     },
 }
@@ -95,7 +95,7 @@ export default {
 <style lang="scss" scoped>
     .order-wrap,.shop-wrap{
         width: 100%;
-        min-height: 100%;
+        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
@@ -106,7 +106,7 @@ export default {
         padding-bottom: 1rem;
     }
     .shop-wrap{
-        top: 1rem;
+        padding-top: 1rem;
     }
     .tab{
         width: 100%;

@@ -40,7 +40,7 @@
             <div class='shop-wrap' v-for="item in activelist">
                 <div class='title-header'>
                     <span class='title'>商户活动</span>
-                    <span class="more">更多></span>
+                    <!--<span class="more">更多></span>-->
                 </div>
                 <div class='shop-con' @click="goNews(item)">
                     <div class='pic'>
