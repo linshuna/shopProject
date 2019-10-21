@@ -27,7 +27,7 @@
                     </li>
                     <li @click="goJifenList">
                         <p class="square"><img src='../assets/images/hdjf-icon.png'/></p>
-                        <p>获取积分</p>
+                        <p>积分签到</p>
                     </li>
                 </ul>
             </div>

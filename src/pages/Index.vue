@@ -17,9 +17,9 @@
                         <p class="square"><img src='../assets/images/zxzx-icon.png'/></p>
                         <span>商户导航</span>
                     </li>
-                    <li @click='goUrl("/shop")'>
+                    <li @click='goUrl("/parkList")'>
                         <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
-                        <span>积分商城</span>
+                        <span>停车收费</span>
                     </li>
                     <li @click="goUrl('/shopBill')">
                         <p class="square"><img src='../assets/images/fpsq-icon.png'/></p>

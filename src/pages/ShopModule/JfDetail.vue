@@ -12,7 +12,7 @@
         </div>
         <div class='calendar-wrap'>
             <div class='calendar-inner'>
-                <calendar　@checkOneDate="getCheckDate"></calendar>
+                <calendar　@checkOneDate="getCheckDate" :signList="list"></calendar>
                 <div class="sign-btn"><button @click="goTip" :class="{'gray-btn': is_signed==1}">{{is_signed==1?'已签到':'签到'}}</button></div>
             </div>
         </div>
@@ -38,7 +38,7 @@ export default {
             month: '',
             day: '',
             is_signed: 1,
-            list: []
+            list: [],
         }
     },
     components:{
@@ -50,7 +50,7 @@ export default {
             this.infoInit();//初始化 获取积分
             var date = new Date()
             this.year = date.getFullYear();
-            this.month = date.getMonth();
+            this.month = date.getMonth()+1;
             this.init()
         })
     },
@@ -70,14 +70,13 @@ export default {
                 _this.is_signed = res.is_signed
                 _this.rule = res.rule
                 _this.list = res;
-                var day = res.day;
-                var filters = day.filter(ele =>{
-                    return ele.day == _this.day;
-                })
-                if(filters.length>0){
-                    _this.is_signed = filters[0].sign;
-                }
-
+                // var day = res.day;
+                // var filters = day.filter(ele =>{
+                //     return ele.day == _this.day;
+                // })
+                // if(filters.length>0){
+                //     _this.is_signed = filters[0].sign;
+                // }
             })
         },
         goExplain(){
@@ -114,8 +113,6 @@ export default {
             this.year = value.year;
             this.month = value.month;
             this.day = value.day;
-            console.log(value)
-            this.init()
         }
     },
 }

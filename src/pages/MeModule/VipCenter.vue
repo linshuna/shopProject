@@ -43,37 +43,25 @@
                 <img src='../../assets/images/vip-chong-icon.png' style='width:.5rem;'></image>
                 <div>会员充值</div>
             </div>
-            <div class='square' @click='goBill'>
-                <img src='../../assets/images/vip-pay.png' style='width:.5rem;'></image>
-                <div>发票</div>
+            <div class='square' @click='goShop'>
+                <img src='../../assets/images/jf-shop-icon.png'  style='width:.5rem;'/>
+                <div>积分商城</div>
             </div>
             <div class='square' @click='goOrder'>
                 <img src='../../assets/images/order-icon.png'  style='width:.48rem;'/>
                 <div>我的订单</div>
             </div>
-            <div class='square' @click='goShop'>
-                <img src='../../assets/images/jf-shop-icon.png'  style='width:.5rem;'/>
-                <div>积分商城</div>
+            <div class='square' @click='goBill'>
+                <img src='../../assets/images/vip-pay.png' style='width:.5rem;'></image>
+                <div>发票申请</div>
             </div>
-            <div class='square' @click='goJfDetail(2)'>
-                <img src='../../assets/images/jf-detail-icon.png'  style='width:.5rem;'/>
-                <div>积分明细</div>
-            </div>
-            <!--<div class='square' @click='goCoupon'>
-                <img src='../../assets/images/card-icon.png'/>
-                <div>优惠券</div>
-            </div>
-            <div class='square' @click='goTeamCenter'>
-                <img src='../../assets/images/tem-center-icon.png' style='height:.5rem;width:.5rem;'/>
-                <div>团队中心</div>
-            </div>-->
             <div class='square' @click='goShop'>
                 <img src='../../assets/images/act-center-icon.png'  style='width:.5rem;'/>
                 <div>活动中心</div>
             </div>
-            <div class='square' @click='goMsgCenter'>
-                <img src='../../assets/images/msg-center-icon.png'/>
-                <div>消息中心</div>
+            <div class='square' @click='goJfDetail(2)'>
+                <img src='../../assets/images/jf-detail-icon.png'  style='width:.5rem;'/>
+                <div>积分明细</div>
             </div>
             <div class='square' @click='goJfDetail(1)'>
                 <img src='../../assets/images/list-icon.png' style='width:.5rem;'/>
@@ -83,6 +71,18 @@
                 <img src='../../assets/images/team-icon.png' style='width:.5rem;'/>
                 <div>我的团队</div>
             </div>
+            <div class='square' @click='goMsgCenter'>
+                <img src='../../assets/images/msg-center-icon.png'/>
+                <div>消息中心</div>
+            </div>
+            <!--<div class='square' @click='goCoupon'>
+                <img src='../../assets/images/card-icon.png'/>
+                <div>优惠券</div>
+            </div>
+            <div class='square' @click='goTeamCenter'>
+                <img src='../../assets/images/tem-center-icon.png' style='height:.5rem;width:.5rem;'/>
+                <div>团队中心</div>
+            </div>-->
         </div>
     </div>
 

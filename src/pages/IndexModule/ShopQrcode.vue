@@ -32,6 +32,7 @@
             <div class="erweima-inner">
                 <div class="square">
                     <img :src="erweima"/>
+                    <p class="orderSn">订单号：{{orderSn}}</p>
                 </div>
             </div>
             <p class="tip">请将二维码展示给店员</p>
@@ -45,7 +46,8 @@ export default {
         return{
             code: '',
             erweima: {},
-            shopName: ''
+            shopName: '',
+            orderSn: ''
         }
     },
     components:{
@@ -69,7 +71,7 @@ export default {
                 })
                 document.title = "付款码"
             }else{//核销订单二维码
-                console.log(this.$route.params.qrcode)
+                this.orderSn = this.$route.params.ordersn;
                 this.erweima = decodeURIComponent(this.$route.params.qrcode)
             }
         })
@@ -93,6 +95,11 @@ export default {
         background: url(../../assets/images/verification-icon.png) #E40000 no-repeat;
         background-size: 100%;
         z-index: 2;
+        .orderSn{
+            background: transparent;
+            font-size: .24rem;
+            color: #000;
+        }
     }
     .vip-erweima-wrap{
         width: 100%;
@@ -191,12 +198,12 @@ export default {
     .square{
         display: inline-block;
         width: 75%;
-        // height: 2rem;
-        // line-height: 2rem;
         text-align: center;
         color:#fff;
-        background: #efefef;
         margin-top: 10%;
+        // background: #efefef;
+        // height: 2rem;
+        // line-height: 2rem;
         // margin-bottom: .34rem;
         img{
             width: 100%;

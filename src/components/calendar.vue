@@ -17,7 +17,9 @@
                 @click='checkDate(item)'>			
                 <div class='date-head'>
                     <div>{{item.dateNum}}</div>
+                    <p class="ring-wrap" v-if="item.sign==1"><span class="ring"></span></p>
                 </div>
+                
                 <!-- <view class='date-weight'>{{item.weight}}</view> -->
             </div>
         </div>
@@ -26,6 +28,9 @@
 </template>
 <script>
 export default {
+    props:{
+        signList: {typeof: Object,default: {}}
+    },
     data(){
         return {
             year: 0,
@@ -36,7 +41,30 @@ export default {
             isToday: 0,
             isTodayWeek: false,
             todayIndex: 0,
-            checkedDate: ''//选中的日期
+            checkedDate: '',//选中的日期
+            list: {}
+        }
+    },
+    watch: {
+        signList:{
+            handler(newVal,oldVal){
+                if(newVal.length==0) return;
+                this.list = newVal;
+                this.dateInit();
+                var dateArr = this.dateArr;
+                var signArr = this.signList.day;
+                if(this.signList.year == this.year&&this.signList.month==this.month){
+                    dateArr.forEach(ele =>{
+                        if(ele.day==undefined) return;
+                        var filters = signArr.filter(fEle =>{
+                            return ele.day == fEle.day;
+                        })
+                        ele.sign = filters.length>0?filters[0].sign:0;
+                    })
+                    this.dateArr = dateArr; 
+                }
+            },
+            immediate: true
         }
     },
     mounted() {
@@ -48,6 +76,7 @@ export default {
             this.year = year;
             this.month = month;
             this.isToday = '' + year + month + now.getDate();
+
         })
     },
     methods: {
@@ -86,7 +115,7 @@ export default {
                 }
                 dateArr[i] = obj;
             }
-            this.dateArr = dateArr
+            this.dateArr = dateArr;
             let nowDate = new Date();
             let nowYear = nowDate.getFullYear();
             let nowMonth = nowDate.getMonth() + 1;
@@ -206,6 +235,17 @@ export default {
     .nowDay .date-head{
         color: #fff;
         background-color: red;
+    }
+    .ring-wrap{
+        text-align: center;
+        margin-top: -.2rem;
+    }
+    .ring{
+        display: inline-block;
+        width: .1rem;
+        height: .1rem;
+        background: #00c800;
+        border-radius: 100px;
     }
     .date-weight{
         font-size: .22rem;

@@ -4,14 +4,19 @@
             <!--店长-->
             <div class="header-wrap shop-store-wrap">
                 <div class="bill-wrap">
-                    <p>
+                    <p class="fixed-wrap">
                         <span>今日收款{{clerk.orders}}笔</span>
+                        <span>{{utype==1?'店长':utype==2?'店员':'财务'}}</span>
                     </p>
                     <p class="money">{{clerk.income}}</p>
                 </div>
-                <div class="money-wrap">
+                <div class="money-wrap"> 
+                    <div>
+                        <img :src="info.avatar" class="my-icon"/>
+                        <p>{{info.realname}}</p>
+                    </div>
                     <div @click="goUrl('/record')">
-                        <img src="../../assets/images/store/note-icon.png"/>
+                        <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
                         <p>数据记录</p>
                     </div>
                 </div>
@@ -24,13 +29,6 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="goUrl('/financeCenter')">
-                    <div class="list-con">
-                        <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
-                        <span>财务中心</span>
-                    </div>
-                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
-                </li>
                 <li @click="goUrl('/shopNameList')">
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
@@ -38,17 +36,17 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <!--<li @click="goUrl('/message')">
+                <li @click="goUrl('/verOrder')">
                     <div class="list-con">
-                        <img src="../../assets/images/store/msg-icon.png" class="icon"/>
-                        <span>消息通知</span>
+                        <img src="../../assets/images/store/sao-icon.png" class="icon"/>
+                        <span>核销订单</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
-                </li>-->
-                <li @click="goUrl('/verificationList/0')">
+                </li>
+                <li @click="goUrl('/financeCenter')">
                     <div class="list-con">
-                        <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
-                        <span>核销记录</span>
+                        <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
+                        <span>财务中心</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
@@ -59,13 +57,20 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="saoFn">
+                <!--<li @click="goUrl('/message')">
                     <div class="list-con">
-                        <img src="../../assets/images/store/sao-icon.png" class="icon"/>
-                        <span>核销订单</span>
+                        <img src="../../assets/images/store/msg-icon.png" class="icon"/>
+                        <span>消息通知</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
+                <li @click="goUrl('/verificationList/0')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
+                        <span>核销记录</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>-->
                 <!--<li @click="goUrl('/shopQrcode')"> 
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
@@ -232,6 +237,11 @@
     }
 </script>
 <style lang="scss" scoped>
+    .fixed-wrap{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .header-wrap{
         width: 100%;
         height: 3.6rem;
@@ -277,16 +287,16 @@
             }
         }
     }
-    .shop-store-wrap{
-        .money-wrap{
-            >div{
-                display: inline-block;
-                width: auto;
-                vertical-align: bottom;
-                font-size: .24rem;
-            }
-        }
-    }
+    // .shop-store-wrap{
+    //     .money-wrap{
+    //         >div{
+    //             display: inline-block;
+    //             width: auto;
+    //             vertical-align: bottom;
+    //             font-size: .24rem;
+    //         }
+    //     }
+    // }
     ul{
         li{
             width: 100%;

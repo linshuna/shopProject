@@ -66,6 +66,11 @@ export default new Router({
       meta: {title: "核销记录"},
       component: resolve => require(['@/pages/IndexModule/VerificationList'], resolve)
     },{
+      path: "/verOrder/:ordersn?",
+      name: "VerOrder",
+      meta: {title: "核销订单"},
+      component: resolve => require(['@/pages/IndexModule/verOrder'], resolve)
+    },{
       path: "/record",
       name: "Record",
       meta: {title: "数据记录"},
@@ -196,7 +201,7 @@ export default new Router({
       meta: {title: "成员信息"},
       component: resolve => require(['@/pages/MeModule/MyTeamDetail'], resolve)
     },{
-      path: "/shopQrcode/:code?/:status?/:qrcode?",
+      path: "/shopQrcode/:code?/:status?/:qrcode?/:ordersn?",
       name: "ShopQrcode",
       meta: {title: "二维码"},
       component: resolve => require(['@/pages/IndexModule/ShopQrcode'], resolve)
@@ -205,6 +210,11 @@ export default new Router({
       name: "ShopBill",
       meta: {title: "发票"},
       component: resolve => require(['@/pages/IndexModule/ShopBill'], resolve)
+    },{
+      path: "/parkList",
+      name: "ParkList",
+      meta: {title: "停车缴费标准"},
+      component: resolve => require(['@/pages/IndexModule/ParkList'], resolve)
     }
   ]
 })
