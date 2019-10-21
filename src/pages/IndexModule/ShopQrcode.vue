@@ -25,6 +25,7 @@
                 <div class="btn-wrap">
                     <button @click="goBack">返回</button>
                 </div>
+                <p class="tip">提示：长按二维码即可保存图片和识别二维码</p>
             </div>
         </div>
         <!--二维码核销用得-->
@@ -186,6 +187,15 @@ export default {
                 color: #299F3E;
                 border-radius: 4px;
             }
+        }
+        .tip{
+            color: red;
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            bottom: .24rem;
+            left: 50%;
+            transform: translate(-50%,0);
         }
     }
     .erweima-inner{

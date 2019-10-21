@@ -13,7 +13,7 @@
                     <img :src="info.avatar" class="my-icon"/>
                     <p>{{info.realname}}</p>
                 </div>
-                <div @click="goUrl('/record')">
+                <div @click="goUrl('/record')" class="right-inner">
                     <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
                     <p>数据记录</p>
                 </div>
@@ -120,11 +120,17 @@
         .money-wrap{
             font-size: 0;
             margin-top: .4rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
             >div{
                 display: inline-block;
-                width: 50%;
                 vertical-align: bottom;
                 font-size: .24rem;
+            }
+            .right-inner{
+                padding-right: .46rem;
+                box-sizing: border-box;
             }
             .my-icon{
                 width: 1rem;
@@ -136,7 +142,6 @@
                 height: .42rem;
             }
             div{
-                flex: 1;
                 text-align: center;
                 color: #fff;
                 img{
