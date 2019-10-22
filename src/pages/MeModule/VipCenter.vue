@@ -180,7 +180,7 @@ export default {
         width: 100%;
         height: 2.6rem;
         color: #fff;
-        background: url(../../assets/images/vip-bg.png) no-repeat;
+        background: url(../../assets/images/vip-center-bg.png) no-repeat; 
         background-size: 100% 100%;
     }
     .msg-main{

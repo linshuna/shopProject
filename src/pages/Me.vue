@@ -10,7 +10,7 @@
                         <div class='shop-card'>
                             <img :src="info.avatar"/>
                         </div>
-                        <div class='vip-name'>会员卡</div>
+                        <!--<div class='vip-name'>会员卡</div>-->
                     </div>
                 </div>
                 <div class='right-now' v-if="iscard!=1">点击立即领取</div>
@@ -168,7 +168,7 @@ export default {
         z-index: 2;
         padding-top: .34rem;
         box-sizing: border-box;
-        background: url(../assets/images/card-bg.png) no-repeat;
+        background: url(../assets/images/vip-card-bg.png) no-repeat;
         background-size: 100%;
     }
     .car-main{
@@ -215,7 +215,7 @@ export default {
         left: 0;
         color: #fff;
         text-align: center;
-        font-size: $font-32;
+        font-size: .36rem;
     }
 
     .adv{

@@ -21,9 +21,9 @@
                         <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
                         <span>停车收费</span>
                     </li>
-                    <li @click="goUrl('/shopBill')">
+                    <li @click="goUrl('/vipChong')">
                         <p class="square"><img src='../assets/images/fpsq-icon.png'/></p>
-                        <span>发票申请</span>
+                        <span>会员充值</span>
                     </li>
                     <!--<li @click="goUrl('/parking')">
                         <p class="square"><img src='../assets/images/tcjf-icon.png'/></p>

@@ -43,7 +43,8 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="goUrl('/financeCenter')">
+                <!--/financeCenter-->
+                <li @click="goUrl('/record')">
                     <div class="list-con">
                         <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
                         <span>财务中心</span>
