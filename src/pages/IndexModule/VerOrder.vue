@@ -60,7 +60,7 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(function(){
+        this.$nextTick(function(){ 
             this.getJsapi()
             this.orderSn = this.$route.params.ordersn;//获取当前的订单号
             var date = new Date()

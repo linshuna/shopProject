@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="me-main-wrap">
         <div class='bg'>
             <img src='../assets/images/bg.png'/>
@@ -18,7 +19,29 @@
             <div class='adv'>
                 <img src='../assets/images/adv-banner.png' @click="goShop"/>
             </div>
-            <div class='working-wrap'>
+            <ul class="diamond-wrap">
+                <li>
+                    <div class="set-border-r set-border-b" @click="goUrl('/parkList')">
+                        <p><img src="../assets/images/act-center-icon.png"/></p>
+                        <p>会员福利</p>
+                    </div>
+                    <div class="set-border-b" @click="goUrl('/parkList')">
+                        <p><img src="../assets/images/parking-icon.png"/></p>
+                        <p>停车缴费</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="set-border-r" @click="goUrl('/parkList')">
+                        <p><img src="../assets/images/vip-card-icon.png"/></p>
+                        <p>会员卡介绍</p>
+                    </div>
+                    <div @click="goUrl('/parkList')">
+                        <p><img src="../assets/images/vip-pay.png"/></p>
+                        <p>会员充值</p>
+                    </div>
+                </li>
+            </ul>
+            <!--<div class='working-wrap'>
                 <ul>
                     <li class='padding-r' @click="goChong">
                         <div class='working-card'>
@@ -74,10 +97,11 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div>-->
         </div>
-        <bar-footer idx="2"></bar-footer>
     </div>
+    <bar-footer idx="2"></bar-footer>
+</div>
 </template>
 <script>
 import BarFooter from "@/components/footer"
@@ -123,6 +147,9 @@ export default {
         },
         goShop(){
             this.$router.push("/shop")
+        },
+        goUrl(url){
+            this.$router.push(url)
         }
     },
 }
@@ -216,6 +243,30 @@ export default {
         color: #fff;
         text-align: center;
         font-size: .36rem;
+    }
+
+    .diamond-wrap{
+        width: 100%;
+        li{
+            font-size: 0;
+            >div{
+                font-size: .24rem;
+                color: #333;
+                display: inline-block;
+                width: 50%;
+                text-align: center;
+                padding: .42rem 0;
+                img{
+                    width: .46rem;
+                }
+            }
+            .set-border-r{
+                border-right: 1px solid #efefef;
+            }
+            .set-border-b{
+                border-bottom: 1px solid #efefef;
+            }
+        }
     }
 
     .adv{

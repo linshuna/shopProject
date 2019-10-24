@@ -65,7 +65,7 @@ Vue.prototype.globalIsPing = config.isPing;
 Vue.prototype.getJsapi = function () {  
   let url = window.location.href
   url = url.split("#")[0]
-  this.$http.get('do=get_jsapi&m=vipcard&url=http://shw.mxiaoxin.com/h5/index.html')
+  this.$http.get('do=get_jsapi&m=vipcard&url='+url)
     .then(res => {
       let appId = res.appId
       let timestamp = res.timestamp

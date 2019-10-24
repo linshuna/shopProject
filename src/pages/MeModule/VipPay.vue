@@ -44,7 +44,7 @@ export default {
             if(!this.money){
                 this.$toast({message: "请输入支付金额"})
                 return false;
-            }else if(this.money>this.shopInfo.credit2){
+            }else if(this.money>this.shopInfo.credit2-0){
                 this.$message.confirm('',{
                     title: '余额不足，是否确定充值',
                     message: ' ',

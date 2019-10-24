@@ -61,6 +61,13 @@
                 <!--<li @click="goUrl('/message')">
                     <div class="list-con">
                         <img src="../../assets/images/store/msg-icon.png" class="icon"/>
+                        <span>退款</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>
+                <li @click="goUrl('/message')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/msg-icon.png" class="icon"/>
                         <span>消息通知</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
