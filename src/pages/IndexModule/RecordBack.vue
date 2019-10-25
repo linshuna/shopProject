@@ -15,12 +15,7 @@
                 <span>本周：{{info.credit2_total_w}}</span>
                 <span>今日：{{info.credit2_total_d}}</span>
             </p>
-            <!-- 会员支付订单 -->
-            <p class="title-inner">
-                <span>会员支付订单</span>
-                <span>{{info.credit2_nums}}</span>
-            </p>
-            <p class="gray-color" v-show="!dlist||dlist.length==0">暂无数据</p>
+            <p class="gray-color no-data-tip" v-show="!dlist||dlist.length==0">暂无数据</p>
             <ul v-show="dlist.length>0" class="list">
                 <li v-for="item in dlist">
                     <div>
@@ -42,11 +37,7 @@
                 <span>本周：{{info.credit2_total_w}}</span>
                 <span>今日：{{info.credit2_total_d}}</span>
             </p>
-            <p class="title-inner">
-                <span>核销订单</span>
-                <span>{{info.credit1_nums}}</span>
-            </p>
-            <p class="gray-color" v-show="!hlist||hlist.length==0">暂无数据</p>
+            <p class="gray-color no-data-tip" v-show="!hlist||hlist.length==0">暂无数据</p>
             <ul v-show="hlist.length>0" class="list">
                 <li v-for="item in hlist">
                     <div>
@@ -59,7 +50,12 @@
         </div>
         <!-- 退款订单 -->
         <div class="shop-inner" v-show="status==3">
-            <ul class="list">
+            <p class="title">
+                <span>总收入：{{info.credit2_total_m}}</span>
+                <span>本周：{{info.credit2_total_w}}</span>
+                <span>今日：{{info.credit2_total_d}}</span>
+            </p>
+            <!--<ul class="list">
                 <li>
                     <div>
                         <p>xxxx</p>
@@ -68,12 +64,14 @@
                     </div>
                     <span class="blue-color">1</span>
                 </li>
-            </ul>
+            </ul>-->
+            <p class="gray-color no-data-tip">暂无数据</p>
         </div>
         <div class='btn-wrap'>
             <button class='get-btn' @click='goExport'>对账导出</button>
         </div>
     </div>
+    
 </div>
 </template>
 <script>
@@ -275,4 +273,5 @@ export default {
             margin-top: -.3rem;
         }
     }
+    
 </style>

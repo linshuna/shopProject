@@ -7,40 +7,39 @@
     <div class='team-center-wrap' v-show="status==1">
         <div class='team-top'>
             <div>
-            <!-- <image src='/images/money-icon.png'></image> -->
                 <span>可用金额</span>
             </div>
-            <div class='money'>8000元</div>
-            <button class='pay-btn'>充值</button>
-        </div>
-        <div class='chong-list'>
-            <span>充值记录</span>
-            <img src='../../assets/images/right-icon.png' class='right-icon' />
+            <div class='money'>{{infoMsg.credit2}}元</div>
+            <button class='pay-btn' @click="goUrl('/vipChong')">充值</button>
         </div>
         <div class='add-people'>
-            <div class='chong-list'>
+            <div class='chong-list' @click="showAdd=true;">
                 <span>添加成员</span>
                 <img src='../../assets/images/add-carno.png' class='add-icon'/>
             </div>
-            <div class='people-list'>
-                <div class='list'>
-                    <i class="checkbox"></i>
-                    <span>张三</span>
-                    <button class='del-btn'>删除</button>
-                </div>
-                <div class='list'>
-                    <i class="checkbox"></i>
-                    <span>李四</span>
-                    <button class='del-btn'>删除</button>
-                </div>
-            </div>
-            <div class='simall-money'>
+            <ul class='people-list'>
+                <li class='list' v-for="item in list">
+                    <v-touch
+                        @chong-event="settingChong(item)" 
+                        @setting-event="settingTeam($event,item)" 
+                        @record-event="goUrl('/record')"
+                        @del-event="settingTeamDel($event,item)">
+                        <div class="list-inner">
+                            <div>
+                                <img :src="item.avatar" @click="goTeamDetail(item.bid)"/>
+                                <span>{{item.mobile}}</span>
+                            </div>
+                        </div>
+                    </v-touch>
+                </li>
+            </ul>
+            <!--<div class='simall-money'>
                 <span>统一充值金额</span>
                 <input type='text' />
                 <button class='pay-btn'>充值</button>
-            </div>
+            </div>-->
         </div>
-        <div class='another-chong-wrap'>
+        <!--<div class='another-chong-wrap'>
             <div class='title'>分别充值</div>
             <div class='table-header'>
                 <div class='set-w10'>勾选</div>
@@ -60,13 +59,17 @@
                 </div>
 
             </div>
-        </div>
+        </div>-->
     </div>
     <div v-show="status==2" class="team-center-wrap">
         
     </div>
     <div v-show="status==3" class="team-center-wrap">
-        <ul class="record-list">
+        <div class="date-wrap">
+            <date-com :date="stime" @listenToChild="getTime"></date-com>
+            <img src="../../assets/images/store/date-icon.png" class="date-icon"/>
+        </div>
+        <ul class="record-list" v-if="recordList&&recordList.length>0">
             <li v-for="item in recordList">
                 <div class="header-wrap">
                     <img :src="item.avatar" class="header-icon"/>
@@ -81,10 +84,74 @@
                 <span class="blue-color">￥{{item.credit2}}</span>
             </li>
         </ul>
+        <p class="gray-color no-date-tip" v-else>暂无数据</p>
+    </div>
+    <!--添加成员-->
+    <div class="marsk-wrap" v-show="showAdd">
+        <div class="marsk-inner">
+            <p class="title">添加队员</p>
+            <div class="tel-wrap">
+                手机号：<input type="tel" placeholder="请输入手机号" v-model="mobile" maxlength="11"/>
+            </div>
+            <div class="marsk-btn-wrap">
+                <span @click="showAdd=false;">取消</span>
+                <span class="red-color" @click="saveTeam">保存</span>
+            </div>
+        </div>
+    </div>
+    <!--修改规则-->
+    <div class="marsk-wrap" v-show="show">
+        <div class="marsk-inner">
+            <p class="title">修改规则</p>
+            <div class="img-wrap">
+                <img :src="info.avatar"/>
+                <p>{{info.realname}}</p>
+            </div>
+            <ul class="detail-wrap">
+                <li>
+                    <span class="det-title">每日限额：</span>
+                    <input type="text" v-model="info.day_limit"/>
+                    <span>元</span>
+                </li>
+                <li>
+                    <span class="det-title">总限额：</span>
+                    <input type="text" v-model="info.all_limit"/>
+                    <span>元</span>
+                </li>
+            </ul>
+            <div class="marsk-btn-wrap">
+                <span @click="cancel">取消</span>
+                <span class="red-color" @click="saveRule">保存</span>
+            </div>
+        </div>
+    </div>
+    <!--给队员充值-->
+    <div class="marsk-wrap" v-show="showChong">
+        <div class="marsk-inner">
+            <p class="title">队员充值</p>
+            <div class="img-wrap">
+                <img :src="info.avatar"/>
+                <p>{{info.realname}}</p>
+            </div>
+            <ul class="detail-wrap">
+                <li>
+                    <span class="det-title">充值金额：</span>
+                    <input type="number" v-model="info.money"/>
+                    <span>元</span>
+                </li>
+            </ul>
+            <p class="red-color tip">提示：充值金额无法撤回，请确认后充值!</p>
+            <div class="marsk-btn-wrap">
+                <span @click="cancel">取消</span>
+                <span class="red-color" @click="saveChong">确认充值</span>
+            </div>
+        </div>
     </div>
 </div>
 </template>
 <script>
+const VTouch = ()=>import('@/components/touch'); 
+import DateRangeCom from "@/components/dateRangeCom"
 export default {
     data(){
         return{
@@ -95,26 +162,164 @@ export default {
                 {name: '队员邀请',id: 2},
                 {name: '充值记录',id: 3},
             ],
-            recordList: []
+            recordList: [],
+            showAdd: false,
+            show: false,
+            list: [],
+            erweima: '',
+            info: {},//选中的个人得信息
+            mobile: '',
+            showChong: false,
+            infoMsg:{},//个人信息
+            rollCheck: true,
+            totalPage: 0,
+            page: 1,
+            stime:'',
+            etime: ''
         }
     },
     mounted() {
+        // var date = new Date();
+        // var year = date.getFullYear();
+        // var month = date.getMonth()+1;
+        // this.stime = year+"-"+month+"-"+1;
+        // this.etime = year+"-"+month+"-"+date.getDate();
+        var _this = this;
+        this.$http.get("do=info&m=vipcard")
+        .then(function(res){
+            _this.infoMsg = res;
+            //获取队员信息
+            _this.init();
+        })
         //获取充值记录
-        this.initRecord();
+        window.addEventListener('scroll', this.handleScroll, true); 
+    },
+    components:{
+        "v-touch": VTouch,
+        "date-com": DateRangeCom
     },
     methods:{
+        handleScroll    : function(){//滚动监听
+            var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+            var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+            var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
+            if(sT+wH == bH&&this.page<=this.totalPage){
+                if(!this.rollCheck) return false;
+                this.rollCheck = !this.rollCheck;
+                this.initRecord()
+            }  
+        },
+        init(){//数据初始化
+            var _this = this;
+            this.$http.get("do=team_data&m=vipcard")
+            .then(function(res){
+                _this.list = res.list;
+                _this.erweima = res
+            })
+        },
         check: function(){
             this.bol = !this.bol
         },
         checkTab: function(item){
+            if(item.id == 2){
+                this.$router.push("/shopQrcode/vip")
+            }else if(item.id==3){
+                this.initRecord();
+            }
             this.status = item.id;
         },
         initRecord(){
             var _this = this;
-            this.$http.get("do=team_recharge_log&m=vipcard&bid=")
+            this.$http.get("do=team_recharge_log&m=vipcard&bid="+this.infoMsg.id+"&page="+this.page+"&stime="+this.stime+"&etime="+this.etime)
             .then(function(res){
                 _this.recordList = res.list;
+                _this.totalPage = res.allpage;
+                _this.rollCheck = true;
+                _this.page++;
             })
+        },
+        getTime(value){//获取时间
+            console.log(value)
+        },
+        saveTeam(){//添加成员
+            var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+            if(!reg.test(this.mobile)){
+                this.$toast({message: '电话号码格式错误'});
+                return false;
+            }
+            var _this = this;
+            this.$http.get("do=team_add&m=vipcard&mobile="+this.mobile)
+            .then(function(res){
+                _this.showAdd = false;
+                _this.$toast({message: "设置成功"})
+                _this.init();
+            })
+        },
+        saveRule(){//设置修改规则
+            var _this = this;
+            this.$http.get("do=team_set&m=vipcard&bid="+this.info.bid+"&day_limit="+this.info.day_limit+"&all_limit="+this.info.all_limit)
+            .then(function(res){
+                _this.show = false;
+                _this.$toast({
+                    message: "设置成功"
+                })
+
+            })
+        },
+        settingChong(item){//给队员充值
+            this.info = item;
+            this.showChong = true;
+        },
+        saveChong(){//确认给队员充值
+            this.showChong = false;
+            if(!this.info.money){
+                this.$toast({message:"请输入充值金额"});
+                return false;
+            }
+            var _this = this;
+            this.$http.get("do=team_recharge&m=vipcard&bid="+this.info.bid+"&money="+this.info.money)
+            .then(function(res){
+                _this.$toast({message:"充值成功"});
+            })
+        },
+        settingTeam(ev,item){//设置
+            this.show = true;
+            this.info = item;
+            ev.stopPropagation()
+        },
+        settingTeamDel(ev,item){//删除
+            this.$message.confirm('',{
+                title: '是否确定删除该成员',
+                message: ' ',
+                showCancelButton: true,
+                confirmButtonText: '删除',
+                cancelButtonText: '取消'  
+            })
+            .then((res) => {
+                if (res === 'confirm') {
+                    var _this = this;
+                    this.$nextTick(() => {
+                        this.$http.get("do=team_del&m=vipcard&bid="+item.bid)
+                        .then(function(res){
+                            _this.$toast({message:"删除成功"})
+                            _this.init();
+                        })
+                    })
+                }
+            })
+            ev.stopPropagation()
+        },
+        cancel(){//取消
+            this.show = false;
+        },
+        save(){//保存
+            this.show = false;
+        },
+        goTeamDetail(id){
+            this.$router.push("/myTeamDetail/"+id)
+        },
+        goUrl(url){
+            this.$router.push(url)
         }
     }
 }
@@ -148,8 +353,9 @@ export default {
         left: 0;
         top: 0;
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
-        padding-top: 1rem;
+        padding-top: 1.2rem;
     }
     .team-top{
         width: 100%;
@@ -207,16 +413,31 @@ export default {
     }
     .people-list{
         width: 100%;
-        padding: 0 .34rem;
-        box-sizing: border-box;
         background: #F7F7F7;
     }
     .people-list .list{
         width: 100%;
-        height: .86rem;
-        line-height: .86rem;
+        height: 1.2rem;
+        box-sizing: border-box;
         border-bottom: 1px solid #DEDEDE;
         position: relative;
+        img{
+            width: 1rem;
+            border-radius: 50%;
+        }
+        .list-inner{
+            width: 100%;
+            height: 1.2rem;
+            padding: .1rem 0 .1rem .34rem;
+            box-sizing: border-box;
+            text-align: left;
+            >*{
+                vertical-align:middle;
+            }
+        }
+    }
+    .add-people{
+        margin-top: .2rem;
     }
     .add-people .chong-list{
         margin: 0;
@@ -326,6 +547,7 @@ export default {
         border-top: 1px solid #DEDEDE;
     }
     .another-chong-wrap .list{
+        height: 1rem;
         border-bottom: 1px solid #DEDEDE;
         padding:.2rem 0;
     }
@@ -396,6 +618,109 @@ export default {
                 height: 1rem;
                 border-radius: 50%;
             }
+        }
+    }
+
+     // 规则
+    .marsk-wrap{
+        width: 100%;
+        height: 100%;
+        padding: 0 .2rem;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: rgba(0,0,0,.4);
+        z-index: 2;
+        .marsk-inner{
+            width: 70%;
+            border-radius: 4px;
+            background: #fff;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            img{
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                border-radius: 100px;
+            }
+            p{
+                text-align: center;
+            }
+            .title{
+                height: .96rem;
+                line-height: .96rem;
+                text-align: center;
+                border-bottom: 1px solid #efefef;
+            }
+            .img-wrap{
+                margin: .34rem auto;
+            }
+            .tip{
+                margin-bottom: .2rem;
+                font-size: .22rem;
+            }
+        }   
+        li{
+            width: 100%;
+            padding-left: .2rem;
+            box-sizing: border-box;
+            text-align: left;
+            margin-bottom: .4rem;
+        }
+        .detail-wrap{
+            width: 100%;
+            padding: 0 .2rem;
+            box-sizing: border-box;
+            .det-title{
+                display: inline-block;
+                width: 1.4rem;
+                text-align: left;
+            }
+            input{
+                width: 2rem;
+                height: .65rem;
+                border: 1px solid #efefef;
+            }
+        }
+        .tel-wrap{
+            input{
+                height: .65rem;
+                border: 1px solid #efefef;
+                padding-left: .1rem;
+                box-sizing: border-box;
+            }
+        }
+        .marsk-btn-wrap{
+            width: 100%;
+            height: .96rem;
+            padding: 0 .34rem;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: gray;
+            border-top: 1px solid #efefef;
+
+        }
+    }
+    .tel-wrap{
+        padding: .2rem 0;
+    }
+    .date-wrap{
+        position: relative;
+        height: .96rem;
+        .date-icon{
+            width: .6rem;
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            margin-top: -.3rem;
         }
     }
 </style>

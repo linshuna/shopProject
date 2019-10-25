@@ -146,7 +146,7 @@ export default {
             this.$router.push("/consumeList")
         },
         goMyTeam(){
-            this.$router.push("/myTeam")
+            this.$router.push("/teamCenter")///myTeam
         },
         saoFn(){//扫一扫
             var _this = this;
