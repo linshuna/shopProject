@@ -1,5 +1,10 @@
 <template>
-    <div class='team-center-wrap'>
+<div>
+    <div class="tab">
+        <div v-for="(item,index) in tabData" :class="{'active': status==item.id}" 
+        @click='checkTab(item)'>{{item.name}}</div>
+    </div>
+    <div class='team-center-wrap' v-show="status==1">
         <div class='team-top'>
             <div>
             <!-- <image src='/images/money-icon.png'></image> -->
@@ -57,23 +62,95 @@
             </div>
         </div>
     </div>
+    <div v-show="status==2" class="team-center-wrap">
+    
+    </div>
+    <div v-show="status==3" class="team-center-wrap">
+        <ul class="record-list">
+            <li v-for="item in recordList">
+                <div class="header-wrap">
+                    <img :src="item.avatar" class="header-icon"/>
+                </div>
+                <div class="middle-wrap">
+                    <p>
+                        <span>{{item.realname}}</span>
+                    </p>
+                    <p>卡号：{{item.mobile}}</p>
+                    <p class="gray-color">充值时间：{{item.ctime}}</p>
+                </div>
+                <span class="blue-color">￥{{item.credit2}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
 </template>
 <script>
 export default {
     data(){
         return{
-            bol: false
+            bol: false,
+            status: 1,
+            tabData: [
+                {name: '团队充值',id: 1},
+                {name: '队员邀请',id: 2},
+                {name: '充值记录',id: 3},
+            ],
+            recordList: []
         }
+    },
+    mounted() {
+        //获取充值记录
+        this.initRecord();
     },
     methods:{
         check: function(){
             this.bol = !this.bol
+        },
+        checkTab: function(item){
+            this.status = item.id;
+        },
+        initRecord(){
+            var _this = this;
+            this.$http.get("do=team_recharge_log&m=vipcard&bid=")
+            .then(function(res){
+                _this.recordList = res.list;
+            })
         }
     }
 }
 </script>
 <style lang="scss" scoped>
     @import '../../assets/css/style';
+    .tab{
+        width: 100%;
+        background: #fff;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 2;
+    }
+    .tab>div{
+        display: inline-block;
+        width: 33.3%;
+        text-align: center;
+        padding: .3rem 0;
+        box-sizing: border-box;
+        font-size: .3rem;
+    }
+    .tab .active{
+        color: #DC3E56;
+        border-bottom: 1px solid #DC3E56;
+    }
+    .team-center-wrap{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 1rem;
+    }
     .team-top{
         width: 100%;
         height: .96rem;
@@ -282,5 +359,43 @@ export default {
     .list .pay-btn{
         display: inline-block;
         vertical-align: middle;
+    }
+
+    ul.record-list{
+        width: 100%;
+        height: 100%;
+        li{
+            width: 100%;
+            padding: .2rem;
+            box-sizing: border-box;
+            background: #fff;
+            border-bottom: #efefef;
+            position: relative;
+            >div{
+                display: inline-block;
+                text-align: left;
+                vertical-align: middle;
+            }
+            .blue-color{
+                text-align: right;
+                position: absolute;
+                right: .2rem;
+                top: .2rem;
+            }
+            .gray-color{
+                margin-top: .2rem;
+                font-size: .22rem;
+                text-align: left!important;
+            }
+            .header-wrap{
+                width: 1rem;
+                margin-right: .1rem;
+            }
+            .header-icon{
+                width: 1rem;
+                height: 1rem;
+                border-radius: 50%;
+            }
+        }
     }
 </style>

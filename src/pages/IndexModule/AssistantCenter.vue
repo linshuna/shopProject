@@ -3,17 +3,15 @@
         <template v-if="utype==1">
             <!--店长-->
             <div class="header-wrap shop-store-wrap">
-                <div class="bill-wrap">
-                    <p class="fixed-wrap">
-                        <span>今日收款{{clerk.orders}}笔</span>
-                        <span>{{utype==1?'店长':utype==2?'店员':'财务'}}</span>
-                    </p>
-                    <p class="money">{{clerk.income}}</p>
+                <div class="header-msg">
+                    <img :src="info.avatar" class="my-icon"/>
+                    <p>{{utype==1?'店长':utype==2?'店员':'财务'}}</p>
+                    <p>{{info.realname}}</p>
                 </div>
                 <div class="money-wrap"> 
                     <div>
-                        <img :src="info.avatar" class="my-icon"/>
-                        <p>{{info.realname}}</p>
+                        <p class="money">{{clerk.income}}</p>
+                        <p>今日收款{{clerk.orders}}笔</p>
                     </div>
                     <div @click="goUrl('/record')" class="right-inner">
                         <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
@@ -44,10 +42,10 @@
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
                 <!--/financeCenter-->
-                <li @click="goUrl('/record')">
+                <li @click="goUrl('/recordBack')">
                     <div class="list-con">
                         <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
-                        <span>财务中心</span>
+                        <span>退款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
@@ -298,18 +296,21 @@
                     margin-bottom: .1rem;
                 }
             }
+            .money{
+                font-size: .42rem;
+            }
         }
     }
-    // .shop-store-wrap{
-    //     .money-wrap{
-    //         >div{
-    //             display: inline-block;
-    //             width: auto;
-    //             vertical-align: bottom;
-    //             font-size: .24rem;
-    //         }
-    //     }
-    // }
+    .shop-store-wrap{
+        .header-msg{
+           text-align:center;
+           color: #fff;
+           img{
+               width: 1rem;
+               border-radius: 50%;
+           }
+        }
+    }
     ul{
         li{
             width: 100%;
