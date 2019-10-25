@@ -63,7 +63,7 @@
         </div>
     </div>
     <div v-show="status==2" class="team-center-wrap">
-    
+        
     </div>
     <div v-show="status==3" class="team-center-wrap">
         <ul class="record-list">
