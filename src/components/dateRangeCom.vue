@@ -1,18 +1,19 @@
 <template>
     <div>
         <div class="showTime">
-            <span @click="selectData">{{dateVal | formatDate}}</span> - 
+            <span @click="selectData">{{stime | formatDate}}</span> - 
             <span @click="selectEndData">{{etime | formatDate}}</span>
         </div>
         <div  @touchmove.prevent>
             <mt-datetime-picker 
                 lockScroll="true" 
                 ref="datePicker"
-                v-model="dateVal" 
+                v-model="sdateVal" 
                 type="date"               
                 year-format="{value} 年"  
                 month-format="{value} 月"
                 date-format="{value} 日"
+                :startDate="setStartDate"
                 :endDate="endDate"
                 @confirm="handleConfirm()"></mt-datetime-picker>
             <mt-datetime-picker 
@@ -24,6 +25,7 @@
                 month-format="{value} 月"
                 date-format="{value} 日"
                 :startDate="startDate"
+                :endDate="setEndDate"
                 @confirm="ehandleConfirm()"></mt-datetime-picker>
         </div>
     </div>
@@ -39,26 +41,27 @@ export default {
                 time = time.split("-").join("/")
                 date = new Date(time);
             }else{
-                date = new Date();
+                date = time;
             }
-            console.log(formatDate(date,type))
             return formatDate(date,type)
         }
     },
-    props:["date"],  //接受父组件中请求json得到的日期值
+    props:["date","eDate"],  //接受父组件中请求json得到的日期值
     data(){
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth()+1;
+        var newDate = new Date();
+        var year = newDate.getFullYear();
+        var month = newDate.getMonth()+1;
         return{
-            sdate: '',
-            dateVal: '', 
+            setStartDate: new Date(year-1,0,1),//设置固定的开始时间
+            setEndDate: new Date(year+1,0,1),//设置固定的结束时间
+            sdateVal: '',
             edateVal: '',
             selectedValue: this.date,
-            startDate: new Date(year-10+"/01/01"),
-            endDate: new Date(year+"/"+month+"/01"),
-            stime: '',
-            etime: ''
+            selectedEData: this.eDate,
+            startDate: new Date(year-1,0,1),
+            endDate: newDate,
+            stime: this.date,
+            etime: this.eDate
         }
     },
     mounted() {
@@ -69,25 +72,35 @@ export default {
         selectData() { 
         //如果已经选过日期，则再次打开时间选择器时，日期回显
             if(this.selectedValue){
-                this.dateVal = this.selectedValue
+                this.sdateVal = this.selectedValue
             }else{
-                this.dateVal = this.date
+                this.sdateVal = this.date
             }
             this.$refs['datePicker'].open()
         },
         selectEndData(){
+            if(this.selectedEData){
+                this.edateVal = this.selectedEData
+            }else{
+                this.edateVal = this.eDate
+            }
             this.$refs['eDatePicker'].open()
         },
         handleConfirm(){   //时间选择器点击确定触发confirm方法 
-            this.selectedValue = this.dateVal;            
+            this.selectedValue = this.sdateVal;            
             var te = this.$options.filters['formatDate'];
             //调用本地过滤器
-            var date = te(this.dateVal,1);
+            var date = te(this.sdateVal,1);
+            this.stime = date;
             this.startDate = new Date(date.split("-").join("/"));
-            this.$emit("listenToChild",{dateStr: this.selectedValue,date: date}) //子组件向父组件传值，选择的时间传到父组件，父组件去请求json中这个时间的文章列表显示在页面上
+            this.$emit("stime-event",date)
         },
         ehandleConfirm(){
-            this.etime = te(this.edateVal,1);
+            var te = this.$options.filters['formatDate'];
+            var date = te(this.edateVal,1);
+            this.etime = date;
+            this.endDate = new Date(date.split("-").join("/"));
+            this.$emit("etime-event",date)
         }
     }
 }

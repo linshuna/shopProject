@@ -28,6 +28,7 @@
                             <div>
                                 <img :src="item.avatar" @click="goTeamDetail(item.bid)"/>
                                 <span>{{item.mobile}}</span>
+                                <span v-show="item.is_bind!=1" class="gray-color no-success">(未邀请成功)</span>
                             </div>
                         </div>
                     </v-touch>
@@ -66,7 +67,7 @@
     </div>
     <div v-show="status==3" class="team-center-wrap">
         <div class="date-wrap">
-            <date-com :date="stime" @listenToChild="getTime"></date-com>
+            <date-com :date="stime" :eDate="etime" @stime-event="getsTime" @etime-event="geteTime"></date-com>
             <img src="../../assets/images/store/date-icon.png" class="date-icon"/>
         </div>
         <ul class="record-list" v-if="recordList&&recordList.length>0">
@@ -154,6 +155,9 @@ const VTouch = ()=>import('@/components/touch');
 import DateRangeCom from "@/components/dateRangeCom"
 export default {
     data(){
+        var nDate = new Date();
+        var nYear = nDate.getFullYear();
+        var nMonth = nDate.getMonth()+1;
         return{
             bol: false,
             status: 1,
@@ -174,8 +178,8 @@ export default {
             rollCheck: true,
             totalPage: 0,
             page: 1,
-            stime:'',
-            etime: ''
+            stime: new Date(nYear,0,1),
+            etime: new Date()
         }
     },
     mounted() {
@@ -238,8 +242,13 @@ export default {
                 _this.page++;
             })
         },
-        getTime(value){//获取时间
-            console.log(value)
+        getsTime(value){//获取开始时间
+            this.stime = value;
+            this.initRecord();
+        },
+        geteTime(value){//获取开始时间
+            this.etime = value;
+            this.initRecord();
         },
         saveTeam(){//添加成员
             var reg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
@@ -356,6 +365,9 @@ export default {
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         padding-top: 1.2rem;
+        .no-date-tip{
+            text-align: center;
+        }
     }
     .team-top{
         width: 100%;
