@@ -5,13 +5,20 @@
           @click='checkTab(item)'>{{item.name}}</div>
     </div>
     <div v-if="status == 1" class="mainCon">
-        <input type="text" placeholder="请输入订单号" v-model="orderSn" />
-        <img src="../../assets/images/store/sao-icon.png" @click="saoFn" class="icon"/>
-        <div class="btn-wrap">
-            <button @click="sureOrder">确认订单</button>
+        <div class="mainConInner">
+            <input type="text" placeholder="请输入订单号" v-model="orderSn" />
+            <img src="../../assets/images/store/sao-icon.png" @click="saoFn" class="icon"/>
+            <div class="btn-wrap">
+                <button @click="sureOrder">确认订单</button>
+            </div>
         </div>
+        <p class="red-color tip">核销订单请点击微信扫一扫进行核销</p>
     </div>
     <div class='shop-wrap' v-if="status == 2" ref="contentWrap">
+        <div class="date-wrap">
+            <date-com :date="stime" :eDate="etime" @stime-event="getsTime" @etime-event="geteTime"></date-com>
+            <img src="../../assets/images/store/date-icon.png" class="date-icon"/>
+        </div>
         <template v-if="list&&list.length>0">
             <ul v-show="list">
                 <li v-for="item in list">
@@ -38,24 +45,37 @@
 import NoOrder from '@/components/noOrder'
 import List from "@/components/list"
 import Erweima from "@/components/ShopErWeima"
+import DateRangeCom from "@/components/dateRangeCom"
 export default {
     data(){
+        var nDate = new Date();
+        var nYear = nDate.getFullYear();
+        var etime = nYear+"-"+(nDate.getMonth()+1)+"-"+nDate.getDate();
+        var stimeDate = new Date(nYear,0,1);
+        var stime = stimeDate.getFullYear()+"-"+(stimeDate.getMonth()+1)+"-"+stimeDate.getDate();
         return {
             currenIdx: 0,
             tabData: [
                 {name: '核销订单',id: 1},
                 {name:'核销记录',id: 2}],
             list: null,
+            page: 1,
+            totalPage: 0,
             status: 1,
-            orderSn: ""
+            orderSn: "",
+            stime: stime,
+            etime: etime,
+            rollCheck: true
         }
     },
     components: {
         "list": List,
-        "no-order": NoOrder
+        "no-order": NoOrder,
+        "date-com": DateRangeCom
     },
     watch: {
         orderSn(newVal,oldVal){
+            if(!this.orderSn) return false;
             this.orderSn=this.orderSn.replace(/[\W]/g,'');
         }
     },
@@ -63,12 +83,21 @@ export default {
         this.$nextTick(function(){ 
             this.getJsapi()
             this.orderSn = this.$route.params.ordersn;//获取当前的订单号
-            var date = new Date()
-            this.dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-            this.date = this.dateStr;
+            //获取充值记录
+            window.addEventListener('scroll', this.handleScroll, true); 
         })
     },
     methods: {
+        handleScroll    : function(){//滚动监听
+            var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+            var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+            var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
+            if(sT+wH == bH&&this.page<=this.totalPage){
+                if(!this.rollCheck) return false;
+                this.rollCheck = !this.rollCheck;
+                this.init()
+            }  
+        },
         init(){
             var _this = this;
             this.$http.get("do=clerk_index&m=vipcard")
@@ -84,18 +113,32 @@ export default {
                 }
                 
             })
-
-            
         },
         shopInit(adminid){
             var _this = this;
-            this.$http.get("do=get_used_order_list&m=vipcard&ddate="+this.date+"&adminid="+adminid)
+            this.$http.get("do=get_used_order_list&m=vipcard&stime="+this.stime+"&etime="+this.etime+"&adminid="+adminid+"&page="+this.page)
             .then(function(res){
-                _this.list = res;
+                _this.list = res.list;
+                _this.totalPage = res.allpage;
+                _this.page++;
+                _this.rollCheck = true;
             })
+        },
+        getsTime(value){//获取开始时间
+            this.stime = value;
+            this.page = 1;
+            this.list = [];
+            this.init();
+        },
+        geteTime(value){//获取开始时间
+            this.etime = value;
+            this.page = 1;
+            this.list = [];
+            this.init();
         },
         checkTab: function(item){
             this.status = item.id;
+            if(item.id == 1) return false;
             this.init()
         },
         sureOrder(){//确认订单
@@ -206,11 +249,16 @@ export default {
     }
     .mainCon{
         width: 100%;
-        position: absolute;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%,0);
+        height: calc(100%);
+        position: relative;
         text-align: center;
+        .mainConInner{
+            width: 100%;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%,0);
+        }
         input{
             display: inline-block;
             width: 60%;
@@ -235,6 +283,26 @@ export default {
                 margin-top: .42rem;
                 font-size: .24rem;
             }
+        }
+        .tip{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            color: red;
+            font-size: .22rem;
+        }
+    }
+    .date-wrap{
+        position: relative;
+        height: .96rem;
+        .date-icon{
+            width: .46rem;
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            margin-top: -.26rem;
         }
     }
     .no-tip-data{

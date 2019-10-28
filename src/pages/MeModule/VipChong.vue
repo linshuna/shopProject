@@ -69,20 +69,13 @@ export default {
     },
     methods: {
         check(item){
-            if(item.def){
+            if(item.def == true){
                 this.checkedMoney = ''
                 this.defShow = true;
             }else{
                 this.checkedMoney = item.num;
                 this.defShow = false;
             }
-        },
-        pressInp(){
-            alert("触发")
-            // if(ev.keyCode === 13){
-            //     alert(ev)
-            // }else{
-            // }
         },
         chongFn(){
             var _this = this;
@@ -98,6 +91,9 @@ export default {
             WeixinJSBridge.invoke('getBrandWCPayRequest',result,function(res){
                 if (res.err_msg == 'get_brand_wcpay_request:ok') {
                     self.$toast({message:'支付成功'});
+                    self.checkedMoney = 50;
+                    self.defMoney = '';
+                    self.defShow = false;
                     return false;
                 }else if(res.err_msg == 'get_brand_wcpay_request:cancel'){
                     // alert('已取消支付');

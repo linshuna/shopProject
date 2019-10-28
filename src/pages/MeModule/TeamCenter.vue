@@ -157,7 +157,9 @@ export default {
     data(){
         var nDate = new Date();
         var nYear = nDate.getFullYear();
-        var nMonth = nDate.getMonth()+1;
+        var etime = nYear+"-"+(nDate.getMonth()+1)+"-"+nDate.getDate();
+        var stimeDate = new Date(nYear,0,1);
+        var stime = stimeDate.getFullYear()+"-"+(stimeDate.getMonth()+1)+"-"+stimeDate.getDate();
         return{
             bol: false,
             status: 1,
@@ -178,8 +180,8 @@ export default {
             rollCheck: true,
             totalPage: 0,
             page: 1,
-            stime: new Date(nYear,0,1),
-            etime: new Date()
+            stime: stime,
+            etime: etime
         }
     },
     mounted() {
@@ -728,11 +730,11 @@ export default {
         position: relative;
         height: .96rem;
         .date-icon{
-            width: .6rem;
+            width: .46rem;
             position: absolute;
             top: 50%;
             right: 10%;
-            margin-top: -.3rem;
+            margin-top: -.26rem;
         }
     }
 </style>

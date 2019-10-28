@@ -266,11 +266,11 @@ export default {
         position: relative;
         height: .96rem;
         .date-icon{
-            width: .6rem;
+            width: .46rem;
             position: absolute;
             top: 50%;
             right: 10%;
-            margin-top: -.3rem;
+            margin-top: -.26rem;
         }
     }
     
