@@ -7,7 +7,7 @@
     <div v-if="status == 1" class="mainCon">
         <div class="mainConInner">
             <input type="text" placeholder="请输入订单号" v-model="orderSn" />
-            <img src="../../assets/images/store/sao-icon.png" @click="saoFn" class="icon"/>
+            <!--<img src="../../assets/images/store/sao-icon.png" @click="saoFn" class="icon"/>-->
             <div class="btn-wrap">
                 <button @click="sureOrder">确认订单</button>
             </div>
