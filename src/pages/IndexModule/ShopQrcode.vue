@@ -91,7 +91,6 @@ export default {
         width: 100%;
         height: 100%;
         position: absolute;
-        top: 0;
         left: 0;
         background: url(../../assets/images/verification-icon.png) #E40000 no-repeat;
         background-size: 100%;

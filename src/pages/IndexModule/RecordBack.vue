@@ -157,7 +157,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: 0;
+        top: .82rem;
         z-index: 2;
     }
     .tab>div{
@@ -177,7 +177,6 @@ export default {
         height: 100%;
         position: absolute;
         left: 0;
-        top: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding-top: 1rem;

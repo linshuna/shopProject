@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+      <div class="shut-wrap">
+        <img src="./assets/images/shut-btn.png" @click="shutWin"/>
+      </div>
       <router-view/>
   </div>
 </template>
@@ -9,8 +12,28 @@ export default {
   name: 'App',
   mounted(){
     
-  }
+  },
+  methods: {
+    shutWin(){
+      wx.closeWindow()
+    }
+  },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+    .shut-wrap{
+      width: 100%;
+      height: .86rem;
+      background: #fff;
+      position: relative;
+      z-index: 10;
+      img{
+        width: 1.4rem;
+        position: absolute;
+        right: .1rem;
+        top: 50%;
+        margin-top: -.3rem;
+      }
+    }
+</style>

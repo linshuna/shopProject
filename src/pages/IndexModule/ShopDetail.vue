@@ -102,7 +102,6 @@ export default {
         width: 100%;
         height: 100%;
         position: absolute;
-        top: 0;
         left: 0;
         padding-bottom: 1.2rem;
         overflow-y: auto;

@@ -112,7 +112,6 @@ export default {
         height: calc(100%);
         position: absolute;
         left: 0;
-        top: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 1rem;

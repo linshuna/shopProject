@@ -98,7 +98,6 @@ export default {
         height: 100%;
         position: absolute;
         left: 0;
-        top: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -113,7 +112,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: 0;
+        top: .82rem;
         z-index: 2;
     }
     .tab>div{

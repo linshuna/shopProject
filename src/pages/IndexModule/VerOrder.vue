@@ -191,7 +191,6 @@ export default {
         height: 100%;
         position: absolute;
         left: 0;
-        top: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -227,7 +226,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: 0;
+        top: .82rem;
         z-index: 2;
     }
     .tab>div{
@@ -287,7 +286,7 @@ export default {
         .tip{
             position: absolute;
             width: 100%;
-            bottom: 0;
+            bottom: 8%;
             left: 0;
             text-align: center;
             color: red;
