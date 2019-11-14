@@ -1,37 +1,22 @@
 <template>
     <div>
         <div class='card-wrap'>
-            <div class='card-list' @click='clickMarskShow'>
+            <div class='card-list' v-for="item in list" @click='clickMarskShow(item)'>
                 <div>
                     <div class='card-con'>
                         <div class='card-money'>
                             <span class='font-20'>￥</span>
-                            <span>10</span>
+                            <span>{{item.card_money}}</span>
                         </div>
                         <div>
                             <div>优惠券</div>
-                            <div class='font-20'>*****可用</div>
+                            <div class='font-20'>{{item.branch_name}}可用</div>
                         </div> 
                     </div>
-                    <div class='font-20 useful-date'>有效日期：2018.02.12-2019.01.01</div>
+                    <div class='font-20 useful-date'>领取日期：{{item.ctime}}</div>
+                    <!--<div class='font-20 useful-date'>有效日期：{{item.ctime}}</div>-->
                 </div>
-                <div class='right-new-wrap'>立即使用</div>
-            </div>
-            <div class='card-list' @click='clickMarskShow'>
-                <div>
-                    <div class='card-con'>
-                        <div class='card-money'>
-                            <span class='font-20'>￥</span>
-                            <span>20</span>
-                        </div>
-                        <div>
-                            <div>优惠券</div>
-                            <div class='font-20'>*****可用</div>
-                        </div> 
-                    </div>
-                    <div class='font-20 useful-date'>有效日期：2018.02.12-2019.01.01</div>
-                </div>
-                <div class='right-new-wrap'>立即使用</div>
+                <div class='right-new-wrap' v-if="item.is_used==2">立即使用</div>
             </div>
         </div>
 
@@ -42,7 +27,7 @@
                     <div class='title'>恭喜您</div>
                     <div class='title'>获得优惠券</div>
                     <div class='card-con'>
-                        <div class='card-money'><span class='font-20'>￥</span><span>10</span></div>
+                        <div class='card-money'><span class='font-20'>￥</span><span>{{checkMsg.card_money}}</span></div>
                         <div>优惠券</div>
                     </div>
                 </div>
@@ -58,12 +43,48 @@
 export default {
     data(){
         return{
-            show: false
+            show: false,
+            page: 1,
+            totalPage: 0,
+            check: true,
+            list: [],
+            checkMsg: {}
         }
     },
+    mounted() {
+        this.$nextTick(function(){
+            this.init()
+            window.addEventListener('scroll', this.handleScroll, true); 
+        })
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     methods: {
-        clickMarskShow(){
+        handleScroll    : function(){//滚动监听
+            var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+            var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+            var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
+            if(sT+wH == bH&&this.page<=this.totalPage){
+                if(!this.check) return false;
+                this.check = !this.check;
+                this.init()
+            }  
+        },
+        init(){
+            var _this = this;
+            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=10&is_used=1&sid=1")
+            .then(function(res){ 
+                _this.check = true;
+                _this.page++;
+                _this.totalPage = res.allpage;
+                _this.list = _this.list.concat(res.list);
+            })
+        },
+        clickMarskShow(item){
+            if(item.is_used==1)return false;
             this.show = true;
+            this.checkMsg = item;
         },
         clickMarskHide(){
             this.show = false;

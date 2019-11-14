@@ -14,6 +14,13 @@
             <input type="text" v-model="money"/>
             <span class='font-34'>元</span>
         </div>
+        <div class="coupon-wrap">
+            <span>优惠券</span>
+            <com-select 
+                selectType="coupon"
+                :selectData="list"
+                @checkedSelect="checkNum"></com-select>
+        </div>
         <div class='btn-wrap'>
             <button class='order-btn' @click="chongFn">确定支付</button>   
         </div>
@@ -21,17 +28,25 @@
 
 </template>
 <script>
+import ComSelect from "@/components/selectCom"
 export default {
     data(){
         return {
             sid: '',
             shopInfo: '',
-            money: ''
+            money: '',
+            cList: [],//获取所有的数据
+            list: [],//根据输入筛选
+            cardid: ''//使用的优惠券id
         }
+    },
+    components:{
+        "com-select": ComSelect
     },
     mounted() {
         this.sid = this.$route.params.id;
         if(this.sid){
+            this.init();//获取所有未使用的优惠券
             var _this = this;
             this.$http.get("do=repay&m=vipcard&sid="+this.sid)
             .then(function(res){
@@ -39,7 +54,42 @@ export default {
             })
         }
     },
+    watch: {
+        money(newVal){
+            if(!newVal) return false;
+            var cList = JSON.parse(JSON.stringify(this.cList))
+            this.list = cList.filter(ele => {
+                return ele.card_money<newVal;
+            })
+        }
+    },
     methods: {
+        init(){
+            var _this = this;
+            //对应店铺能获取到未使用的优惠
+            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=0&is_used=2&sid="+this.sid)
+            .then(function(res){ 
+                var list = res.list;
+                list.forEach(ele => {
+                    ele.name = ele.card_title
+                })
+                _this.list = list;
+                _this.cList = JSON.parse(JSON.stringify(res.list));
+            })
+            _this.list = _this.cList = [{
+                branch_name: "空勤灶三号湾店",
+                card_money: "50.00",
+                card_title: "星巴克50元抵扣券",
+                name: "星巴克50元抵扣券",
+                cardid: "1",
+                ctime: "2019-11-12 16:59",
+                sid: "1",
+            }]
+        },
+        checkNum(value){
+            this.cardid = value.cardid;
+            console.log(value)
+        },
         chongFn(){
             if(!this.money){
                 this.$toast({message: "请输入支付金额"})
@@ -63,7 +113,7 @@ export default {
                 return false;
             }
             var _this = this;
-            this.$http.get("do=pay&m=vipcard&sid="+this.sid+"&money="+this.money)
+            this.$http.get("do=pay&m=vipcard&sid="+this.sid+"&money="+this.money+"&cardid="+this.cardid)
             .then(function(res){
                 _this.$toast({message: '支付成功'})
                 setTimeout(function(){
@@ -128,5 +178,14 @@ export default {
         color: #fff;
         background: red;
         font-size: .28rem;
+    }
+    .coupon-wrap{
+        margin-top: .2rem;
+        >*{
+            vertical-align: middle;
+        }
+    }
+    .select_box{
+        width: 80%;
     }
 </style>
