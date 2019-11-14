@@ -15,7 +15,7 @@
             <span class='font-34'>元</span>
         </div>
         <div class="coupon-wrap">
-            <span>优惠券</span>
+            <span>优惠券：</span>
             <com-select 
                 selectType="coupon"
                 :selectData="list"
@@ -36,7 +36,7 @@ export default {
             shopInfo: '',
             money: '',
             cList: [],//获取所有的数据
-            list: [],//根据输入筛选
+            list: [{name:"请选择",cardid:''}],//根据输入筛选
             cardid: ''//使用的优惠券id
         }
     },
@@ -58,9 +58,10 @@ export default {
         money(newVal){
             if(!newVal) return false;
             var cList = JSON.parse(JSON.stringify(this.cList))
-            this.list = cList.filter(ele => {
-                return ele.card_money<newVal;
+            var filters = cList.filter(ele => {
+                return ele.card_money-0<newVal-0;
             })
+            this.list = this.list.concat(filters);
         }
     },
     methods: {
@@ -73,22 +74,23 @@ export default {
                 list.forEach(ele => {
                     ele.name = ele.card_title
                 })
-                _this.list = list;
                 _this.cList = JSON.parse(JSON.stringify(res.list));
             })
-            _this.list = _this.cList = [{
-                branch_name: "空勤灶三号湾店",
-                card_money: "50.00",
-                card_title: "星巴克50元抵扣券",
-                name: "星巴克50元抵扣券",
-                cardid: "1",
-                ctime: "2019-11-12 16:59",
-                sid: "1",
-            }]
+            // _this.list = _this.cList = [{
+            //     name:"请选择",
+            //     cardid: ''
+            // },{
+            //     branch_name: "空勤灶三号湾店",
+            //     card_money: "50.00",
+            //     card_title: "星巴克50元抵扣券",
+            //     name: "星巴克50元抵扣券",
+            //     cardid: "1",
+            //     ctime: "2019-11-12 16:59",
+            //     sid: "1",
+            // }]
         },
         checkNum(value){
             this.cardid = value.cardid;
-            console.log(value)
         },
         chongFn(){
             if(!this.money){
@@ -186,6 +188,7 @@ export default {
         }
     }
     .select_box{
-        width: 80%;
+        width: 3.5rem!important;
+        padding-left: .34rem;
     }
 </style>

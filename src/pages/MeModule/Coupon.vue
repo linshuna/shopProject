@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class='card-wrap'>
+        <div class='card-wrap' v-if="list.length>0">
             <div class='card-list' v-for="item in list" @click='clickMarskShow(item)'>
                 <div>
                     <div class='card-con'>
@@ -19,7 +19,7 @@
                 <div class='right-new-wrap' v-if="item.is_used==2">立即使用</div>
             </div>
         </div>
-
+        <div class="no-data-tip" v-else>暂无未使用的优惠券</div>
         <!-- 点击使用的阴影 -->
         <div v-show='show' class='marsk' @click='clickMarskHide'>
             <div class='toast-bg'>
@@ -73,7 +73,7 @@ export default {
         },
         init(){
             var _this = this;
-            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=10&is_used=1&sid=1")
+            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=10&is_used=2&sid=1")
             .then(function(res){ 
                 _this.check = true;
                 _this.page++;

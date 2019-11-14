@@ -75,11 +75,11 @@
                 <img src='../../assets/images/msg-center-icon.png'/>
                 <div>消息中心</div>
             </div>
-            <!--<div class='square' @click='goCoupon'>
+            <div class='square' @click='goCoupon'>
                 <img src='../../assets/images/card-icon.png'/>
                 <div>优惠券</div>
             </div>
-            <div class='square' @click='goTeamCenter'>
+            <!--<div class='square' @click='goTeamCenter'>
                 <img src='../../assets/images/tem-center-icon.png' style='height:.5rem;width:.5rem;'/>
                 <div>团队中心</div>
             </div>-->
