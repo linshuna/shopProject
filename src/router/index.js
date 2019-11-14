@@ -36,6 +36,11 @@ export default new Router({
       meta: {title: "商户中心"},
       component: resolve => require(['@/pages/IndexModule/ShopStore'], resolve)
     },{
+      path: "/shopStoreDetail/:msg",
+      name: "ShopStoreDetail",
+      meta: {title: "商户详情"},
+      component: resolve => require(['@/pages/IndexModule/ShopStoreDetail'], resolve)
+    },{
       path: "/assistantCenter",
       name: "AssistantCenter",
       meta: {title: "店员中心"},

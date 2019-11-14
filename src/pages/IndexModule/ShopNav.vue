@@ -27,7 +27,7 @@
             </div>
         </div>
         <ul class="floor-list" v-if="shopList[idx]">
-            <li v-for="item in shopList[idx]">
+            <li v-for="item in shopList[idx]" @click="goUrl(item)">
                 <p class="shop-name">{{item.branch_name}}</p>
                 <p class="gray-color">
                     <img src="../../assets/images/address-icon.png">
@@ -42,8 +42,9 @@
 <script>
 export default {
     data(){
+        var idx = window.localStorage.getItem('stopIdx')
         return{
-            idx: 0,
+            idx: idx==undefined?0:idx,
             floorData: 0,//获取楼层 层数
             checkedNum: 0,//楼层的总数
             shopNum: 0,//入驻的楼层总数
@@ -84,9 +85,13 @@ export default {
             }
             if(index<0||index>=this.checkedNum) return false;
             this.idx = index;
+            window.localStorage.setItem('stopIdx',index);
         },
         goStore(){
             this.$router.push("/assistantCenter")
+        },
+        goUrl(item){
+            this.$router.push("/shopStoreDetail/"+encodeURIComponent(JSON.stringify(item)))
         }
     },
 }

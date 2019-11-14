@@ -94,8 +94,11 @@ Vue.prototype.getJsapi = function () {
 }
 
 router.afterEach(function (to, from, next) {
-  var name = to.meta.title;
+  var name = to.meta.title,pName = to.name;
   document.title = name;
+  if(pName!='ShopNav'&&pName!='ShopStore'&&pName!='ShopStoreDetail'){
+    window.localStorage.clear('stopIdx')
+  }
 })
 
 // var gobackUrl = window.location.href;
