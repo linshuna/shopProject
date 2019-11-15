@@ -19,7 +19,7 @@
                 <div class="floor-num-inner">
                     <img src="../../assets/images/left-white-icon.png" @click="lookFloor(1)" class="left-icon"/>    
                     <ul class="floor-num" :style="{'left': -((idx-3)*48)+'px'}">
-                        <li v-for="(item,index) in floorData" :class="{'active': index==idx}">{{item}}F</li>
+                        <li v-for="(item,index) in floorData" :class="{'active': index==idx}" @click="checkFloor(index)">{{item}}F</li>
                     </ul>
                     <img src="../../assets/images/right-white-icon.png" @click="lookFloor(-1)" class="right-icon"/>
                 </div>
@@ -76,6 +76,17 @@ export default {
         })
     },
     methods: {
+        checkFloor(index){
+            var num = index>(this.idx-0)?-1:1,
+                cha = index-(this.idx-0)-2;
+            if(num>0){
+                index = index - cha;
+            }else{
+                index = index + cha;
+            }
+            if(index<0||index>this.checkedNum) return false;
+            this.idx = index;
+        },
         lookFloor(num){
             var index = this.idx;
             if(num>0){
@@ -83,7 +94,7 @@ export default {
             }else{
                 ++index;
             }
-            if(index<0||index>=this.checkedNum) return false;
+            if(index<0||index>this.checkedNum) return false;
             this.idx = index;
             window.localStorage.setItem('stopIdx',index);
         },

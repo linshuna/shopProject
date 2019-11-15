@@ -87,7 +87,11 @@ Vue.prototype.getJsapi = function () {
           'addCard',
           'chooseCard',
           'openCard',
-          'error'
+          'error',
+          'chooseImage',
+          'previewImage',
+          'uploadImage',
+          'downloadImage'
         ]
       });
     })

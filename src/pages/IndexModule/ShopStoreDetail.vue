@@ -1,8 +1,8 @@
 <template>
     <div class="main-wrap">
         <p>位置示意图：</p>
-        <img :src="msg.place_pic" class="place_pic"/>
-        <p>电话：{{msg.mobile}}</p>
+        <img :src="msg.place_pic" class="place_pic" @click="proxyImage(msg.place_pic)"/>
+        <p>电话：<a :href="'tel:'+msg.mobile">{{msg.mobile}}</a></p>
         <p>图片列表：</p>
         <div class='slider-wrap'>
             <div class='slider-inner'>
@@ -27,7 +27,17 @@ export default {
         return {
             msg: msg
         }
-    }
+    },
+    mounted() {
+        this.getJsapi()
+    },
+    methods: {
+        proxyImage(url){
+            wx.previewImage({
+                current: url
+            });
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>
