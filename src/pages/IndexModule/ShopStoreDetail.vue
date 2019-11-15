@@ -2,7 +2,7 @@
     <div class="main-wrap">
         <p>位置示意图：</p>
         <img :src="msg.place_pic" class="place_pic" @click="proxyImage(msg.place_pic)"/>
-        <p>电话：<a :href="'tel:'+msg.mobile">{{msg.mobile}}</a></p>
+        <p>电话：<a :href="'tel:'+msg.mobile" class="phone">{{msg.mobile}}</a></p>
         <p>图片列表：</p>
         <div class='slider-wrap'>
             <div class='slider-inner'>
@@ -34,7 +34,8 @@ export default {
     methods: {
         proxyImage(url){
             wx.previewImage({
-                current: url
+                current: url,
+                urls: [url]
             });
         }
     },
@@ -75,5 +76,8 @@ export default {
     }
     .place_pic{
         width: 100%;
+    }
+    .phone{
+        font-weight: 550;
     }
 </style>

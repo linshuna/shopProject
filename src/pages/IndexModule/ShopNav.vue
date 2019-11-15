@@ -33,6 +33,7 @@
                     <img src="../../assets/images/address-icon.png">
                     <span>{{item.floor_no}}</span>
                 </p>
+                <p>营业时间：{{item.telephone}}</p>
             </li>
         </ul>
         <p class="gray-color no-data-tip" v-else>该楼层暂无店铺介绍</p>
