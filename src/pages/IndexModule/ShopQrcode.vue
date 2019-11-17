@@ -37,6 +37,11 @@
                 </div>
             </div>
             <p class="tip">请将二维码展示给店员</p>
+            <div class="detail-msg">
+                <p>名称：{{shop.goods_name}}</p>
+                <p>单价：{{shop.price}}元</p>
+                <p>最多核销数量：{{shop.total}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -48,7 +53,8 @@ export default {
             code: '',
             erweima: {},
             shopName: '',
-            orderSn: ''
+            orderSn: '',
+            shop: ''
         }
     },
     components:{
@@ -73,7 +79,9 @@ export default {
                 document.title = "付款码"
             }else{//核销订单二维码
                 this.orderSn = this.$route.params.ordersn;
-                this.erweima = decodeURIComponent(this.$route.params.qrcode)
+                var data = JSON.parse(decodeURIComponent(this.$route.params.qrcode));
+                this.shop = data;
+                this.erweima = data.qrcode;
             }
         })
     },
@@ -226,6 +234,14 @@ export default {
         left: 50%;
         transform: translate(-50%,0);
         bottom: .34rem;
+    }
+    .detail-msg{
+        width: 65%;
+        text-align: left;
+        color: #fff;
+        font-size: .24rem;
+        margin: 0 auto;
+        padding-top: .4rem;
     }
     .tip{
         text-align: center;

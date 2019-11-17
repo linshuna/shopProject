@@ -13,7 +13,7 @@
                         <p class="money">{{clerk.income}}</p>
                         <p>今日收款{{clerk.orders}}笔</p>
                     </div>
-                    <div @click="goUrl('/record')" class="right-inner">
+                    <div @click="goUrl('/recordBackLook')" class="right-inner">
                         <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
                         <p>数据记录</p>
                     </div>

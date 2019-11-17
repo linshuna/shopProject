@@ -101,10 +101,9 @@ export default {
         var stime = stimeDate.getFullYear()+"-"+(stimeDate.getMonth()+1)+"-"+stimeDate.getDate();
         return{
             info: '',
-            status: 1,
+            status: 3,
             tabData: [
                 {name: '会员支付订单',id: 1},
-                {name: '核销订单',id: 2},
                 {name: '退款订单',id: 3},
             ],
             stime: etime,
@@ -264,7 +263,7 @@ export default {
     }
     .tab>div{
         display: inline-block;
-        width: 33.3%;
+        width: 50%;
         text-align: center;
         padding: .3rem 0;
         box-sizing: border-box;

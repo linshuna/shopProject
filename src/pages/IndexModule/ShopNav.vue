@@ -78,14 +78,6 @@ export default {
     },
     methods: {
         checkFloor(index){
-            var num = index>(this.idx-0)?-1:1,
-                cha = index-(this.idx-0)-2;
-            if(num>0){
-                index = index - cha;
-            }else{
-                index = index + cha;
-            }
-            if(index<0||index>this.checkedNum) return false;
             this.idx = index;
         },
         lookFloor(num){
@@ -95,7 +87,7 @@ export default {
             }else{
                 ++index;
             }
-            if(index<0||index>this.checkedNum) return false;
+            if(index<0||index>=this.checkedNum) return false;
             this.idx = index;
             window.localStorage.setItem('stopIdx',index);
         },

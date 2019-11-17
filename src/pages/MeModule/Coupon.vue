@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="tab">
+            <div v-for="(item,index) in tabData" :class="{'active': status==item.id}" 
+            @click='checkTab(item)'>{{item.name}}</div>
+        </div>
         <div class='card-wrap' v-if="list.length>0">
             <div class='card-list' v-for="item in list" @click='clickMarskShow(item)'>
                 <div>
@@ -19,7 +23,8 @@
                 <div class='right-new-wrap' v-if="item.is_used==2">立即使用</div>
             </div>
         </div>
-        <div class="no-data-tip" v-else>暂无未使用的优惠券</div>
+        <div class="no-data-tip" v-if="list.length==0&&status==2">暂无未使用的优惠券</div>
+        <div class="no-data-tip" v-if="list.length==0&&status==1">暂无使用记录</div>
         <!-- 点击使用的阴影 -->
         <div v-show='show' class='marsk' @click='clickMarskHide'>
             <div class='toast-bg'>
@@ -31,9 +36,9 @@
                         <div>优惠券</div>
                     </div>
                 </div>
-                <div class='button' @click='rightNowUse'>
+                <!--<div class='button' @click='rightNowUse'>
                     <button>立即使用</button>
-                </div>
+                </div>-->
             </div>
 
         </div>
@@ -48,7 +53,12 @@ export default {
             totalPage: 0,
             check: true,
             list: [],
-            checkMsg: {}
+            checkMsg: {},
+            status: 2,
+            tabData: [
+                {name: '未使用',id: 2},
+                {name: '已使用',id: 1},
+            ],
         }
     },
     mounted() {
@@ -73,13 +83,19 @@ export default {
         },
         init(){
             var _this = this;
-            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=10&is_used=2&sid=1")
+            this.$http.get("do=user_coupon&m=vipcard&page="+this.page+"&psize=10&is_used="+this.status+"&sid=1")
             .then(function(res){ 
                 _this.check = true;
                 _this.page++;
                 _this.totalPage = res.allpage;
                 _this.list = _this.list.concat(res.list);
             })
+        },
+        checkTab: function(item){
+            this.status = item.id;
+            this.list = [];
+            this.page = 1;
+            this.init();
         },
         clickMarskShow(item){
             if(item.is_used==1)return false;
@@ -97,6 +113,29 @@ export default {
 </script>
 <style lang="scss" scoped>
     @import '../../assets/css/style';
+    .no-data-tip{
+        padding-top: 1rem;
+    }
+    .tab{
+        width: 100%;
+        background: #fff;
+        position: fixed;
+        left: 0;
+        top: .82rem;
+        z-index: 10
+    }
+    .tab>div{
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        padding: .3rem 0;
+        box-sizing: border-box;
+        font-size: .3rem;
+    }
+    .tab .active{
+        color: #DC3E56;
+        border-bottom: 1px solid #DC3E56;
+    }
     .card-wrap{
         width: 100%;
         padding: .4rem .34rem;

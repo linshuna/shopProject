@@ -11,10 +11,10 @@
             <div class="remove-wrap" ref='remove'>
                 <!--默认-->
                 <template v-if="type == ''">
-                    <span @click.stop="handleChongClick" class="yellow-bg">充值</span>
-                    <span @click.stop="handleRecordClick" class="setting-bg">消费记录</span>
-                    <span @click.stop="handlesettingClick" class="green-bg">设置</span>
-                    <span @click.stop="handleDelClick" class="blue-bg">删除</span>
+                    <div @click.stop="handleChongClick"><span class="red-bg">充值</span></div>
+                    <div @click.stop="handleRecordClick" class="setting-bg"><span class="back-bg">个人消费记录</span></div>
+                    <div @click.stop="handlesettingClick"><span class="green-bg">设置</span></div>
+                    <div @click.stop="handleDelClick"><span class="blue-bg">删除</span></div>
                 </template>
             </div>
             
@@ -117,13 +117,13 @@
     }
     .slider{
         width: 100%;
-        height: 1rem;
+        height: 1.32rem;
         position: relative;
         user-select: none;
         .content{
             position: absolute;
             left: 0;
-            right: -3.6rem;
+            right: -4.2rem;
             top: 0;
             bottom: 0;
             z-index: 2;
@@ -134,8 +134,8 @@
         .remove-wrap{
             position: absolute;
             // width: 100%;
-            width: 3.6rem;
-            height: 1.2rem;
+            width: 4.2rem;
+            height: 1.32rem;
             right: 0;
             top: 0;
             z-index: 2;
@@ -157,24 +157,32 @@
             .reject-icon{
                 width: .4rem;
             }
-            >span{
+            >div{
                 display: inline-block;
                 // min-width: .5rem;
-                width: 22%;
+                width: 20%;
                 height: 100%;
-                color: $white;
-                font-size: .24rem;
+                padding: 0.12rem .08rem;
+                box-sizing: border-box;
                 text-align: center;
+                span{
+                    display: inline-block;
+                    width: 100%;
+                    height: .56rem;
+                    line-height: .56rem;
+                    border: none;
+                    color: $white;
+                    font-size: .24rem;
+                }
             }
             .setting-bg{
-                width: 30%;
-                background: #333;
+                width: 40%;
+            }
+            .back-bg{
+                background: #333;                
             }
             .green-bg{
                 background: #00c800;
-            }
-            .yellow-bg{
-                background: yellow;
             }
             .red-bg{
                 background: red;

@@ -25,10 +25,26 @@
                         @record-event="goUrl('/record')"
                         @del-event="settingTeamDel($event,item)">
                         <div class="list-inner">
-                            <div>
-                                <img :src="item.avatar" @click="goTeamDetail(item.bid)"/>
-                                <span>{{item.mobile}}</span>
-                                <span v-show="item.is_bind!=1" class="gray-color no-success">(未邀请成功)</span>
+                            <div v-if="item.is_bind==1">
+                                <img :src="item.avatar" @click="goTeamDetail(item)"/>
+                                <div class="list-r">
+                                    <p>
+                                        <span>{{item.nickname}}</span>
+                                        <span v-show="item.is_bind!=1" class="gray-color no-success">(未邀请成功)</span>
+                                    </p>
+                                    <p>{{item.mobile}}</p>        
+                                    <p>总消费限制：{{item.all_limit}}</p>                        
+                                </div>
+                                <div class="list-tip">(可左滑)</div>
+                            </div>
+                            <div class="not-success" @click="checkTab(tabData[1])" v-else>
+                                <img :src="item.avatar"/>
+                                <div class="list-r">
+                                    <p>
+                                        <span>{{item.mobile}}</span>
+                                        <span class="gray-color no-success">(未邀请成功)</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </v-touch>
@@ -322,12 +338,14 @@ export default {
         },
         cancel(){//取消
             this.show = false;
+            this.showChong = false;
         },
         save(){//保存
             this.show = false;
+            this.showChong = false;
         },
-        goTeamDetail(id){
-            this.$router.push("/myTeamDetail/"+id)
+        goTeamDetail(item){
+            this.$router.push("/myTeamDetail/"+item.bid)
         },
         goUrl(url){
             this.$router.push(url)
@@ -430,7 +448,7 @@ export default {
     }
     .people-list .list{
         width: 100%;
-        height: 1.2rem;
+        height: 1.32rem;
         box-sizing: border-box;
         border-bottom: 1px solid #DEDEDE;
         position: relative;
@@ -444,8 +462,22 @@ export default {
             padding: .1rem 0 .1rem .34rem;
             box-sizing: border-box;
             text-align: left;
-            >*{
+            position: relative;
+            img{
                 vertical-align:middle;
+            }
+            .list-r{
+                display:inline-block;
+                max-width: 40%;
+                vertical-align:middle;
+                padding-left: .1rem;
+            }
+            .list-tip{
+                display: inline-block;
+                color: gray;
+            }
+            .not-success{
+                margin-top: .38rem;
             }
         }
     }
@@ -564,11 +596,7 @@ export default {
         border-bottom: 1px solid #DEDEDE;
         padding:.2rem 0;
     }
-    .list div{
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle;
-    }
+    
     .header-icon{
         width: .52rem;
         height: .52rem;

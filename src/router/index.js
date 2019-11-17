@@ -86,6 +86,11 @@ export default new Router({
       meta: {title:"订单"},
       component: resolve => require(['@/pages/IndexModule/RecordBack'], resolve)
     },{
+      path: "/recordBackLook",
+      name: "recordBackLook",
+      meta: {title:"数据记录"},
+      component: resolve => require(['@/pages/IndexModule/recordBackLook'], resolve)
+    },{
       path: '/shopDetail/:id',
       name: 'ShopDetail',
       meta: { title: '商品详情'},

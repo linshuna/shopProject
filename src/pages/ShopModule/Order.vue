@@ -85,7 +85,17 @@ export default {
             this.init()
         },
         goOrderDetail(item){
-            var data = encodeURIComponent(item.qrcode);
+            if(this.status == 3){//已核销
+               this.$toast({message: '核销成功'});
+               return false;
+            }
+            var cData = {
+                qrcode: encodeURIComponent(item.qrcode),
+                price: item.price,
+                total: item.total,
+                goods_name: item.goods_name
+            }
+            var data = encodeURIComponent(JSON.stringify(cData))
             // this.$router.push({name: 'ShopQrcode',params:{'qrcode': item.qrcode}})
             this.$router.push("/shopQrcode/hx/0/"+data+"/"+item.ordersn)
         }
