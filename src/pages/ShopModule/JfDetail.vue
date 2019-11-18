@@ -133,6 +133,7 @@ export default {
         left: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        padding-top: .86rem;
     }
     /* 头部 */
     .jifen-top{

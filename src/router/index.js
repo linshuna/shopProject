@@ -230,6 +230,11 @@ export default new Router({
       name: "ParkList",
       meta: {title: "停车缴费标准"},
       component: resolve => require(['@/pages/IndexModule/ParkList'], resolve)
+    },{
+      path: "/selfConsume/:id",
+      name: "SelfConsume",
+      meta: {title: "个人消费信息"},
+      component: resolve => require(['@/pages/MeModule/SelfConsume'], resolve)
     }
   ]
 })

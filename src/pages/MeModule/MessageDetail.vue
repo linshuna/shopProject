@@ -22,6 +22,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .con-wrap{
+        padding-top: .86rem; 
+    }
     .marsk-wrap{
         width:100%;
         height: 100%;

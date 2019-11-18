@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-con">
         <template v-if="utype==1">
             <!--店长-->
             <div class="header-wrap shop-store-wrap">
@@ -13,7 +13,7 @@
                         <p class="money">{{clerk.income}}</p>
                         <p>今日收款{{clerk.orders}}笔</p>
                     </div>
-                    <div @click="goUrl('/recordBackLook')" class="right-inner">
+                    <div @click="goUrl('/recordBack')" class="right-inner">
                         <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
                         <p>数据记录</p>
                     </div>
@@ -42,7 +42,7 @@
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
                 <!--/financeCenter-->
-                <li @click="goUrl('/recordBack')">
+                <li @click="goUrl('/recordBackLook')">
                     <div class="list-con">
                         <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
                         <span>退款</span>
@@ -247,6 +247,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .main-con{
+        padding-top: .86rem;
     }
     .header-wrap{
         width: 100%;

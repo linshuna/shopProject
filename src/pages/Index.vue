@@ -116,6 +116,7 @@ export default {
         -webkit-overflow-scrolling: touch;
         padding-bottom: 1rem;
         z-index:1;
+        padding-top: .86rem;
     }
     .main-top{
         width: 100%;

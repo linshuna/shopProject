@@ -176,6 +176,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .vip-center-wrap{
+        width: 100%;
+        height: 100%;
+        padding: .86rem 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
     .list-top{
         width: 100%;
         height: 2.6rem;

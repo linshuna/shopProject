@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-con">
         <!--店员-->
         <div class="header-wrap">
             <div class="bill-wrap">
@@ -102,6 +102,9 @@
     }
 </script>
 <style lang="scss" scoped>
+    .main-con{
+        padding-top: .86rem;
+    }
     .header-wrap{
         width: 100%;
         height: 3.6rem;

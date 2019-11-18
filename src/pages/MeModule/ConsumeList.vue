@@ -33,6 +33,7 @@
         background: #fff;
         overflow-y: auto;
         -webkit-overflow-scrolling:touch; 
+        padding-top: .86rem;
     }
     .detail-wrap .list{
         padding: .2rem 0;

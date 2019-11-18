@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="main-con">
         <div class="tab">
             <div v-for="(item,index) in tabData" :class="{'active': status==item.id}" 
             @click='checkTab(item)'>{{item.name}}</div>
         </div>
         <div class='card-wrap' v-if="list.length>0">
-            <div class='card-list' v-for="item in list" @click='clickMarskShow(item)'>
+            <div class='card-list' v-for="item in list" @click='clickMarskShow(item)' :class="{'card-gray-bg':item.is_used!=2}">
                 <div>
                     <div class='card-con'>
                         <div class='card-money'>
@@ -114,14 +114,15 @@ export default {
 <style lang="scss" scoped>
     @import '../../assets/css/style';
     .no-data-tip{
-        padding-top: 1rem;
+        padding-top: 2.3rem;
     }
+    
     .tab{
         width: 100%;
         background: #fff;
         position: fixed;
         left: 0;
-        top: .82rem;
+        top: .86rem;
         z-index: 10
     }
     .tab>div{
@@ -139,6 +140,7 @@ export default {
     .card-wrap{
         width: 100%;
         padding: .4rem .34rem;
+        padding-top: 2.3rem;
         box-sizing: border-box;
     }
     .card-list{
@@ -151,11 +153,18 @@ export default {
         color: #fff;
         font-size: $font-38;
         margin-bottom: .34rem;
-        background: url(../../assets/images/c-card-bg.png) no-repeat;
+        background: url(../../assets/images/coupou-active-bg.png) no-repeat;
         background-size: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    .card-gray-bg{
+        width: 100%;
+        height: 1.8rem;
+        background: url(../../assets/images/coupou-gray-bg.png) no-repeat;
+        background-size: 100%;
+        box-shadow: 0 0 10px 0 gray!important;
     }
     .card-con>div{
         display: inline-block;

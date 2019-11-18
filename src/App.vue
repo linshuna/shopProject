@@ -26,7 +26,9 @@ export default {
       width: 100%;
       height: .86rem;
       background: #fff;
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
       z-index: 10;
       img{
         width: 1.4rem;

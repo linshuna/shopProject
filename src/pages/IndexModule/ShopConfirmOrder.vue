@@ -119,6 +119,7 @@ export default {
     .list-wrap{
         width: 100%;
         background: #fff;
+        padding-top: .86rem;
     }
     /*中间内容  */
     .list-con{

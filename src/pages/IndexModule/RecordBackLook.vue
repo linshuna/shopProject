@@ -74,7 +74,7 @@
                     <div>
                         <p>{{item.nickname}}</p>
                         <p>{{item.mobile}}</p>
-                        <p class="gray-color">退款时间：{{item.createtime}}</p>
+                        <p class="gray-color">退款时间：{{item.refundtime}}</p>
                     </div>
                     <div class="txt-r">
                         <p class="red-color">{{item.num}}元</p>
@@ -83,11 +83,11 @@
             </ul>
             <p class="gray-color no-data-tip"  v-show="!rlist||rlist.length==0">暂无数据</p>
         </div>
-        <div class='btn-wrap'>
-            <button class='get-btn' @click='goExport'>对账导出</button>
-        </div>
+        
     </div>
-    
+    <div class='btn-wrap'>
+        <button class='get-btn' @click='goExport'>对账导出</button>
+    </div>
 </div>
 </template>
 <script>
@@ -120,7 +120,7 @@ export default {
         "date-com": DateRangeCom
     },
     mounted(){
-        this.init();
+        this.getRebackInit();
         window.addEventListener('scroll', this.handleScroll, true); 
     },    
     methods: {
@@ -131,7 +131,14 @@ export default {
             if(sT+wH == bH&&this.page<=this.totalPage){
                 if(!this.rollCheck) return false;
                 this.rollCheck = !this.rollCheck;
-                this.init()
+                var status = this.status;
+                if(status==1){//会员支付的切换
+                    this.init()
+                }else if(status == 2){//核销订单的切换
+                    this.getHlistInit()
+                }else{//退款订单的切换
+                    this.getRebackInit()
+                }
             }  
         },
         init(){//会员支付
@@ -180,7 +187,6 @@ export default {
                 this.rlist = [];
                 this.getRebackInit()
             }
-            this.getRebackInit();
         },
         geteTime(value){//获取开始时间
             this.etime = value;
@@ -195,7 +201,6 @@ export default {
                 this.rlist = [];
                 this.getRebackInit()
             }
-            this.getRebackInit();
         },
         goExport(){
             window.location.href = this.info.export_url
@@ -229,6 +234,10 @@ export default {
                     this.$http.get("do=refund&m=vipcard&id="+item.id)
                     .then(function(res){
                         _this.$toast({message:"退款成功"})
+                        var filters = _this.viplist.filter(ele => {
+                            return ele.id!=item.id;
+                        })
+                        _this.viplist = filters;
                     })
                 }
             })
@@ -280,7 +289,7 @@ export default {
         left: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: 1rem;
+        padding-top: .86rem;
     }
     .shop-inner{
         background: #fff;

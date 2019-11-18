@@ -117,6 +117,7 @@ export default {
         left: 0;
         background-size: 100%;
         z-index: 2;
+        padding-top: .86rem;
         .erweima-inner{
             background: #fff;
         }

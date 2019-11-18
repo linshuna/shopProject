@@ -1,13 +1,13 @@
 <template>
-    <div class='message-wrap' ref="contentWrap">
-        <div class='msg-list' v-for="item in list" @click="goDetail(item)">
-            <div class='title'>
-                <img src='../../assets/images/msg-icon.png' />
-                <span>{{item.title}}</span>
+    <div class='detail-wrap' ref="contentWrap">
+        <div class='list' v-for="item in list">
+            <div class='set-padding set-flex'>
+                <span>{{item.remark}}</span>
+                <span :class='{"red-color": item.num-0>0,"blue-color": item.num-0<0}'>{{item.num}}</span>
             </div>
-            <div class='msg-btm'>
-                <div class='msg-con'>{{item.description}}</div>
-                <div class='font-20 gray-color'>{{item.createtime}}</div>
+            <div class='gray-color set-flex'>
+                <span>{{item.createtime}}</span>
+                <span>积分：{{item.cur_num}}</span>
             </div>
         </div>
         <p class="gray-color not-data-tip" v-if="!list||list.length==0">暂无数据</p>
@@ -16,11 +16,13 @@
 <script>
 export default {
     data(){
+        var bid = this.$route.params.id;
         return{
             page: 1,
             totalPage: 0,
-            list: [],
             check: true,
+            list: [],
+            bid: bid
         }
     },
     mounted(){
@@ -43,76 +45,55 @@ export default {
                 if(sT+wH == bH&&this.page<=this.totalPage){
                     if(!this.check) return false;
                     this.check = !this.check;
-                    this.init(true)
-                } 
+                    this.init()
+                }    
             }
         },
-        init(isPan){
+        init(){
             var _this = this;
-            this.$http.get("do=notice_list&m=vipcard&page="+this.page)
+            if(!this.bid) return false;
+            this.$http.get("do=team_pay_log&m=vipcard&bid="+this.bid)
             .then(function(res){
-                if(isPan == true){
-                   _this.check = true;
-                   _this.page++;
-                }
                 _this.list = _this.list.concat(res.list);
                 _this.totalPage = res.allpage;
+                _this.check = true;
+                _this.page++;
             })
-        },
-        goDetail(item){
-            this.$router.push("/messageDetail/"+item.id)
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-    .message-wrap{
-        width: 100%;   
-        height: 100%;     
+    .detail-wrap{
         position: absolute;
-        left: 0;
-        overflow-y: auto;
-        -webkit-overflow-scrolling:touch;
-        padding: .34rem .2rem;
-        box-sizing: border-box;
-        padding-top: .86rem; 
-    }
-    .msg-list{
         width: 100%;
-        padding: .38rem .34rem;
+        height: 100%;
+        left: 0;
+        padding: .86rem .34rem 0;
         box-sizing: border-box;
         background: #fff;
-        border-radius: 8px;
-        margin-top: .2rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling:touch; 
     }
-    .title{
-        margin-bottom: .4rem;
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    .detail-wrap .list{
+        padding: .22rem 0;
+        border-bottom: 1px solid #efefef;
     }
-    .title img{
-        width: .3rem;
-        height: .3rem;
-        vertical-align: middle;
+    .list>div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-    .title text{
-        padding-left: .2rem;
-        vertical-align: middle;
+    .set-padding{
+        padding-bottom: .2rem;
     }
-    .msg-con{
-        margin-bottom: .1rem;
-        display: -webkit-box;
-        -webkit-line-clamp:2;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
+    .set-flex{
+        display: flex;
+        justify-content: space-between;
     }
     .not-data-tip{
         text-align: center;
         padding: .2rem 0;
         background: transparent;
-        color: gray;
     }
 </style>

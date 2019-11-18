@@ -157,6 +157,7 @@ export default {
         background: #fff;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        padding-top: .86rem;
     }
     .con-inner{
         width: 100%;

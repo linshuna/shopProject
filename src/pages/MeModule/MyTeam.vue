@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-con">
         <div v-show="!showMa">
             <div class="header">
                 <span class="red-color">队员</span>
@@ -158,6 +158,9 @@
 <style lang="scss" scoped>
     .red-color{
         color: red;
+    }
+    .main-con{
+        padding-top: .86rem;
     }
     .header{
         width: 100%;

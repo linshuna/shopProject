@@ -165,6 +165,7 @@ export default {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 1rem;
+        padding-top: .86rem;
     }
     .bg{
         width: 100%;

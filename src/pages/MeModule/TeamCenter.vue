@@ -22,11 +22,11 @@
                     <v-touch
                         @chong-event="settingChong(item)" 
                         @setting-event="settingTeam($event,item)" 
-                        @record-event="goUrl('/record')"
+                        @record-event="goUrl(item)" 
                         @del-event="settingTeamDel($event,item)">
                         <div class="list-inner">
                             <div v-if="item.is_bind==1">
-                                <img :src="item.avatar" @click="goTeamDetail(item)"/>
+                                <img :src="item.avatar" v-show="item.avatar" @click="goTeamDetail(item)"/>
                                 <div class="list-r">
                                     <p>
                                         <span>{{item.nickname}}</span>
@@ -347,8 +347,8 @@ export default {
         goTeamDetail(item){
             this.$router.push("/myTeamDetail/"+item.bid)
         },
-        goUrl(url){
-            this.$router.push(url)
+        goUrl(item){
+            this.$router.push("/selfConsume/"+item.bid)
         }
     }
 }
@@ -378,12 +378,7 @@ export default {
     .team-center-wrap{
         width: 100%;
         height: 100%;
-        position: absolute;
-        left: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-        padding-top: 1.2rem;
+        padding-top: 1.86rem;
         .no-date-tip{
             text-align: center;
         }
@@ -444,7 +439,13 @@ export default {
     }
     .people-list{
         width: 100%;
+        height: 100%;
         background: #F7F7F7;
+        position: absolute;
+        left: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
     }
     .people-list .list{
         width: 100%;

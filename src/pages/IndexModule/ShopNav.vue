@@ -113,6 +113,7 @@ export default {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: #fff;
+        padding-top: 1rem;
     }
     .header-wrap{
         width: 100%;

@@ -189,13 +189,19 @@ export default {
     .order-wrap,.shop-wrap{
         width: 100%;
         height: 100%;
+    }
+    .order-wrap{
+        padding-bottom: 1rem;
+        padding-top: .86rem;
+    }
+    .shop-wrap{
+        width: 100%;
+        height: 100%;
         position: absolute;
         left: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-    }
-    .order-wrap{
-        padding-bottom: 1rem;
+        padding-top: 1.2rem;
     }
     .shop-wrap{
         padding-top: 1.2rem;
@@ -249,7 +255,7 @@ export default {
     .mainCon{
         width: 100%;
         height: calc(100%);
-        position: relative;
+        position: absolute;
         text-align: center;
         .mainConInner{
             width: 100%;

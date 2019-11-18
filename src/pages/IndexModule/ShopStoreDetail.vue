@@ -53,6 +53,7 @@ export default {
         background: #fff;
         padding: 0 .34rem 1rem;
         box-sizing: border-box; 
+        padding-top: .86rem;
         p{
             margin-top: .2rem;
         }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-con">
         <div class="date-wrap">
             <date-com :date="dateStr" @listenToChild="getTime"></date-com>
             <img src="../../assets/images/store/date-icon.png" class="date-icon"/>
@@ -72,6 +72,9 @@ export default {
     .no-data-tip{
         text-align: center;
         padding: .2rem 0;
+    }
+    .main-con{
+        padding-top: .86rem;
     }
     .title{
         width: 100%;

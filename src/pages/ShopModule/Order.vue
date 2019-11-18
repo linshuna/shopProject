@@ -106,6 +106,10 @@ export default {
     .order-wrap,.shop-wrap{
         width: 100%;
         height: 100%;
+    }
+    .shop-wrap{
+        width: 100%;
+        height: 100%;
         position: absolute;
         left: 0;
         overflow-y: auto;

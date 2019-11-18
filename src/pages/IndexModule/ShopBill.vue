@@ -78,6 +78,7 @@ export default {
         background: #fff;
         overflow-y: auto;
         -webkit-overflow-scrolling:touch; 
+        padding-top: .86rem;
     }
     .detail-wrap .list{
         padding: .22rem 0;
