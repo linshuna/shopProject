@@ -35,13 +35,16 @@
         <!-- 核销订单 -->
         <div class="shop-inner" v-show="status==2">
             <p class="title">
-                <span>核销积分总额：{{info.credit2_total_m}}</span>
+                <span>核销总积分：{{statMsg.allscore}}</span>
             </p>
             <p class="title">
-                <span>今日核销积分总额：{{info.credit2_total_w}}</span>
+                <span>核销笔数：{{statMsg.allnums}}</span>
             </p>
             <p class="title">
-                <span>今日核销总额：{{info.credit2_total_d}}</span>
+                <span>核销抵扣金额：{{statMsg.cardmoney}}</span>
+            </p>
+            <p class="title">
+                <span>商户出资额：{{statMsg.shcardmoney}}</span>
             </p>
             <p class="gray-color no-data-tip" v-show="!hlist||hlist.length==0">暂无数据</p>
             <ul v-show="hlist.length>0" class="list">
@@ -111,9 +114,11 @@ export default {
             page: 1,
             totalPage: 0,
             viplist: [],//会员支付列表
+            statMsg: {},
             hlist: [],//核销列表
             rlist: [],//退款列表
-            rollCheck: false
+            rollCheck: false,
+            defStime: stime
         }
     },
     components:{
@@ -154,10 +159,11 @@ export default {
         },
         getHlistInit(){//核销订单
             var _this = this;
-            this.$http.get("do=get_used_order_list&m=vipcard&stime="+this.stime+"&etime="+this.etime+"&page="+this.page)
+            this.$http.get("do=get_card_stat&m=vipcard&stime="+this.stime+"&etime="+this.etime+"&page="+this.page)
             .then(function(res){
                 _this.info = res;
-                _this.hlist = _this.list.concat(res.list);
+                _this.hlist = _this.hlist.concat(res.list);
+                _this.statMsg = res.stat;
                 _this.totalPage = res.allpage;
                 _this.page++;
                 _this.rollCheck = true;
@@ -291,7 +297,7 @@ export default {
         left: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: .86rem;
+        padding-top: 1.86rem;
     }
     .shop-inner{
         background: #fff;

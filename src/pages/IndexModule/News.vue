@@ -3,8 +3,8 @@
         <div class="con-inner" v-html="content">
             
         </div>
-        <div class="btn-wrap">
-            <button class="btn" @click="showMarsk = true">报名</button>
+        <div class="btn-wrap" ng-if="isbm==1">
+            <button class="btn" @click="showMarsk=true">报名</button>
         </div>
         <div class="marsk-wrap"  v-show="showMarsk">
             <div class="marsk-con">
@@ -34,7 +34,8 @@ export default {
             showMarsk: false,
             content: '',
             realname: '',
-            mobile: ''
+            mobile: '',
+            isbm: 0
         }
     },
     mounted() {
@@ -43,6 +44,7 @@ export default {
         this.$http.get("do=detail&m=webhome&id="+this.id)
         .then(function(res){
             _this.content = res.detail.content;
+            _this.isbm = res.detail.isbm;
         })
     },
     methods:{
@@ -71,7 +73,7 @@ export default {
     .btn-wrap{
         width: 100%;
         text-align: center;
-        margin: 2.6rem auto 0;
+        margin: 2.2rem auto 0;
         color: #333;
     }
     .btn{
@@ -158,6 +160,7 @@ export default {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding-top: .86rem;
+        padding-bottom: .4rem;
     }
     .con-inner{
         width: 100%;
