@@ -119,7 +119,7 @@ export default {
             .then(function(res){
                 _this.$toast({message: '支付成功'})
                 setTimeout(function(){
-                    _this.$router.push("/shop")
+                    _this.$router.push("/index")
                 },1000)
             })
         }
