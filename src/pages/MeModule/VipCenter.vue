@@ -179,7 +179,7 @@ export default {
     .vip-center-wrap{
         width: 100%;
         height: 100%;
-        padding: .86rem 0;
+        padding-bottom: .86rem;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }

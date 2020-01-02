@@ -16,7 +16,10 @@
             </div>
             <div class="floor-num-wrap">
                 <img src="../../assets/images/floor-active-icon.png" class="floor-active"/>
-                <div class="floor-num-inner">
+                <div class="floor-num-inner"
+                    @touchstart='touchStart'
+                    @touchmove='touchMove'
+                    @touchend='touchEnd'>
                     <img src="../../assets/images/left-white-icon.png" @click="lookFloor(1)" class="left-icon"/>    
                     <ul class="floor-num" :style="{'left': -((idx-3)*48)+'px'}">
                         <li v-for="(item,index) in floorData" :class="{'active': index==idx}" @click="checkFloor(index)">{{item}}F</li>
@@ -50,7 +53,10 @@ export default {
             checkedNum: 0,//楼层的总数
             shopNum: 0,//入驻的楼层总数
             shopList: [],
-            utype: ''
+            utype: '',
+            startX: 0,
+            moveX: 0,
+            disX: 0
         }
     },
     mounted() {
@@ -66,6 +72,12 @@ export default {
                 }
                 _this.floorData = arr;
                 _this.checkedNum = _this.floorData.length;
+                var msgData = []
+                for(var key in res.stores) {
+                    msgData = msgData.concat(res.stores[key])
+                }
+                window.localStorage.setItem("shopDetailMsg",JSON.stringify(msgData))
+
             })
             //根据身份跳转
             this.$nextTick(function(){
@@ -77,6 +89,34 @@ export default {
         })
     },
     methods: {
+        touchStart(ev){
+            ev = ev || event;
+            this.startX = ev.touches[0].clientX;
+        },
+        touchMove(ev){
+            ev = ev || event;
+            //获取删除按钮的宽度，此宽度为滑块左滑的最大距离
+            let wd = 48;
+            this.moveX = ev.touches[0].clientX
+            //起始位置减去 实时的滑动的距离，得到手指实时偏移距离
+            this.disX = this.startX - this.moveX;
+            
+        },
+        touchEnd(ev){
+            ev = ev || event;
+            let wd=48;
+            let endX = ev.changedTouches[0].clientX;
+            this.disX = this.startX - endX;
+            // 如果是向右滑动或者不滑动，不改变滑块的位置
+            if(this.disX < 0&&this.disX<=-24) {
+                if(this.idx==0) return false;
+                this.idx--;
+            // 大于0，表示左滑了，此时滑块开始滑动 
+            }else if (this.disX > 0&&this.disX>=24) {
+                if(this.idx==this.checkedNum-1)return false;
+                this.idx++;
+            }
+        },
         checkFloor(index){
             this.idx = index;
         },
@@ -95,7 +135,7 @@ export default {
             this.$router.push("/assistantCenter")
         },
         goUrl(item){
-            this.$router.push("/shopStoreDetail/"+encodeURIComponent(JSON.stringify(item)))
+            this.$router.push("/shopStoreDetail/"+item.id)
         }
     },
 }
@@ -113,7 +153,6 @@ export default {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         background: #fff;
-        padding-top: 1rem;
     }
     .header-wrap{
         width: 100%;

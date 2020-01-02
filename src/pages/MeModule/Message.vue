@@ -75,7 +75,6 @@ export default {
         -webkit-overflow-scrolling:touch;
         padding: .34rem .2rem;
         box-sizing: border-box;
-        padding-top: .86rem; 
     }
     .msg-list{
         width: 100%;
@@ -83,7 +82,7 @@ export default {
         box-sizing: border-box;
         background: #fff;
         border-radius: 8px;
-        margin-top: .2rem;
+        margin-bottom: .2rem;
     }
     .title{
         margin-bottom: .4rem;

@@ -17,15 +17,18 @@
                         <p class="square"><img src='../assets/images/zxzx-icon.png'/></p>
                         <span>商户导航</span>
                     </li>
-                    <li @click='goUrl("/parkList")'>
-                        <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
-                        <span>停车收费</span>
+                    <li @click='goUrl("/vipCenter")'>
+                        <p class="square"><img src='../assets/images/grzx-icon.png'/></p>
+                        <span>个人中心</span>
                     </li>
                     <li @click="goUrl('/vipChong')">
                         <p class="square"><img src='../assets/images/fpsq-icon.png'/></p>
                         <span>会员充值</span>
                     </li>
-                    <!--<li @click="goUrl('/parking')">
+                    <!--<li @click='goUrl("/parkList")'>
+                        <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
+                        <span>停车收费</span>
+                    </li><li @click="goUrl('/parking')">
                         <p class="square"><img src='../assets/images/tcjf-icon.png'/></p>
                         <span>停车缴费</span>
                     </li>-->
@@ -89,7 +92,11 @@ export default {
             this.$router.push(url)
         },
         goNews(item){
-            this.$router.push('/news/'+item.id)
+            if(item.linkurl){
+                window.location.href=item.linkurl
+            }else{
+                this.$router.push('/news/'+item.id)
+            }
         }
     },
 }
@@ -116,7 +123,6 @@ export default {
         -webkit-overflow-scrolling: touch;
         padding-bottom: 1rem;
         z-index:1;
-        padding-top: .86rem;
     }
     .main-top{
         width: 100%;

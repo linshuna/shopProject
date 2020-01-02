@@ -69,7 +69,7 @@ export default {
         width: 100%;
         height: 100%;
         left: 0;
-        padding: .86rem .34rem 0;
+        padding: 0 .34rem 0;
         box-sizing: border-box;
         background: #fff;
         overflow-y: auto;

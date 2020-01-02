@@ -45,7 +45,6 @@ export default {
         
     .main-con{
         width: 100%;
-        padding-top: 1rem;
     }
     /*恭喜广告  */
     .lucky-tip{

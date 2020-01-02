@@ -123,7 +123,7 @@ export default {
     }
     .floor-banner{
         width: 100%;
-        height: 1.86rem;
+        height: 1rem;
         margin-bottom: .34rem;
         padding: 0 .2rem;
         box-sizing: border-box;

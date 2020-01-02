@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-      <div class="shut-wrap">
-        <img src="./assets/images/shut-btn.png" @click="shutWin"/>
-      </div>
       <router-view/>
   </div>
 </template>

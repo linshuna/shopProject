@@ -129,7 +129,7 @@ export default {
 <style lang="scss" scoped>
     .vip-pay-wrap{
         width: 100%;
-        padding: 1rem .2rem 0;
+        padding: .2rem .2rem 0;
         box-sizing: border-box;
     }
     .shop-info-wrap{

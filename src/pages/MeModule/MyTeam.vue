@@ -159,9 +159,6 @@
     .red-color{
         color: red;
     }
-    .main-con{
-        padding-top: .86rem;
-    }
     .header{
         width: 100%;
         height: .96rem;

@@ -36,7 +36,6 @@ export default {
 <style lang="scss" scoped>
     .my-msg-wrap{
         width: 100%;
-        padding-top: .86rem;
     }
     .list{
         width: 100%;

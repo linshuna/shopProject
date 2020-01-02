@@ -62,9 +62,6 @@ export default {
         font-weight: 560;
         margin-bottom: .1rem;
     }
-    .team-wrap{
-        padding-top: .86rem;
-    }
     .header-wrap{
         width: 100%;
         height: 2rem;

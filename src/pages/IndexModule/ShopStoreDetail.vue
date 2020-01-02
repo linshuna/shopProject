@@ -8,7 +8,7 @@
             <div class='slider-inner'>
                 <mt-swipe :auto="4000">
                     <mt-swipe-item v-for="item in msg.photo_list">
-                        <img :src="item.thumb"/>
+                        <img :src="item"/>
                     </mt-swipe-item>
                 </mt-swipe>
             </div>
@@ -21,11 +21,14 @@
 <script>
 export default {
     data(){
-        var msg = decodeURIComponent(this.$route.params.msg);
-        msg = JSON.parse(msg)
-        document.title = msg.branch_name;
+        var id = this.$route.params.id;
+        var msgData = JSON.parse(window.localStorage.getItem("shopDetailMsg"));
+        var msg = msgData.filter(ele => {
+            return ele.id == id;
+        }) 
+        document.title = msg[0].branch_name;
         return {
-            msg: msg
+            msg: msg[0]
         }
     },
     mounted() {
@@ -51,9 +54,8 @@ export default {
         -webkit-overflow-scrolling: touch;
         z-index:1;
         background: #fff;
-        padding: 0 .34rem 1rem;
+        padding: .34rem .34rem 1rem;
         box-sizing: border-box; 
-        padding-top: .86rem;
         p{
             margin-top: .2rem;
         }

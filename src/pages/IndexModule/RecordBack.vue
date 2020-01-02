@@ -291,7 +291,7 @@ export default {
         left: 0;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: 1.86rem;
+        padding-top: 1rem;
     }
     .shop-inner{
         background: #fff;

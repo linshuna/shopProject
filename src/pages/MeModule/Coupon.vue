@@ -21,6 +21,7 @@
                     <!--<div class='font-20 useful-date'>有效日期：{{item.ctime}}</div>-->
                 </div>
                 <div class='right-new-wrap' v-if="item.is_used==2">立即使用</div>
+                <div class='right-new-wrap' v-else>已经使用</div>
             </div>
         </div>
         <div class="no-data-tip" v-if="list.length==0&&status==2">暂无未使用的优惠券</div>
@@ -122,7 +123,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: .86rem;
+        top: 0;
         z-index: 10
     }
     .tab>div{
@@ -140,7 +141,7 @@ export default {
     .card-wrap{
         width: 100%;
         padding: .4rem .34rem;
-        padding-top: 2.3rem;
+        padding-top: 1.2rem;
         box-sizing: border-box;
     }
     .card-list{

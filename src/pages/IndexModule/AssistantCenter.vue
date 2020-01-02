@@ -248,9 +248,6 @@
         align-items: center;
         justify-content: space-between;
     }
-    .main-con{
-        padding-top: .86rem;
-    }
     .header-wrap{
         width: 100%;
         height: 3.6rem;

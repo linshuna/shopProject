@@ -106,7 +106,6 @@ export default {
         padding-bottom: 1.2rem;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: .86rem;
     }
     .slider-wrap{
         position: relative;

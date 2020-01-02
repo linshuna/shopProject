@@ -137,7 +137,6 @@ export default {
 <style lang="scss" scoped>
     .vip-wrap{
         width: 100%;
-        padding-top: .86rem;
     }
     .vip-wrap ul{
         display: block;

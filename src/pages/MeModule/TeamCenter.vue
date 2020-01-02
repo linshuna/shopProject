@@ -360,7 +360,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: .82rem;
+        top: 0;
         z-index: 2;
     }
     .tab>div{
@@ -378,7 +378,7 @@ export default {
     .team-center-wrap{
         width: 100%;
         height: 100%;
-        padding-top: 1.86rem;
+        padding-top: 1.2rem;
         .no-date-tip{
             text-align: center;
         }

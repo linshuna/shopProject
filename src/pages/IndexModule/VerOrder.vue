@@ -192,7 +192,6 @@ export default {
     }
     .order-wrap{
         padding-bottom: 1rem;
-        padding-top: .86rem;
     }
     .shop-wrap{
         width: 100%;
