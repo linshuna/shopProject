@@ -80,12 +80,12 @@ export default {
 
             })
             //根据身份跳转
-            this.$nextTick(function(){
-                this.$http.get("do=clerk_index&m=vipcard")
-                .then(function(res){
-                    _this.utype = res.utype;
-                })
-            })
+            // this.$nextTick(function(){
+            //     this.$http.get("do=clerk_index&m=vipcard")
+            //     .then(function(res){
+            //         _this.utype = res.utype;
+            //     })
+            // })
         })
     },
     methods: {

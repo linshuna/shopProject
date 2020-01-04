@@ -45,15 +45,18 @@ service.get = (url, data = {}, config) => {
           window.location.href = resUrl;
           window.localStorage.setItem("backUrl",gobackUrl)
         }else if(tip.code == 500){
-          //禁止提示
-          if(data.forbidden) return false;
-          Toast({message: response.data.msg})
+          if((response.data.msg).indexOf("没有权限")>-1){
+            router.push({
+              path: '/me'
+            })
+          }else{
+            //禁止提示
+            if(data.forbidden) return false;
+            Toast({message: response.data.msg})  
+          }
+          
         }
-        if((response.data.msg).indexOf("没有权限")>-1){
-          router.push({
-            path: '/me'
-          })
-        }
+        
       }, err => {
         // message.wrong({message: '网络出错,请稍后重试'})
         reject(err)

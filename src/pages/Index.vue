@@ -206,6 +206,7 @@ export default {
   box-sizing: border-box;
   margin-bottom: .2rem;
   background: #fff;
+  position: relative;
 }
 .title-header{
   position: relative;
@@ -226,7 +227,6 @@ export default {
     width: 100%;
     padding: .2rem;
     box-sizing: border-box;
-    position: relative;
 }
 .pic{
   width: 100%;
@@ -244,6 +244,7 @@ export default {
 }
 .shop-detail{
   padding: .1rem 0;
+  margin-bottom: 0.34rem;
 }
 .shop-detail span.name{
   display: inline-block;
