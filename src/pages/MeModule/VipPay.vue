@@ -8,18 +8,20 @@
                 <p>当前余额：{{shopInfo.credit2}}</p>
             </div>
         </div>
-        <div class='title'>请输入支付金额</div>
-        <div class='money red-color'>
-            <span class='font-34'>￥</span>
-            <input type="text" v-model="money"/>
-            <span class='font-34'>元</span>
-        </div>
-        <div class="coupon-wrap">
-            <span>优惠券：</span>
-            <com-select 
-                selectType="coupon"
-                :selectData="list"
-                @checkedSelect="checkNum"></com-select>
+        <div class="main-inner">
+            <div class='title'>请输入支付金额</div>
+            <div class='money red-color'>
+                <span class='font-34'>￥</span>
+                <input type="text" v-model="realMoney"/>
+                <span class='font-34'>元</span>
+            </div>
+            <div class="coupon-wrap">
+                <span>优惠券：</span>
+                <com-select 
+                    selectType="coupon"
+                    :selectData="list"
+                    @checkedSelect="checkNum"></com-select>
+            </div>
         </div>
         <div class='btn-wrap'>
             <button class='order-btn' @click="chongFn">确定支付</button>   
@@ -34,6 +36,7 @@ export default {
         return {
             sid: '',
             shopInfo: '',
+            realMoney: 0,
             money: '',
             cList: [],//获取所有的数据
             list: [{name:"请选择",cardid:''}],//根据输入筛选
@@ -55,7 +58,7 @@ export default {
         }
     },
     watch: {
-        money(newVal){
+        realMoney(newVal){
             if(!newVal) return false;
             var cList = JSON.parse(JSON.stringify(this.cList))
             var filters = cList.filter(ele => {
@@ -72,25 +75,29 @@ export default {
             .then(function(res){ 
                 var list = res.list;
                 list.forEach(ele => {
-                    ele.name = ele.card_title
+                    ele.name = ele.card_title+"(优惠"+ele.card_money+"元)"
                 })
                 _this.cList = JSON.parse(JSON.stringify(res.list));
             })
-            // _this.list = _this.cList = [{
-            //     name:"请选择",
-            //     cardid: ''
-            // },{
-            //     branch_name: "空勤灶三号湾店",
-            //     card_money: "50.00",
-            //     card_title: "星巴克50元抵扣券",
-            //     name: "星巴克50元抵扣券",
-            //     cardid: "1",
-            //     ctime: "2019-11-12 16:59",
-            //     sid: "1",
-            // }]
+            _this.list = _this.cList = [{
+                name:"请选择",
+                cardid: ''
+            },{
+                branch_name: "空勤灶三号湾店",
+                card_money: "50.00",
+                card_title: "星巴克50元抵扣券(优惠50元)",
+                name: "星巴克50元抵扣券(优惠50元)",
+                cardid: "1",
+                ctime: "2019-11-12 16:59",
+                sid: "1",
+            }]
         },
-        checkNum(value){
-            this.cardid = value.cardid;
+        checkNum(data){
+            this.cardid = data.value.cardid;
+            if(this.realMoney&&this.realMoney<=this.shopInfo.credit2-0){
+                var m = this.realMoney - (data.value.card_money-0);
+                this.realMoney = m>0?m:0;
+            }
         },
         chongFn(){
             if(!this.money){
@@ -131,6 +138,11 @@ export default {
         width: 100%;
         padding: .2rem .2rem 0;
         box-sizing: border-box;
+        .main-inner{
+            width: 100%;
+            padding: 0 .56rem;
+            box-sizing: border-box;
+        }
     }
     .shop-info-wrap{
         text-align: center;
@@ -182,13 +194,15 @@ export default {
         font-size: .28rem;
     }
     .coupon-wrap{
-        margin-top: .2rem;
+        margin-top: .34rem;
+        display: flex;
         >*{
             vertical-align: middle;
         }
+        .select_box{
+            width: 100%;
+            flex: 1;
+        }
     }
-    .select_box{
-        width: 3.5rem!important;
-        padding-left: .34rem;
-    }
+    
 </style>

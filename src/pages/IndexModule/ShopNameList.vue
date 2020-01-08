@@ -31,7 +31,7 @@
                     <img src="../../assets/images/def-icon.png" class="head-img" v-else/>
                     <span>{{index+1}}</span>
                     <span>{{item.realname}}</span>
-                    <span>{{item.utype==1?'店长':item.utype==2?'店员':'财务'}}</span>
+                    <span>{{item.utype==1?'店长':item.utype==2?'店员':item.utype==3?'财务':''}}</span>
                     <div>
                         <button class="red-color" v-if="item.isbind==0" @click="bindWeixin(item)">绑定</button>
                         <button class="red-color" v-else @click="unbindWeixin(item)">解绑</button>

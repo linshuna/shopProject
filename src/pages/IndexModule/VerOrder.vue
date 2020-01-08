@@ -231,7 +231,7 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: .82rem;
+        top: 0;
         z-index: 2;
     }
     .tab>div{

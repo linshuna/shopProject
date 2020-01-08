@@ -31,7 +31,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="set-border-r" @click="goUrl('/parkList')">
+                    <div class="set-border-r" @click="goUrl('/news/15')">
                         <p><img src="../assets/images/vip-card-icon.png"/></p>
                         <p>会员卡介绍</p>
                     </div>

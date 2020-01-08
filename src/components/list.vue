@@ -18,7 +18,7 @@
     </div>
     <!-- 底部 -->
     <div class='list-bottom'>
-        <span class='gray-color'>运单编号：{{item.ordersn}}</span>
+        <span class='gray-color'>订单编号：{{item.ordersn}}</span>
     </div>
 </div>
 

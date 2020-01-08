@@ -5,7 +5,7 @@
             <div class="header-wrap shop-store-wrap">
                 <div class="header-msg">
                     <img :src="info.avatar" class="my-icon"/>
-                    <p>{{utype==1?'店长':utype==2?'店员':'财务'}}</p>
+                    <p>{{utype==1?'店长':utype==2?'店员':utype==3?'财务':''}}</p>
                     <p>{{info.realname}}</p>
                 </div>
                 <div class="money-wrap"> 
@@ -98,12 +98,9 @@
                 <div class="money-wrap"> 
                     <div>
                         <img :src="info.avatar" class="my-icon"/>
-                        <p>{{info.realname}}</p>
+                        <p>{{info.realname}} 店员</p>
                     </div>
-                    <div @click="goUrl('/record')" class="right-inner">
-                        <img src="../../assets/images/store/note-icon.png" class="record-icon"/>
-                        <p>数据记录</p>
-                    </div>
+                    
                 </div>
             </div>
             <ul>
@@ -128,13 +125,15 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="goUrl('/shopQrcode')">
+                <!--shopQrcode-->
+                <li @click="goUrl('/verOrder')">
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
                         <span>店铺收款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
+                <!--/vipCenter-->
                 <li @click="goUrl('/shopMsg')">
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
