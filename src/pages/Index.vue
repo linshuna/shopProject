@@ -17,17 +17,17 @@
                         <p class="square"><img src='../assets/images/zxzx-icon.png'/></p>
                         <span>商户导航</span>
                     </li>
-                    <li @click='goUrl("/vipCenter")'>
-                        <p class="square"><img src='../assets/images/grzx-icon.png'/></p>
-                        <span>个人中心</span>
+                    <li @click='goUrl("/news/17")'>
+                        <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
+                        <span>停车收费</span>
                     </li>
                     <li @click="goUrl('/vipChong')">
                         <p class="square"><img src='../assets/images/fpsq-icon.png'/></p>
                         <span>会员充值</span>
                     </li>
-                    <!--<li @click='goUrl("/parkList")'>
-                        <p class="square"><img src='../assets/images/jfsc-icon.png'/></p>
-                        <span>停车收费</span>
+                    <!--<li @click='goUrl("/vipCenter")'>
+                        <p class="square"><img src='../assets/images/grzx-icon.png'/></p>
+                        <span>个人中心</span>
                     </li><li @click="goUrl('/parking')">
                         <p class="square"><img src='../assets/images/tcjf-icon.png'/></p>
                         <span>停车缴费</span>
@@ -42,7 +42,7 @@
             </div>-->
             <div class='shop-wrap' v-for="item in activelist">
                 <div class='title-header'>
-                    <span class='title'>商户活动</span>
+                    <span class='title'>{{item.groupName}}</span>
                     <!--<span class="more">更多></span>-->
                 </div>
                 <div class='shop-con' @click="goNews(item)">
@@ -68,7 +68,8 @@ export default {
     data(){
         return{
             imgUrls:[],
-            activelist: []
+            activelist: [],
+            list: []
         }
     },
     components:{
@@ -77,14 +78,55 @@ export default {
     mounted() {
         this.$nextTick(function(){
             var _this = this;
-            this.$http.get("do=index&m=webhome")
+            //获取分类
+            this.$http.get("do=category&m=webhome")
             .then(function(res){ 
-                _this.imgUrls = res.banner;
-                _this.activelist = res.activelist;            
+                var catlist = res.catlist;
+                var promiseAll = catlist.map(function(ele){
+                    return _this.$http.get("do=index&m=webhome&cid="+ele.id)
+                })
+                promiseAll.forEach((promise,i) => {
+                    promise.then(function(data){
+                        _this.list[i] = data;
+                        if(_this.list.length == catlist.length){
+                            setTimeout(function(){
+                                _this.imgUrls = [];
+                                _this.activelist = [];
+                                _this.list.forEach((ele,idx) => {
+                                    var activelist = ele.activelist;
+                                    activelist.forEach(aEle => {
+                                        aEle.groupName = catlist[idx].name;
+                                    })
+                                    _this.activelist = _this.activelist.concat(activelist);    
+                                    var banner = ele.banner;
+                                    _this.imgUrls = _this.imgUrls.concat(banner);    
+                                })   
+                            })
+                            
+                        }
+
+                    })
+                })
+           
             })
         })
+
     },
     methods: {
+        getCatList (ele){
+            var _this = this;
+            this.$http.get("do=index&m=webhome&cid="+ele.id)
+            .then(function(data){ 
+                var activelist = data.activelist;
+                activelist.forEach(aEle => {
+                    aEle.groupName = ele.name;
+                })
+                _this.activelist = _this.activelist.concat(activelist);    
+                var banner = data.banner;
+                _this.imgUrls = _this.imgUrls.concat(banner);
+                _this.check = true;
+            })
+        },
         goLink(url){
             window.location.href = url
         },
@@ -206,6 +248,7 @@ export default {
   box-sizing: border-box;
   margin-bottom: .2rem;
   background: #fff;
+  position: relative;
 }
 .title-header{
   position: relative;
@@ -226,7 +269,6 @@ export default {
     width: 100%;
     padding: .2rem;
     box-sizing: border-box;
-    position: relative;
 }
 .pic{
   width: 100%;
@@ -244,6 +286,7 @@ export default {
 }
 .shop-detail{
   padding: .1rem 0;
+  margin-bottom: 0.34rem;
 }
 .shop-detail span.name{
   display: inline-block;

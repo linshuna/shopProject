@@ -55,6 +55,14 @@ export default {
     mounted() {
         this.$nextTick(function(){
             this.initList = this.types=='car'?this.carList:this.list;
+            //获取个人信息
+            var _this = this;
+            this.$http.get("do=info&m=vipcard")
+            .then(function(res){
+                if(res.iscard==1){
+                    _this.list[2].push = '/vipCenter'
+                }
+            })
         })
     },
 }

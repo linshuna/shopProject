@@ -39,7 +39,7 @@
             <p class="tip">请将二维码展示给店员</p>
             <div class="detail-msg">
                 <p>名称：{{shop.goods_name}}</p>
-                <p>单价：{{shop.price}}元</p>
+                <p>积分：{{shop.price}}分</p>
                 <p>最多核销数量：{{shop.total}}</p>
             </div>
         </div>

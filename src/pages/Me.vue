@@ -21,21 +21,21 @@
             </div>
             <ul class="diamond-wrap">
                 <li>
-                    <div class="set-border-r set-border-b" @click="goUrl('/parkList')">
+                    <div class="set-border-r set-border-b" @click="goUrl('/news/18')">
                         <p><img src="../assets/images/act-center-icon.png"/></p>
                         <p>会员福利</p>
                     </div>
-                    <div class="set-border-b" @click="goUrl('/parkList')">
+                    <div class="set-border-b" @click="goUrl('/news/17')">
                         <p><img src="../assets/images/parking-icon.png"/></p>
                         <p>停车缴费</p>
                     </div>
                 </li>
                 <li>
-                    <div class="set-border-r" @click="goUrl('/parkList')">
+                    <div class="set-border-r" @click="goUrl('/news/15')">
                         <p><img src="../assets/images/vip-card-icon.png"/></p>
                         <p>会员卡介绍</p>
                     </div>
-                    <div @click="goUrl('/parkList')">
+                    <div @click="goUrl('/news/15')">
                         <p><img src="../assets/images/vip-pay.png"/></p>
                         <p>会员充值</p>
                     </div>

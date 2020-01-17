@@ -5,10 +5,6 @@
             <img src="../../assets/images/store/date-icon.png" class="date-icon"/>
         </div>
         <div class="shop-inner">
-            <p class="title">
-                <span>***店员</span>
-                <span>***商户</span>
-            </p>
             <ul>
                 <li v-for="item in list">
                     <div>
@@ -30,7 +26,10 @@ export default {
         return{
             date: '',
             dateStr: '',
-            list: ''
+            list: [],
+            check: true,
+            page: 1,
+            totalPage: 0,
         }
     },
     components:{
@@ -41,14 +40,31 @@ export default {
         var date = new Date()
         this.dateStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
         this.date = this.dateStr
-        this.init()
+        this.init();
+        window.addEventListener('scroll', this.handleScroll, true); 
     },    
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     methods: {
+        handleScroll    : function(){//滚动监听
+            var sT = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;//对象滚动的高度
+            var wH = document.documentElement.clientHeight || document.body.clientHeight;//对象滚动的高度
+            var bH = document.documentElement.scrollHeight || document.body.scrollHeight;//对象滚动的高度
+            if(sT+wH == bH&&this.page<=this.totalPage){
+                if(!this.check) return false;
+                this.check = !this.check;
+                this.init()
+            }  
+        },
         init(){
             var _this = this;
-            this.$http.get("do=get_used_order_list&m=vipcard&ddate="+this.date+"&adminid="+this.id)
+            this.$http.get("do=get_used_order_list&m=vipcard&ddate="+this.date+"&adminid="+this.id+"&page="+this.page)
             .then(function(res){
-                _this.list = res;
+                _this.list = _this.list.concat(res.list);
+                _this.totalPage = res.allpage;
+                _this.check = true;
+                _this.page++;
             })
         },
         goExport(){

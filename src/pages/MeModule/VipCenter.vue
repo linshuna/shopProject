@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class='vip-center-wrap'>
         <div class='list-top'>
             <div class='msg-main'>
@@ -85,15 +86,20 @@
             </div>-->
         </div>
     </div>
-
+    <bar-footer idx="2"></bar-footer>
+</div>
 </template>
 <script>
+import BarFooter from "@/components/footer"
 export default {
     data(){
         return{
             shopInfo: '',//获取店铺信息
             info: {}
         }
+    },
+    components:{
+        "bar-footer": BarFooter
     },
     mounted(){
         //获取微信支付

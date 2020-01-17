@@ -68,7 +68,8 @@ export default {
             this.$http.get("do=sign&m=vipcard&op=display&year="+this.year+"&month="+this.month)
             .then(function(res){
                 _this.is_signed = res.is_signed
-                _this.rule = res.rule
+                _this.rule = res.rule;
+                localStorage.setItem('rule',res.rule);
                 _this.list = res;
                 // var day = res.day;
                 // var filters = day.filter(ele =>{
@@ -80,7 +81,6 @@ export default {
             })
         },
         goExplain(){
-            localStorage.setItem('rule',this.rule);
             this.$router.push("/explain")
         },
         goJfExplain(){

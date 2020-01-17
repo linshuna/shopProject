@@ -1,5 +1,5 @@
 {
     "isDev": false,
     "devUrl": "/index.php?debug=1&i=1&c=entry&",
-    "oUrl": "/app/index.php?i=1&c=entry&" 
+    "oUrl": "/app/index.php?i=1&c=entry&"
 } 

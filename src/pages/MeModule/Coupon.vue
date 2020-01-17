@@ -20,12 +20,8 @@
                     <div class='font-20 useful-date'>领取日期：{{item.ctime}}</div>
                     <!--<div class='font-20 useful-date'>有效日期：{{item.ctime}}</div>-->
                 </div>
-<<<<<<< HEAD
                 <div class='right-new-wrap' v-if="item.is_used==2">立即使用</div>
                 <div class='right-new-wrap' v-else>已经使用</div>
-=======
-                <div class='right-new-wrap' v-if="item.is_used==2">未使用</div>
->>>>>>> 8def0cec246fcf8028c2512003fe4d57e1bb6501
             </div>
         </div>
         <div class="no-data-tip" v-if="list.length==0&&status==2">暂无未使用的优惠券</div>

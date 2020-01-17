@@ -31,12 +31,19 @@
         </div>
         <ul class="floor-list" v-if="shopList[idx]">
             <li v-for="item in shopList[idx]" @click="goUrl(item)">
-                <p class="shop-name">{{item.branch_name}}</p>
-                <p class="gray-color">
-                    <img src="../../assets/images/address-icon.png">
-                    <span>{{item.floor_no}}</span>
-                </p>
-                <p>营业时间：{{item.telephone}}</p>
+                <div class="shop-logo">
+                    <img :src="item.logo" class="shop-logo"/>
+                </div>
+                <div class="right-modal">
+                    <p class="shop-name">
+                        <span>{{item.branch_name}}</span>
+                    </p>
+                    <p class="gray-color">
+                        <img src="../../assets/images/address-icon.png">
+                        <span>{{item.floor_no}}</span>
+                    </p>
+                    <p>联系电话：{{item.telephone}}</p>
+                </div>
             </li>
         </ul>
         <p class="gray-color no-data-tip" v-else>该楼层暂无店铺介绍</p>
@@ -72,6 +79,7 @@ export default {
                 }
                 _this.floorData = arr;
                 _this.checkedNum = _this.floorData.length;
+                console.log(_this.shopList)
                 var msgData = []
                 for(var key in res.stores) {
                     msgData = msgData.concat(res.stores[key])
@@ -80,12 +88,12 @@ export default {
 
             })
             //根据身份跳转
-            this.$nextTick(function(){
-                this.$http.get("do=clerk_index&m=vipcard")
-                .then(function(res){
-                    _this.utype = res.utype;
-                })
-            })
+            // this.$nextTick(function(){
+            //     this.$http.get("do=clerk_index&m=vipcard")
+            //     .then(function(res){
+            //         _this.utype = res.utype;
+            //     })
+            // })
         })
     },
     methods: {
@@ -150,9 +158,9 @@ export default {
         height: 100%;
         position: absolute;
         left: 0;
+        background: #fff;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        background: #fff;
     }
     .header-wrap{
         width: 100%;
@@ -247,23 +255,38 @@ export default {
     }
     .floor-list{
         width: 100%;
-        padding: 0 .4rem;
+        padding: 0 .2rem;
         box-sizing: border-box;
         font-size: .22rem;
         margin-top: .2rem;
         li{
-            border-bottom: 1px solid #efefef;
             padding: .2rem 0;
-            .shop-name{
-                margin-bottom: .1rem;
-            }
-            span,img{
-                vertical-align: middle;
-            }
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #efefef;
             img{
                 width: .24rem;
                 height: .24rem;
             }
+            .shop-logo{
+                display: inline-block;
+                width: 1.2rem;
+                height: auto;
+                margin-right: .1rem;
+                border-radius: 4px;
+                img{
+                    width: 100%;
+                }
+            }
+            .right-modal{
+                width: 100%;
+                flex: 1;
+                display: inline-block;
+            }
+            .shop-name{
+                margin-bottom: .1rem;
+            }
+            
         }
     }
 </style>

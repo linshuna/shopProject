@@ -18,7 +18,8 @@
     </div>
     <!-- 底部 -->
     <div class='list-bottom'>
-        <span class='gray-color'>运单编号：{{item.ordersn}}</span>
+        <p class='gray-color'>核销店铺：{{item.store_name}}</p>
+        <p class='gray-color'>订单编号：{{item.ordersn}}</p>
     </div>
 </div>
 

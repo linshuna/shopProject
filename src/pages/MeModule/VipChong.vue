@@ -127,13 +127,16 @@ export default {
     }
     .vip-top{
         width: 100%;
-        padding: .34rem;
+        height: 2.6rem;
+        padding-top: .34rem;
+        color: #fff;
+        background: url(../../assets/images/vip-center-bg.png) no-repeat; 
+        background-size: 100% 100%;
         box-sizing: border-box;
     }
     .vip-top .vip-inner{
         width: 100%;
         height: 2rem;
-        background: #5A57DA;
         border-radius: 8px;
         color: #fff;
         padding-left: .8rem;

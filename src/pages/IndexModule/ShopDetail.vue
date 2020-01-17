@@ -29,15 +29,16 @@
         <!-- 物品详情 -->
         <div class='shop-detail'>
             <div>物品详情：</div>
-            <div>产品：{{goods.title}}。规格：{{goods.usermaxbuy}}{{goods.unit}}</div>
+            <div>产品：{{goods.title}}。</div>
+            <div>每个用户兑换数：{{goods.usermaxbuy}}{{goods.unit}}</div>
             <div v-html="goods.content"></div>
         </div>
-        <!-- 使用规则 -->
+        <!-- 使用规则 
         <div class='shop-rule'>
             <div>使用规则：</div>
             <div>1.凭此电子券到兑换处兑换商品；</div>
             <div>2.此券仅限积分兑换礼使用，不做其他使用；</div>
-        </div>
+        </div>-->
         <!-- 图片详情 -->
         <div class='shop-img-wrap'>
             <img :src='goods.thumb'/>

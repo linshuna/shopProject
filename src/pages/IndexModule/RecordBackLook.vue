@@ -12,9 +12,9 @@
         <!-- 会员支付 -->
         <div class="shop-inner" v-show="status==1">
             <p class="title">
-                <span>总收入：{{info.credit2_total_m}}</span>
-                <span>本周：{{info.credit2_total_w}}</span>
-                <span>今日：{{info.credit2_total_d}}</span>
+                <span>总收入：{{statMsg?statMsg.all:''}}</span>
+                <span>本周：{{statMsg?statMsg.week:''}}</span>
+                <span>今日：{{statMsg?statMsg.day:''}}</span>
             </p>
             <p class="gray-color no-data-tip" v-show="!viplist||viplist.length==0">暂无数据</p>
             <ul v-show="viplist.length>0" class="list">
@@ -35,24 +35,30 @@
         <!-- 核销订单 -->
         <div class="shop-inner" v-show="status==2">
             <p class="title">
-                <span>核销积分总额：{{info.credit2_total_m}}</span>
+                <span>核销总积分：{{statMsg?statMsg.allscore:''}}</span>
             </p>
             <p class="title">
-                <span>今日核销积分总额：{{info.credit2_total_w}}</span>
+                <span>核销笔数：{{statMsg?statMsg.allnums:''}}</span>
             </p>
             <p class="title">
-                <span>今日核销总额：{{info.credit2_total_d}}</span>
+                <span>核销抵扣金额：{{statMsg?statMsg.cardmoney:''}}</span>
+            </p>
+            <p class="title">
+                <span>商户出资额：{{statMsg?statMsg.shcardmoney:''}}</span>
             </p>
             <p class="gray-color no-data-tip" v-show="!hlist||hlist.length==0">暂无数据</p>
             <ul v-show="hlist.length>0" class="list">
                 <li v-for="item in hlist">
                     <div>
-                        <p>{{item.admin_name}} ({{item.utype==1?'店长':item.utype==2?'店员':''}})</p>
+                        <p>
+                            {{item.admin_name}} 
+                            <span v-show="item.utype">({{item.utype==1?'店长':item.utype==2?'店员':item.utype==3?'财务':''}})</span>
+                        </p>
                         <p>{{item.goods_name}} ({{item.total}}件)</p>
                         <p class="gray-color">兑换时间：{{item.used_time}}</p>
                     </div>
                     <div class="txt-r">
-                        <p class="blue-color">{{item.price}}元</p>
+                        <p class="blue-color">{{item.price}}积分</p>
                     </div>
                 </li>
             </ul>
@@ -60,13 +66,13 @@
         <!-- 退款订单 -->
         <div class="shop-inner" v-show="status==3">
             <p class="title">
-                <span>退款总额：{{info.credit2_total_m}}</span>
+                <span>退款总额：{{statMsg?statMsg.all:''}}</span>
             </p>
             <p class="title">
-                <span>今日退款笔数：{{info.credit2_total_w}}</span>
+                <span>今日退款笔数：{{statMsg?statMsg.daynum:''}}</span>
             </p>
             <p class="title">
-                <span>今日退款总额：{{info.credit2_total_d}}</span>
+                <span>今日退款总额：{{statMsg?statMsg.daymoney:''}}</span>
             </p>
             <ul v-show="rlist.length>0" class="list">
                 <li v-for="item in rlist">
@@ -74,10 +80,10 @@
                     <div>
                         <p>{{item.nickname}}</p>
                         <p>{{item.mobile}}</p>
-                        <p class="gray-color">退款时间：{{item.refundtime}}</p>
+                        <p class="gray-color">退款时间：{{item.createtime}}</p>
                     </div>
                     <div class="txt-r">
-                        <p class="red-color">{{item.num}}元</p>
+                        <p class="red-color">{{item.num}}积分</p>
                     </div>
                 </li>
             </ul>
@@ -113,7 +119,8 @@ export default {
             viplist: [],//会员支付列表
             hlist: [],//核销列表
             rlist: [],//退款列表
-            rollCheck: false
+            rollCheck: false,
+            statMsg: {}
         }
     },
     components:{
@@ -147,6 +154,7 @@ export default {
             .then(function(res){
                 _this.info = res;
                 _this.viplist = _this.viplist.concat(res.list);
+                _this.statMsg = res.stat;
                 _this.totalPage = res.allpage;
                 _this.page++;
                 _this.rollCheck = true;
@@ -158,6 +166,7 @@ export default {
             .then(function(res){
                 _this.info = res;
                 _this.hlist = _this.list.concat(res.list);
+                _this.statMsg = res.stat;
                 _this.totalPage = res.allpage;
                 _this.page++;
                 _this.rollCheck = true;
@@ -169,6 +178,7 @@ export default {
             .then(function(res){
                 _this.info = res;
                 _this.rlist = _this.rlist.concat(res.list);
+                _this.statMsg = res.stat;
                 _this.totalPage = res.allpage;
                 _this.page++;
                 _this.rollCheck = true;
@@ -208,6 +218,7 @@ export default {
         checkTab: function(item){
             var status = item.id;
             this.status = item.id;
+            console.log(item.id)
             this.page = 1;
             if(status==1){//会员支付的切换
                 this.viplist = [];
@@ -267,8 +278,8 @@ export default {
         background: #fff;
         position: fixed;
         left: 0;
-        top: .82rem;
-        z-index: 10
+        top: 0;
+        z-index: 10;
     }
     .tab>div{
         display: inline-block;
