@@ -123,6 +123,9 @@ export default {
             _this.iscard = res.iscard;
             _this.info = res;
             window.localStorage.setItem('info', JSON.stringify(res));
+            if(res.iscard == 1){//如果是会员 直接跳转到会员卡
+                _this.$router.push("/vipCenter")
+            }
         })
     },
     methods: {

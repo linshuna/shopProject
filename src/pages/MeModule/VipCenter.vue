@@ -186,6 +186,7 @@ export default {
         width: 100%;
         height: 100%;
         padding-bottom: .86rem;
+        position: absolute;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -310,6 +311,7 @@ export default {
         width: 100%;
         background: #fff;
         font-size: 0;
+        padding: .34rem 0;
     }
     .list-con .square{
         display: inline-block;
