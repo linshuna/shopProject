@@ -18,8 +18,12 @@
     </div>
     <!-- 底部 -->
     <div class='list-bottom'>
+<<<<<<< HEAD
         <p class='gray-color'>核销店铺：{{item.store_name}}</p>
         <p class='gray-color'>订单编号：{{item.ordersn}}</p>
+=======
+        <span class='gray-color'>订单编号：{{item.ordersn}}</span>
+>>>>>>> 17cb45d54eae77952cd652a7f5acaad4da1400da
     </div>
 </div>
 

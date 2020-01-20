@@ -107,14 +107,19 @@ export default {
         padding-bottom: 1.2rem;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        .swiper-container{
+            width: 100%;
+            height: 100%;
+        }
     }
     .slider-wrap{
         position: relative;
         width: 100%;
-        height: 4.2rem;
+        height: 5.6rem;
         box-sizing: border-box;
         border-bottom: 1px solid #efefef;
     }
+
     .slider-inner,.slider-inner img{
         width: 100%;
         height: 100%;
