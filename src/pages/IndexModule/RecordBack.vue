@@ -80,7 +80,7 @@
                     <div>
                         <p>{{item.nickname}}</p>
                         <p>{{item.mobile}}</p>
-                        <p class="gray-color">退款时间：{{item.createtime}}</p>
+                        <p class="gray-color">退款时间：{{item.refundtime}}</p>
                     </div>
                     <div class="txt-r">
                         <p class="red-color">{{item.num}}积分</p>

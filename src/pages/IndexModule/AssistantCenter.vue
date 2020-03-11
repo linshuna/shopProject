@@ -41,14 +41,14 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <!--/financeCenter-->
+                <!--/financeCenter
                 <li @click="goUrl('/recordBackLook')">
                     <div class="list-con">
                         <img src="../../assets/images/store/finance-center-icon.png" class="icon"/>
                         <span>退款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
-                </li>
+                </li>-->
                 <li @click="goUrl('/message')">
                     <div class="list-con">
                         <img src="../../assets/images/store/msg-icon.png" class="icon"/>
@@ -104,10 +104,17 @@
                 </div>
             </div>
             <ul>
-                <li @click="goUrl('/verificationList/'+info.id)">
+                <!--<li @click="goUrl('/verificationList/'+info.id)">
                     <div class="list-con">
                         <img src="../../assets/images/store/leader-out-icon.png" class="icon"/>
                         <span>核销记录</span>
+                    </div>
+                    <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
+                </li>-->
+                <li @click="goUrl('/record')">
+                    <div class="list-con">
+                        <img src="../../assets/images/store/note-icon.png"/>
+                        <p>数据记录</p>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
@@ -125,14 +132,14 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <!--shopQrcode-->
-                <li @click="goUrl('/verOrder')">
+                <!--shopQrcode
+                <li @click="goUrl('/shopQrcode/shopPay')">
                     <div class="list-con">
                         <img src="../../assets/images/store/assistant-icon.png" class="icon"/>
                         <span>店铺收款</span>
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
-                </li>
+                </li>-->
                 <!--/vipCenter-->
                 <li @click="goUrl('/shopMsg')">
                     <div class="list-con">
@@ -202,7 +209,7 @@
                 .then(function(res){
                     _this.clerk = res;
                     var utype = res.utype;
-                    _this.utype = 2//utype;
+                    _this.utype = utype;
                     var str = utype==1||utype==2?'店员中心':utype==3?'财务中心':'';
                     document.title = str;
                 })
