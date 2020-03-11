@@ -46,6 +46,11 @@ service.get = (url, data = {}, config) => {
           window.localStorage.setItem("backUrl",gobackUrl)
         }else if(tip.code == 500){
           var path = router.currentRoute.path;
+          if((response.data.msg).indexOf("没有开通会员卡")>-1&&path!='/me'){
+            router.push({
+              path: '/card'
+            })
+          }
           if((response.data.msg).indexOf("没有权限")>-1&&path=='/assistantCenter'){
             Toast({message: response.data.msg}) 
             wx.closeWindow();

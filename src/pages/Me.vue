@@ -116,16 +116,18 @@ export default {
         "bar-footer": BarFooter
     },
     mounted() {
-        //获取个人信息
-        var _this = this;
-        this.$http.get("do=info&m=vipcard")
-        .then(function(res){
-            _this.iscard = res.iscard;
-            _this.info = res;
-            window.localStorage.setItem('info', JSON.stringify(res));
-            if(res.iscard == 1){//如果是会员 直接跳转到会员卡
-                _this.$router.push("/vipCenter")
-            }
+        this.$nextTick(function(){
+            //获取个人信息
+            var _this = this;
+            this.$http.get("do=info&m=vipcard")
+            .then(function(res){
+                _this.iscard = res.iscard;
+                _this.info = res;
+                window.localStorage.setItem('info', JSON.stringify(res));
+                if(res.iscard == 1){//如果是会员 直接跳转到会员卡
+                    _this.$router.push("/vipCenter")
+                }
+            })    
         })
     },
     methods: {

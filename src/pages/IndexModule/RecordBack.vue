@@ -26,7 +26,7 @@
                         <p class="gray-color">消费时间：{{item.createtime}}</p>
                     </div>
                     <div class="txt-r">
-                        <p class="blue-color">{{item.num}}积分</p>
+                        <p class="blue-color">{{item.num}}元</p>
                         <button class="reback" @click="rebackMoney(item)">退款</button>
                     </div>
                 </li>

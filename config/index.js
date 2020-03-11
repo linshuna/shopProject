@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-
+const version = '1.0.0';
 module.exports = {
   dev: {
 

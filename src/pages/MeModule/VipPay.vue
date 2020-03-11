@@ -64,7 +64,7 @@ export default {
             var filters = cList.filter(ele => {
                 return ele.card_money-0<newVal-0;
             })
-            this.list = this.list.concat(filters);
+            this.list = filters;
         }
     },
     methods: {
@@ -82,14 +82,6 @@ export default {
             _this.list = _this.cList = [{
                 name:"请选择",
                 cardid: ''
-            },{
-                branch_name: "空勤灶三号湾店",
-                card_money: "50.00",
-                card_title: "星巴克50元抵扣券(优惠50元)",
-                name: "星巴克50元抵扣券(优惠50元)",
-                cardid: "1",
-                ctime: "2019-11-12 16:59",
-                sid: "1",
             }]
         },
         checkNum(data){
@@ -100,10 +92,10 @@ export default {
             }
         },
         chongFn(){
-            if(!this.money){
+            if(!this.realMoney){
                 this.$toast({message: "请输入支付金额"})
                 return false;
-            }else if(this.money>this.shopInfo.credit2-0){
+            }else if(this.realMoney>this.shopInfo.credit2-0){
                 this.$message.confirm('',{
                     title: '余额不足，是否确定充值',
                     message: ' ',
@@ -122,7 +114,7 @@ export default {
                 return false;
             }
             var _this = this;
-            this.$http.get("do=pay&m=vipcard&sid="+this.sid+"&money="+this.money+"&cardid="+this.cardid)
+            this.$http.get("do=pay&m=vipcard&sid="+this.sid+"&money="+this.realMoney+"&cardid="+this.cardid)
             .then(function(res){
                 _this.$toast({message: '支付成功'})
                 setTimeout(function(){

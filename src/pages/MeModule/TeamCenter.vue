@@ -18,7 +18,7 @@
                 <img src='../../assets/images/add-carno.png' class='add-icon'/>
             </div>
             <ul class='people-list'>
-                <li class='list' v-for="item in list">
+                <li class='list' v-for="item in list"> 
                     <v-touch
                         @chong-event="settingChong(item)" 
                         @setting-event="settingTeam($event,item)" 
@@ -348,6 +348,7 @@ export default {
             this.$router.push("/myTeamDetail/"+item.bid)
         },
         goUrl(item){
+            if(!item.bid) return false;
             this.$router.push("/selfConsume/"+item.bid)
         }
     }

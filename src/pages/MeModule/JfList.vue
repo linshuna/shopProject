@@ -46,11 +46,11 @@ export default {
                 if(sT+wH == bH&&this.page<=this.totalPage){
                     if(!this.check) return false;
                     this.check = !this.check;
-                    this.init(true)
+                    this.init()
                 }    
             }
         },
-        init(isPan){
+        init(){
             var _this = this;
             var type = this.type,url = '';
             if(type == 1){//余额明细
@@ -60,12 +60,10 @@ export default {
             }
             this.$http.get(url)
             .then(function(res){
-                if(isPan == true){
-                   _this.check = true;
-                   _this.page++;
-                }
                 _this.list = _this.list.concat(res.list);
                 _this.totalPage = res.allpage;
+                _this.check = true;
+                _this.page++;
             })
         }
     }

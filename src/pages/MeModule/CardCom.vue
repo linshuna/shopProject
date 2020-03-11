@@ -22,11 +22,11 @@
         <span class='red-color'>0元</span>
       </li>
   </ul>
-  <div class='tip-wrap blue-color'>
+  <!--<div class='tip-wrap blue-color'>
     <div>办理会员卡说明：办理会员需支付15元会员费</div>
     <div>企业办卡大于等于100张时免费办理！</div>
     <div>充值5000或以上，免除会员费</div>
-  </div>
+  </div>-->
   <div class='btn-wrap'>
       <button class='com-btn'>确定办理</button>
   </div>

@@ -43,7 +43,7 @@
 </template>
 <script>
 import NoOrder from '@/components/noOrder'
-import List from "@/components/list"
+import ListComp from "@/components/list"
 import Erweima from "@/components/ShopErWeima"
 import DateRangeCom from "@/components/dateRangeCom"
 export default {
@@ -69,7 +69,7 @@ export default {
         }
     },
     components: {
-        "list": List,
+        "list": ListComp,
         "no-order": NoOrder,
         "date-com": DateRangeCom
     },
@@ -104,12 +104,14 @@ export default {
             .then(function(res){
                 var utype = res.utype;
                 if(utype == 1){
-                    _this.shopInit(0)
+                    _this.shopInit(0);
+                    return false;
                 }else{
                     _this.$http.get("do=info&m=vipcard")
                     .then(function(res){
                         _this.shopInit(res.id)
                     })
+                    return false;
                 }
                 
             })

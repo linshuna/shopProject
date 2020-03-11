@@ -118,7 +118,7 @@
                     </div>
                     <span><img src="../../assets/images/right-icon.png" class="right-arrow"/></span>
                 </li>
-                <li @click="saoFn">
+                <li @click="goUrl('/verOrder')">
                     <div class="list-con">
                         <img src="../../assets/images/store/sao-icon.png" class="icon"/>
                         <span>核销订单</span>
@@ -202,7 +202,7 @@
                 .then(function(res){
                     _this.clerk = res;
                     var utype = res.utype;
-                    _this.utype = utype;
+                    _this.utype = 2//utype;
                     var str = utype==1||utype==2?'店员中心':utype==3?'财务中心':'';
                     document.title = str;
                 })
