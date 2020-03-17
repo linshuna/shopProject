@@ -9,13 +9,13 @@
             </div>
         </div>
         <div class="main-inner">
-            <div class='title'>请输入支付金额</div>
+            <div class='title'>支付金额：</div>
             <div class='money red-color'>
                 <span class='font-34'>￥</span>
-                <input type="text" v-model="realMoney"/>
+                <input type="text" v-model="realMoney" placeholder='请输入支付金额'/>
                 <span class='font-34'>元</span>
             </div>
-            <div class="coupon-wrap">
+            <div class="coupon-wrap" @click="checkCoupe">
                 <span>优惠券：</span>
                 <com-select 
                     selectType="coupon"
@@ -36,10 +36,10 @@ export default {
         return {
             sid: '',
             shopInfo: '',
-            realMoney: 0,
-            money: '',
+            realMoney: '',
+            originMoney: null,
             cList: [],//获取所有的数据
-            list: [{name:"请选择",cardid:''}],//根据输入筛选
+            list: [{name:"请选择",card_money:0,cardid:''}],//根据输入筛选
             cardid: ''//使用的优惠券id
         }
     },
@@ -60,6 +60,7 @@ export default {
     watch: {
         realMoney(newVal){
             if(!newVal) return false;
+            if(this.cList.length==0) return false;
             var cList = JSON.parse(JSON.stringify(this.cList))
             var filters = cList.filter(ele => {
                 return ele.card_money-0<newVal-0;
@@ -84,12 +85,18 @@ export default {
                 cardid: ''
             }]
         },
+        checkCoupe(){//存储原价
+            this.originMoney = this.originMoney?this.originMoney:this.realMoney;
+            return false;
+        },
         checkNum(data){
             this.cardid = data.value.cardid;
-            if(this.realMoney&&this.realMoney<=this.shopInfo.credit2-0){
-                var m = this.realMoney - (data.value.card_money-0);
-                this.realMoney = m>0?m:0;
-            }
+            // var credit2 = this.shopInfo.credit2||0
+            // if(this.realMoney&&this.realMoney<=credit2-0){}
+            //要原价处理
+            var m = this.originMoney - (data.value.card_money-0);
+            this.realMoney = m>0?m:0;
+            
         },
         chongFn(){
             if(!this.realMoney){
@@ -113,14 +120,31 @@ export default {
                 })
                 return false;
             }
-            var _this = this;
-            this.$http.get("do=pay&m=vipcard&sid="+this.sid+"&money="+this.realMoney+"&cardid="+this.cardid)
-            .then(function(res){
-                _this.$toast({message: '支付成功'})
-                setTimeout(function(){
-                    _this.$router.push("/index")
-                },1000)
+            //再次确认
+            this.$message.confirm('',{
+                title: '是否确定支付',
+                message: ' ',
+                showCancelButton: true,
+                confirmButtonText: '确定',
+                cancelButtonText: '取消'  
             })
+            .then((res) => {
+                if (res === 'confirm') {
+                    var _this = this;
+                    this.$nextTick(() => {
+                        _this.$http.get("do=pay&m=vipcard&sid="+_this.sid+"&money="+_this.realMoney+"&cardid="+_this.cardid)
+                        .then(function(mRes){
+                            _this.$toast({message: '支付成功'})
+                            setTimeout(function(){
+                                _this.$router.push("/index")
+                            },800)
+                            
+                        })
+                    })
+                }
+            })
+
+            
         }
     },
 }
@@ -159,7 +183,7 @@ export default {
     }
     .money input{
         display: inline-block;
-        width: 40%;
+        width: 60%;
         border-bottom: 1px solid #E5E5E5;
         margin: 0 .2rem;
         text-align: center;

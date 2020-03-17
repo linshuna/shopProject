@@ -62,7 +62,8 @@ export default {
             })
         },
         goBill(item){
-            window.location.href = "http://shw.mxiaoxin.com/app/index.php?i=1&c=entry&do=invoice&m=vipcard&id="+item.id
+            window.location.href = "http://www.chjisw.com/app/index.php?i=1&c=entry&do=invoice&m=vipcard&id="+item.id
+            // window.location.href = "http://shw.mxiaoxin.com/app/index.php?i=1&c=entry&do=invoice&m=vipcard&id="+item.id
         }
     }
 }

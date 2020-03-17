@@ -46,11 +46,14 @@ service.get = (url, data = {}, config) => {
           window.localStorage.setItem("backUrl",gobackUrl)
         }else if(tip.code == 500){
           var path = router.currentRoute.path;
-          if((response.data.msg).indexOf("没有开通会员卡")>-1&&path!='/me'){
-            router.push({
-              path: '/card'
-            })
+          //如果是有身份 下面的可以不判断
+          var info = window.localStorage.getItem('info');
+          if(info){
+            info = JSON.parse(info);
+            var utype = info.utype;
+            if(utype==1||utype==2||utype==3) return false;
           }
+          //没有身份权限的 关闭窗口
           if((response.data.msg).indexOf("没有权限")>-1&&path=='/assistantCenter'){
             Toast({message: response.data.msg}) 
             wx.closeWindow();
@@ -63,7 +66,11 @@ service.get = (url, data = {}, config) => {
             if(data.forbidden) return false;
             Toast({message: response.data.msg}) 
           }
-          
+          if((response.data.msg).indexOf("没有开通会员卡")>-1&&path!='/me'){
+            router.push({
+              path: '/card'
+            })
+          }
         }
         
       }, err => {

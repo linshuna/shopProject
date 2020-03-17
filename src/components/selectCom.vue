@@ -1,7 +1,7 @@
 <template>
     <div class='select_box'>
         <div class='select' @click='selectTap'>
-            <span class='select_text'>{{selectData[index].name?selectData[index].name:selectData[index]}}</span>
+            <span class='select_text'>{{selectData&&selectData[index].name?selectData[index].name:selectData[index]}}</span>
             <img class='select_img' :class="{'select_img_rotate': selectShow}" 
                 src='../assets/images/square-icon.png'  
                 background-size="contain"/> 
@@ -28,7 +28,17 @@ export default {
         return{
             selectShow: false,//控制下拉列表的显示隐藏，false隐藏、true显示 
             index: 0,//选择的下拉列表下标
+            list: []
         }
+    },
+    mounted(){
+        this.$nextTick(function(){
+            var data = this.selectData;
+            data.forEach(ele => {
+                ele.check = false;
+            })
+            this.list = data;
+        })
     },
     methods: {
         // 点击下拉显示框
@@ -39,6 +49,7 @@ export default {
         optionTap(_index,item) {
             this.index = _index;
             this.selectShow = !this.selectShow;
+
             this.$emit('checkedSelect', { _type: this.selectType,idx: _index,value: item})
         }
     }

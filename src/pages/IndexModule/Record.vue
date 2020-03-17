@@ -43,7 +43,7 @@
             </ul>
         </div>
         <div class='btn-wrap'>
-            <button class='get-btn' @click='goExport'>对账导出</button>
+            <button class='get-btn' @click='goExport' v-if="utype!=2">对账导出</button>
         </div>
     </div>
 </template>
@@ -51,12 +51,14 @@
 import DateCom from "@/components/dateCom"
 export default {
     data(){
+        var info = JSON.parse(window.localStorage.getItem('info'));
         return{
             date: '',
             dateStr: '',
             hlist: '',//核销列表
             dlist: '',//当天消费
-            info: ''
+            info: '',
+            utype: info.utype
         }
     },
     components:{
@@ -84,7 +86,6 @@ export default {
         getTime(value){//获取时间
             this.dateStr = value.dateStr;
             this.date = value.date;
-            console.log(value)
             this.init();
         }
     }

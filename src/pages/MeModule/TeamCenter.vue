@@ -347,7 +347,9 @@ export default {
         goTeamDetail(item){
             this.$router.push("/myTeamDetail/"+item.bid)
         },
+
         goUrl(item){
+            if(item == '/vipChong') this.$router.push(item);
             if(!item.bid) return false;
             this.$router.push("/selfConsume/"+item.bid)
         }

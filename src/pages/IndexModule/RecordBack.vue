@@ -27,7 +27,7 @@
                     </div>
                     <div class="txt-r">
                         <p class="blue-color">{{item.num}}元</p>
-                        <button class="reback" @click="rebackMoney(item)">退款</button>
+                        <button class="reback" @click="rebackMoney(item)" v-if="utype==1">退款</button>
                     </div>
                 </li>
             </ul>
@@ -83,7 +83,7 @@
                         <p class="gray-color">退款时间：{{item.refundtime}}</p>
                     </div>
                     <div class="txt-r">
-                        <p class="red-color">{{item.num}}积分</p>
+                        <p class="red-color">{{item.num}}元</p>
                     </div>
                 </li>
             </ul>
@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class='btn-wrap'>
-        <button class='get-btn' @click='goExport'>对账导出</button>
+        <button class='get-btn' @click='goExport' v-if="utype!=2">对账导出</button>
     </div>
 </div>
 </template>
@@ -104,6 +104,7 @@ export default {
         var etime = nYear+"-"+(nDate.getMonth()+1)+"-"+nDate.getDate();
         var stimeDate = new Date(nYear,0,1);
         var stime = stimeDate.getFullYear()+"-"+(stimeDate.getMonth()+1)+"-"+stimeDate.getDate();
+        var info = JSON.parse(window.localStorage.getItem('info'));
         return{
             info: '',
             status: 1,
@@ -121,7 +122,8 @@ export default {
             hlist: [],//核销列表
             rlist: [],//退款列表
             rollCheck: false,
-            defStime: stime
+            defStime: stime,
+            utype: info.utype
         }
     },
     components:{
